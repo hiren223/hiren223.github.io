@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> My First Website</title>
+    </head>
+    <style type="text/css">
+        *{ margin:0;
+            padding: 0;
+            font-family: century gothic;
+        }
+
+        header{
+            background-image: url(https://www.shutterstock.com/image-vector/web-hosting-concept-cloud-computing-600w-1369669355.jpg);
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+        ul{
+            float: left;
+            list-style-type: none;
+            margin-top: 25px;
+        }
+        ul li{
+            display: inline-block;
+        }
+        ul li a{
+            text-decoration:none ;
+            color: aqua;
+            padding-top:5px 20px ;
+            border: 1px solid #ccc;
+            transition: 0.25s ease;
+        }
+        ul li a:hover{
+                    background-color: blanchedalmond;
+                    color: darkcyan;
+        }
+        .logo img{
+            float: right;
+            width: 200px;
+            height: auto;
+        }
+        .main{
+            max-width: 1200px;
+            margin: auto;
+        }
+        .title{
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .bottom{
+            position: absolute;
+            top: 80%;
+            bottom: 40%;
+            transform: translate(-50%,-50%);
+        }
+        .btn{
+            border: 1px solid #ccc;
+            padding: 10px 30px;
+            color: #101010;
+            text-decoration: none;
+            transform: 0.5s ease;
+        }
+        .btn:hover{
+            background-color: aquamarine;
+            color: beige;
+        }
+        
+        </style>
+    <body>
+        <header>
+            <div class="main">
+                <div class="logo">
+                    <img src="data:image/png;base64,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">
+                </div>
+            </div>
+            <ul>
+                <li><a href="https://cdn-icons-png.flaticon.com/512/15/15766.png">home</a></li>
+                <li><a href="https://www.w3schools.com/">link</a></li>
+                <li><a href="https://theartsdevelopmentcompany.org.uk/wp-content/uploads/2019/02/Website-Building-Landscape-1280x640.jpg">img</a></li>
+                <li><a href="C:\Users\Student\Desktop\website.html01.html">form</a></li>
+                <li><a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fhannondigital.com%2Fwp-content%2Fuploads%2F2014%2F01%2FContent-Marketing.jpeg&imgrefurl=https%3A%2F%2Fhannondigital.com%2F2014%2F01%2F21%2Fhow-content-marketing-can-help-a-recruitment-agency%2Fcontent-marketing-3%2F&tbnid=B1LtuI7IalUPdM&vet=12ahUKEwijjN3Hr_P8AhUxA7cAHbotCMIQMygtegUIARC5Ag..i&docid=-bvw-BCDllyOnM&w=1667&h=1250&q=content&ved=2ahUKEwijjN3Hr_P8AhUxA7cAHbotCMIQMygtegUIARC5Ag">content</a></li>
+                </ul>
+                <div class="title">
+                    <h1>My Website</h1>
+                </div>
+                <div class="button">
+                    <a href="https://www.google.com/search?q=website+video&tbm=isch&ved=2ahUKEwjG2LOCsvP8AhX-_HMBHeTpAM0Q2-cCegQIABAA&oq=website+vidi&gs_lcp=CgNpbWcQARgAMgkIABCABBAKEBgyBwgAEIAEEBgyCQgAEIAEEAoQGDoFCAAQgARQugxY9A1g-x5oAHAAeACAAZgBiAH0ApIBAzAuM5gBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=xt3ZY8bdOf75z7sP5NOD6Aw&bih=657&biw=1366&rlz=1C1CHBF_enIN1017IN1017" class="btn">video</a>
+                    <a href="#" class="btn">larne more</a>
+                </div>
+            </header>
+        </body>
+    </html>
