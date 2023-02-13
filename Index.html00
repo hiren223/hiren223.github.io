@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Modern Car Website</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img src="logo.png" alt="dell'Estasi.jpeg">
+			<h1>Modern Car Website</h1>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Cars</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section id="hero">
+			<h2>Welcome to our Car Website</h2>
+			<p>Discover our latest car models and find your dream car today.</p>
+			<a href="#" class="btn">View Cars</a>
+		</section>
+		<section id="featured-cars">
+			<h2>Featured Cars</h2>
+			<div class="card">
+				<img src="car1.jpg" alt="Car 1">
+				<h3>Car 1</h3>
+				<p>Starting at $20,000</p>
+			</div>
+			<div class="card">
+				<img src="car2.jpg" alt="Car 2">
+				<h3>Car 2</h3>
+				<p>Starting at $30,000</p>
+			</div>
+			<div class="card">
+				<img src="car3.jpg" alt="Car 3">
+				<h3>Car 3</h3>
+				<p>Starting at $40,000</p>
+			</div>
+		</section>
+		<section id="about">
+			<h2>About Us</h2>
+			<p>We are a leading car dealership with a wide range of car models to choose from. Our team of experts will help you find the perfect car for your needs and budget.</p>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; 2023 Modern Car Website</p>
+	</footer>
+</body>
+</html>
