@@ -1323,9 +1323,6 @@ a {
    CERTS
 ============================================================ */
 
-
-
-
 .cert-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1484,7 +1481,8 @@ a {
   padding: 10px 12px;
   resize: vertical;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color  0.15s;
+  transition: box-shadow 0.15s;
 }
 
 .contact-form input::placeholder,
@@ -1495,6 +1493,7 @@ a {
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--fn);
+  box-shadow: 1px 1px 10px  var(--fn);
 }
 
 .form-submit {
