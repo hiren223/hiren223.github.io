@@ -28,30 +28,6 @@
 })();
 
 
-// ============================================================
-// THEME TOGGLE (dark / light) with persistence
-// ============================================================
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-const root = document.documentElement;
-
-function applyTheme(theme) {
-  root.setAttribute('data-theme', theme);
-  if (themeIcon) {
-    themeIcon.className = theme === 'light' ? 'ri-sun-line' : 'ri-moon-line';
-  }
-  localStorage.setItem('portfolio-theme', theme);
-}
-
-const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-applyTheme(savedTheme);
-
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    applyTheme(current === 'light' ? 'dark' : 'light');
-  });
-}
 
 
 // ============================================================

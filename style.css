@@ -1054,6 +1054,9 @@ body.nav-open {
   .chip-tip-bar {
     width: 54px;
   }
+  .chip{
+    margin: 0.2rem;
+  }
 
   /* show tooltip when tapped on mobile */
 .chip.tip-open .chip-tip {
