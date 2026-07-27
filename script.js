@@ -254,6 +254,23 @@ if (navBurger && navTabs) {
 }
 
 
+
+// ================= SKILL CHIP TAP-TO-SHOW (mobile) =================
+  document.querySelectorAll(".chip").forEach((chip) => {
+    chip.setAttribute("tabindex", "0"); // enables :focus-within on tap
+    chip.addEventListener("click", (e) => {
+      const alreadyOpen = chip.classList.contains("tip-open");
+      document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
+      if (!alreadyOpen) chip.classList.add("tip-open");
+    });
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".chip")) {
+      document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
+    }
+  });
+
+
 // ============================================================
 // ACTIVE SECTION HIGHLIGHT
 // ============================================================
@@ -331,6 +348,47 @@ function showNote(text, type) {
   if (type === 'error') fNote.classList.add('note-error');
   fNote.classList.add('note-visible');
 }
+
+ (function () {
+    const tabBtns = document.querySelectorAll(".exp-tab-btn");
+    const panels = document.querySelectorAll(".exp-panel");
+
+    function animateSkillBars() {
+      document.querySelectorAll(".skill-bar-fill").forEach((bar) => {
+        const pct = bar.dataset.pct || "0";
+        bar.style.setProperty("--fill-pct", pct + "%");
+        bar.classList.remove("filled");
+        void bar.offsetWidth; // reflow to restart transition
+        bar.classList.add("filled");
+      });
+    }
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.tab;
+        if (btn.classList.contains("active")) return;
+
+        tabBtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        panels.forEach((panel) => {
+          if (panel.dataset.panel === target) {
+            panel.style.display = "flex";
+            panel.classList.remove("exp-panel-anim");
+            void panel.offsetWidth;
+            panel.classList.add("exp-panel-anim");
+
+            if (target === "skills") {
+              setTimeout(animateSkillBars, 150);
+            }
+          } else {
+            panel.style.display = "none";
+          }
+        });
+      });
+    });
+  })();
+  // ============ END EXPERIENCE / SKILLS TAB SWITCHER ============
 
 
 // ============================================================

@@ -7,20 +7,18 @@
     <link
       rel="icon"
       type="image/svg+xml"
-      href="Images/photo.jpg"
+      href="Images/photo-2.png"
       style="border-radius: 50px"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <linkhref="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"rel="stylesheet"/>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css" rel="stylesheet"/>
+   <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+          
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
@@ -28,7 +26,7 @@
     <!-- ================= SITE LOADER ================= -->
     <div id="site-loader" class="site-loader">
       <div class="loader-box">
-        <img src="Images/photo.jpg" alt="logo" class="loader-logo-img" />
+        <img src="Images/photo-2.png" alt="logo" class="loader-logo-img" />
         <div class="loader-bar-track">
           <div class="loader-bar-fill" id="loader-bar"></div>
         </div>
@@ -46,27 +44,35 @@
       <header class="topbar">
         <div class="topbar-inner">
           <a href="#home" class="brand">
-            <img src="Images/photo.jpg" alt="HK logo" class="brand-logo" />
+            <img src="Images/photo-2.png" alt="HK logo" class="brand-logo" />
+            <span class="footer-logo">HK<span class="id-cursor">_</span></span>
           </a>
 
           <nav class="tabs" id="nav-tabs">
-            <a href="#home" class="tab active">home.py</a>
-            <a href="#about" class="tab">about.md</a>
-            <a href="#experience" class="tab">experience.log</a>
-            <a href="#projects" class="tab">projects/</a>
-            <a href="#certs" class="tab">certs.json</a>
-            <a href="#contact" class="tab">contact.sh</a>
+            <span class="tab-slider" id="tab-slider"></span>
+            <a href="#home" class="tab active" data-tab="home">
+               home.py
+            </a>
+            <a href="#about" class="tab" data-tab="about">
+               about.md
+            </a>
+            <a href="#experience" class="tab" data-tab="experience">
+           experience.log
+            </a>
+            <a href="#projects" class="tab" data-tab="projects">
+               projects/
+            </a>
+            <a href="#certs" class="tab" data-tab="certs">
+               certs.json
+            </a>
+            <a href="#contact" class="tab" data-tab="contact">
+               contact.sh
+            </a>
           </nav>
 
-          <button
-            class="nav-burger"
-            id="nav-burger"
-            aria-label="Toggle menu"
-            aria-expanded="false"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
+
+          <button class="nav-burger" id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
           </button>
 
           <div class="clock" id="clock">00:00</div>
@@ -174,7 +180,7 @@
                   </div>
 
                   <div class="id-photo-wrapper">
-                    <img src="Images/photo.jpg" alt="Hiren Keraliya" />
+                    <img src="Images/photo-2.png" alt="Hiren Keraliya" />
                   </div>
 
                   <div class="id-card-bottom">
@@ -194,40 +200,52 @@
           </div>
 
           <div class="about-text reveal" data-delay="1">
-  <p>
-    I am a <strong>Bachelor of Computer Applications (BCA)</strong> graduate
-    from <strong>Silver Oak University, Ahmedabad</strong>, with a strong
-    interest in <strong>Data Science, Machine Learning, Artificial Intelligence, and Data Analytics</strong>.
-    I enjoy working with data to discover meaningful insights, solve real-world
-    problems, and build predictive models.
-  </p>
+            <p>
+              I am a
+              <strong>Bachelor of Computer Applications (BCA)</strong> graduate
+              from <strong>Silver Oak University, Ahmedabad</strong>, with a
+              strong interest in
+              <strong
+                >Data Science, Machine Learning, Artificial Intelligence, and
+                Data Analytics</strong
+              >. I enjoy working with data to discover meaningful insights,
+              solve real-world problems, and build predictive models.
+            </p>
 
-  <p>
-    During my BCA, I built a strong foundation in
-    <strong>Web Development</strong> using
-    <strong>HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap</strong>.
-    As my final-year project, I co-developed
-    <strong>Krushi Manch</strong>, a multilingual agricultural web platform
-    that provides digital services for farmers while giving me valuable
-    experience in full-stack development and teamwork.
-  </p>
+            <p>
+              During my BCA, I built a strong foundation in
+              <strong>Web Development</strong> using
+              <strong>HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap</strong>.
+              As my final-year project, I co-developed
+              <strong>Krushi Manch</strong>, a multilingual agricultural web
+              platform that provides digital services for farmers while giving
+              me valuable experience in full-stack development and teamwork.
+            </p>
 
-  <p>
-    To strengthen my technical skills, I completed a
-    <strong>Data Science program at Datamites</strong>, where I gained
-    hands-on experience with
-    <strong>Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL, Statistics, Machine Learning, Data Visualization, and Exploratory Data Analysis (EDA)</strong>.
-    I worked on real-world datasets involving data preprocessing, feature engineering,
-    model building, hyperparameter tuning, and model evaluation.
-  </p>
+            <p>
+              To strengthen my technical skills, I completed a
+              <strong>Data Science program at Datamites</strong>, where I gained
+              hands-on experience with
+              <strong
+                >Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL,
+                Statistics, Machine Learning, Data Visualization, and
+                Exploratory Data Analysis (EDA)</strong
+              >. I worked on real-world datasets involving data preprocessing,
+              feature engineering, model building, hyperparameter tuning, and
+              model evaluation.
+            </p>
 
-  <p>
-    My goal is to build a successful career as a
-    <strong>Data Scientist</strong>, applying data-driven solutions to
-    real-world challenges while continuously learning and improving my skills
-    in <strong>Data Science, Machine Learning, and Artificial Intelligence</strong>.
-  </p>
-</div>
+            <p>
+              My goal is to build a successful career as a
+              <strong>Data Scientist</strong>, applying data-driven solutions to
+              real-world challenges while continuously learning and improving my
+              skills in
+              <strong
+                >Data Science, Machine Learning, and Artificial
+                Intelligence</strong
+              >.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -241,135 +259,275 @@
           </p>
         </div>
 
-        <div class="experience-grid">
-          <!-- Skills Panel -->
-          <div class="experience-skills editor-window reveal" data-delay="0">
-            <div class="editor-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="editor-filename">skills.json</span>
-            </div>
-            <div class="editor-body skills-body">
-              <div class="skill-group">
-                <span class="skill-group-title">languages_and_ml</span>
-                <div class="chip-row">
-                  <span class="chip chip-py">Python</span>
-                  <span class="chip chip-py">SQL</span>
-                  <span class="chip chip-blue">Pandas</span>
-                  <span class="chip chip-blue">NumPy</span>
-                  <span class="chip chip-green">scikit-learn</span>
-                  <span class="chip chip-green">XGBoost</span>
+        <!-- ================= EXPERIENCE / SKILLS TABS ================= -->
+        <div class="exp-tabs reveal" data-delay="0">
+          <button
+            class="exp-tab-btn active"
+            data-tab="experience"
+            type="button"
+          >
+            <i class="ri-git-commit-line"></i> Experience
+          </button>
+          <button class="exp-tab-btn" data-tab="skills" type="button">
+            <i class="ri-code-box-line"></i> Skills
+          </button>
+        </div>
+
+        <div class="exp-tab-panels">
+          <!-- ===== PANEL 1: EXPERIENCE (default visible) ===== -->
+          <div class="exp-panel" data-panel="experience" style="display: block">
+            <div class="git-log">
+              <div class="commit reveal" data-delay="2">
+                <div class="commit-marker">
+                  <span class="commit-dot"
+                    ><i class="ri-graduation-cap-line"></i
+                  ></span>
+                  <span class="commit-line"></span>
+                </div>
+                <div class="commit-body">
+                  <div class="commit-top">
+                    <span class="commit-hash">BCA</span>
+                    <span class="commit-date">2022 – 2025</span>
+                  </div>
+                  <h3>Bachelor of Computer Application</h3>
+                  <p class="commit-org">Silver Oak University, Ahmedabad</p>
+                  <p class="commit-desc">
+                    Graduated with a final-year thesis on
+                    <strong>Krushi Manch</strong>, a multilingual agricultural
+                    web platform built with a 4-person team — first hands-on
+                    experience taking a project from requirements to a deployed
+                    system.
+                  </p>
                 </div>
               </div>
 
-              <div class="skill-group">
-                <span class="skill-group-title">visualization</span>
-                <div class="chip-row">
-                  <span class="chip chip-amber">Matplotlib</span>
-                  <span class="chip chip-amber">Seaborn</span>
-                  <span class="chip chip-purple">Power BI</span>
+              <div class="commit reveal" data-delay="0">
+                <div class="commit-marker">
+                  <span class="commit-dot"><i class="ri-medal-line"></i></span>
+                  <span class="commit-line"></span>
+                </div>
+                <div class="commit-body">
+                  <div class="commit-top">
+                    <span class="commit-hash">Certification</span>
+                    <span class="commit-date">Jun 2026</span>
+                  </div>
+                  <h3>
+                    Certified Data Scientist &amp; Data Science Foundation
+                  </h3>
+                  <p class="commit-org">
+                    NASSCOM FutureSkills Prime (Gold, 95%) · IABAC
+                  </p>
+                  <p class="commit-desc">
+                    Cleared a Government of India–aligned Data Scientist
+                    assessment with a Gold score, and earned the IABAC Data
+                    Science Foundation certification — formalising skills built
+                    during the Rubixe internship.
+                  </p>
                 </div>
               </div>
 
-              <div class="skill-group">
-                <span class="skill-group-title">web_dev</span>
-                <div class="chip-row">
-                  <span class="chip chip-blue">HTML/CSS/JS</span>
-                  <span class="chip chip-green">PHP</span>
-                  <span class="chip chip-purple">MySQL</span>
+              <div class="commit reveal" data-delay="1">
+                <div class="commit-marker">
+                  <span class="commit-dot"
+                    ><i class="ri-briefcase-4-line"></i
+                  ></span>
+                  <span class="commit-line last"></span>
                 </div>
-              </div>
-
-              <div class="skill-group">
-                <span class="skill-group-title">workflow</span>
-                <div class="chip-row">
-                  <span class="chip chip-blue">VS Code</span>
-                  <span class="chip chip-blue">Jupyter</span>
-                  <span class="chip chip-py">Git</span>
-                  <span class="chip chip-amber">EDA</span>
-                  <span class="chip chip-green">Feature Engineering</span>
+                <div class="commit-body">
+                  <div class="commit-top">
+                    <span class="commit-hash">Data Science Internship</span>
+                    <span class="commit-date">Aug 2025 – Feb 2026</span>
+                  </div>
+                  <h3>Data Science Consultant Intern</h3>
+                  <p class="commit-org">Rubixe · 6-month internship</p>
+                  <p class="commit-desc">
+                    Worked across proof-of-concept and client engagements —
+                    cleaning data, engineering features, and building/evaluating
+                    classification and regression models. Delivered the Customer
+                    Churn client project plus four independent capstones (loan
+                    default, insurance claims, vaccine prediction, COVID-19
+                    forecasting).
+                  </p>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Git Log Timeline -->
-          <div class="git-log">
-            <div class="commit reveal" data-delay="2">
-              <div class="commit-marker">
-                <span class="commit-dot"
-                  ><i class="ri-graduation-cap-line"></i
-                ></span>
-                <span class="commit-line"></span>
-              </div>
-              <div class="commit-body">
-                <div class="commit-top">
-                  <span class="commit-hash">BCA</span>
-                  <span class="commit-date">2022 – 2025</span>
-                </div>
-                <h3>Bachelor of Computer Application</h3>
-                <p class="commit-org">Silver Oak University, Ahmedabad</p>
-                <p class="commit-desc">
-                  Graduated with a final-year thesis on
-                  <strong>Krushi Manch</strong>, a multilingual agricultural web
-                  platform built with a 4-person team — first hands-on
-                  experience taking a project from requirements to a deployed
-                  system.
-                </p>
-              </div>
-            </div>
-
-            <div class="commit reveal" data-delay="0">
-              <div class="commit-marker">
-                <span class="commit-dot"><i class="ri-medal-line"></i></span>
-                <span class="commit-line"></span>
-              </div>
-              <div class="commit-body">
-                <div class="commit-top">
-                  <span class="commit-hash">Certification</span>
-                  <span class="commit-date">Jun 2026</span>
-                </div>
-                <h3>Certified Data Scientist &amp; Data Science Foundation</h3>
-                <p class="commit-org">
-                  NASSCOM FutureSkills Prime (Gold, 95%) · IABAC
-                </p>
-                <p class="commit-desc">
-                  Cleared a Government of India–aligned Data Scientist
-                  assessment with a Gold score, and earned the IABAC Data
-                  Science Foundation certification — formalising skills built
-                  during the Rubixe internship.
-                </p>
-              </div>
-            </div>
-
-            <div class="commit reveal" data-delay="1">
-              <div class="commit-marker">
-                <span class="commit-dot"
-                  ><i class="ri-briefcase-4-line"></i
-                ></span>
-                <span class="commit-line last"></span>
-              </div>
-              <div class="commit-body">
-                <div class="commit-top">
-                  <span class="commit-hash">Data Science Internship</span>
-                  <span class="commit-date">Aug 2025 – Feb 2026</span>
-                </div>
-                <h3>Data Science Consultant Intern</h3>
-                <p class="commit-org">Rubixe · 6-month internship</p>
-                <p class="commit-desc">
-                  Worked across proof-of-concept and client engagements —
-                  cleaning data, engineering features, and building/evaluating
-                  classification and regression models. Delivered the Customer
-                  Churn client project plus four independent capstones (loan
-                  default, insurance claims, vaccine prediction, COVID-19
-                  forecasting).
-                </p>
               </div>
             </div>
           </div>
+
+          <!-- ===== PANEL 2: SKILLS (hidden by default) ===== -->
+          <div class="exp-panel" data-panel="skills" style="display: none">
+  <div class="experience-skills editor-window">
+    <div class="editor-header">
+      <span class="dot red"></span><span class="dot yellow"></span
+      ><span class="dot green"></span>
+      <span class="editor-filename">skills.json</span>
+    </div>
+    <div class="editor-body skills-body">
+      <div class="skill-group">
+        <span class="skill-group-title">languages_and_ml</span>
+        <div class="chip-row">
+          <span class="chip chip-py" style="--lvl: 90%">
+            <i class="devicon-python-plain colored"></i>Python
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">90%</span>
+            </span>
+          </span>
+          <span class="chip chip-py" style="--lvl: 85%">
+            <i class="ri-database-2-line"></i>SQL
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">85%</span>
+            </span>
+          </span>
+          <span class="chip chip-blue" style="--lvl: 88%">
+            <i class="devicon-pandas-plain"></i>Pandas
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">88%</span>
+            </span>
+          </span>
+          <span class="chip chip-blue" style="--lvl: 82%">
+            <i class="devicon-numpy-plain colored"></i>NumPy
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">82%</span>
+            </span>
+          </span>
+          <span class="chip chip-green" style="--lvl: 85%">
+            <i class="devicon-scikitlearn-plain"></i>scikit-learn
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">85%</span>
+            </span>
+          </span>
+          <span class="chip chip-green" style="--lvl: 78%">
+            <i class="ri-flow-chart"></i>XGBoost
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">78%</span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <span class="skill-group-title">visualization</span>
+        <div class="chip-row">
+          <span class="chip chip-amber" style="--lvl: 80%">
+            <i class="devicon-matplotlib-plain"></i>Matplotlib
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">80%</span>
+            </span>
+          </span>
+          <span class="chip chip-amber" style="--lvl: 78%">
+            <i class="ri-bar-chart-grouped-line"></i>Seaborn
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">78%</span>
+            </span>
+          </span>
+          <span class="chip chip-purple" style="--lvl: 75%">
+            <i class="ri-bar-chart-2-line"></i>Power BI
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">75%</span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <span class="skill-group-title">web_dev</span>
+        <div class="chip-row">
+           <span class="chip chip-amber" style="--lvl: 80%">
+             <i class="devicon-html5-plain colored"></i>HTML
+             <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">80%</span>
+           </span>
+           </span>
+
+             <span class="chip chip-blue" style="--lvl: 80%">
+             <i class="devicon-css3-plain colored"></i>CSS
+             <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">80%</span>
+           </span>
+             </span>
+
+             <span class="chip chip-green" style="--lvl: 80%">
+             <i class="devicon-javascript-plain colored"></i>Java Script
+             <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">80%</span>
+           </span>
+             </span>
+
+
+          <span class="chip chip-green" style="--lvl: 75%">
+            <i class="devicon-php-plain"></i>PHP
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">75%</span>
+            </span>
+          </span>
+          <span class="chip chip-purple" style="--lvl: 78%">
+            <i class="devicon-mysql-plain"></i>MySQL
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">78%</span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <span class="skill-group-title">workflow</span>
+        <div class="chip-row">
+          <span class="chip chip-blue" style="--lvl: 88%">
+            <i class="devicon-vscode-plain colored"></i>VS Code
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">88%</span>
+            </span>
+          </span>
+          <span class="chip chip-blue" style="--lvl: 90%">
+            <i class="devicon-jupyter-plain colored"></i>Jupyter
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">90%</span>
+            </span>
+          </span>
+          <span class="chip chip-py" style="--lvl: 80%">
+            <i class="devicon-git-plain colored"></i>Git
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">80%</span>
+            </span>
+          </span>
+          <span class="chip chip-amber" style="--lvl: 82%">
+            <i class="ri-search-eye-line"></i>EDA
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">82%</span>
+            </span>
+          </span>
+          <span class="chip chip-green" style="--lvl: 84%">
+            <i class="ri-tools-line"></i>Feature Engineering
+            <span class="chip-tip">
+              <span class="chip-tip-bar"><span class="chip-tip-fill"></span></span>
+              <span class="chip-tip-pct">84%</span>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
       </section>
+      <!-- ============ END EXPERIENCE / SKILLS TABS ============ -->
 
       <!-- ================= PROJECTS ================= -->
       <section id="projects" class="section">
@@ -388,7 +546,8 @@
           <article class="cell cell-web reveal" data-delay="0">
             <div class="cell-io">
               <span class="cell-tag tag-college">
-                <i class="ri-graduation-cap-line"></i>GRADUATION PROJECT· COLLEGE
+                <i class="ri-graduation-cap-line"></i>GRADUATION PROJECT·
+                COLLEGE
               </span>
               <span class="cell-exec">In [1]:</span>
             </div>
@@ -899,11 +1058,79 @@
       </section>
 
       <!-- ================= FOOTER ================= -->
-      <footer class="footer">
-        <p>Copyright © 2026 · Built by Hiren Keraliya</p>
-      </footer>
+      <!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">HK<span class="id-cursor">_</span></span>
+        <p class="footer-tagline">
+          Turning messy data into models that hold up.
+        </p>
+        <div class="footer-socials">
+           <a href="https://github.com/hiren223" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-fill"></i
+          ></a>
+          
+           <a href="https://www.linkedin.com/in/hiren-patel-440700259/"  target="_blank" rel="noopener" aria-label="LinkedIn"
+            ><i class="ri-linkedin-box-fill"></i
+          ></a>
+          <a href="mailto:keraliyahiren99@gmail.com" aria-label="Email"
+            ><i class="ri-mail-fill"></i
+          ></a>
+          <a href="tel:+91 63531 93330" aria-label="Phone"
+            ><i class="ri-phone-fill"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title"># navigate</span>
+        <a href="#home">home.py</a>
+        <a href="#about">about.md</a>
+        <a href="#experience">experience.log</a>
+        <a href="#projects">projects/</a>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title"># more</span>
+        <a href="#certs">certs.json</a>
+        <a href="#contact">contact.sh</a>
+        <a href="HirenKeraliya_cv.pdf" download>resume.pdf</a>
+      </div>
+
+      <div class="footer-col footer-terminal">
+        <span class="footer-col-title"># status</span>
+        <p class="footer-status-line">
+          <span class="id-card-dot"></span> available for opportunities
+        </p>
+        <p class="footer-status-line footer-muted">
+          <span class="prompt">$</span> echo $LOCATION
+        </p>
+        <p class="footer-status-line footer-out">Ahmedabad, India</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        <span class="prompt">$</span> © 2026 Hiren Keraliya — built with
+        HTML, CSS &amp; JS
+      </p>
+      <button class="footer-top-btn" id="footer-top-btn" type="button">
+        back to top <i class="ri-arrow-up-line"></i>
+      </button>
+    </div>
+  </div>
+</footer>
+<!-- ============ END FOOTER ============ -->
     </div>
 
     <script src="script.js"></script>
+    <script>
+  // ================= FOOTER: BACK TO TOP =================
+  document.getElementById("footer-top-btn")?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  // ============ END BACK TO TOP ============
+</script>
+    
   </body>
 </html>
