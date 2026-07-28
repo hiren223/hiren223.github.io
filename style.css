@@ -297,11 +297,10 @@ body.nav-open {
   /* mobile drawer panel */
   .tabs {
     position: fixed;
-    top: 78px;
+    top: 65px;
     left: 16px;
     right: 16px;
     width: auto;
-    height: calc(100vh - 78px - 16px);
     background: rgb(16, 21, 29);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -514,6 +513,7 @@ body.nav-open {
 .btn-cv {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 .btn-cv i {
@@ -1406,7 +1406,7 @@ body.nav-open {
     padding: 16px;
   }
   .certificate-viewer {
-    height: 90vh;
+    height: 50vh;
   }
   .viewer-header {
     flex-direction: column;
