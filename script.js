@@ -40,8 +40,21 @@
   const ctx = canvas.getContext('2d');
   let w, h, dpr;
 
-  function getVar(name) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  // 1. Cache colors so we don't call getComputedStyle 60 times a second
+  let cachedColors = {
+    '--border': '#232b38',
+    '--fn': '#10B981', 
+    '--str': '#38BDF8', 
+    '--kw': '#a0aabf',
+    '--num': '#ffffff'
+  };
+
+  function updateColors() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    Object.keys(cachedColors).forEach(key => {
+      const val = rootStyles.getPropertyValue(key).trim();
+      if (val) cachedColors[key] = val;
+    });
   }
 
   function resize() {
@@ -53,17 +66,19 @@
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    updateColors(); 
   }
+  
   resize();
   window.addEventListener('resize', resize);
 
-  const NODE_COUNT = Math.round((window.innerWidth * window.innerHeight) / 55000);
-  const nodes = Array.from({ length: Math.max(30, Math.min(NODE_COUNT, 50)) }, () => ({
+  const NODE_COUNT = Math.round((w * h) / 35000); 
+  const nodes = Array.from({ length: Math.max(50, Math.min(NODE_COUNT, 100)) }, () => ({
     x: Math.random() * w,
     y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.18,
-    vy: (Math.random() - 0.5) * 0.18,
-    r: Math.random() * 1.6 + 1
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 2 + 1.5 // Slightly larger nodes
   }));
   const LINK_DIST = 150;
 
@@ -75,25 +90,25 @@
   ];
   const colorVars = ['--fn', '--str', '--kw', '--num'];
 
-  const tokens = Array.from({ length: 16 }, () => spawnToken());
-
   function spawnToken(recycle) {
     return {
       text: TOKENS[Math.floor(Math.random() * TOKENS.length)],
       x: Math.random() * w,
       y: recycle ? h + 20 : Math.random() * h,
-      speed: Math.random() * 0.12 + 0.05,
-      size: Math.random() * 5 + 11,
+      speed: Math.random() * 0.3 + 0.1, 
+      size: Math.random() * 6 + 12, 
       color: colorVars[Math.floor(Math.random() * colorVars.length)],
-      opacity: Math.random() * 0.5 + 0.05,
-      drift: (Math.random() - 0.5) * 0.06
+      opacity: Math.random() * 0.4 + 0.1,
+      drift: (Math.random() - 0.5) * 0.1
     };
   }
+
+  const tokens = Array.from({ length: 16 }, () => spawnToken());
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
 
-    const lineColor = getVar('--border') || '#232b38';
+    const lineColor = cachedColors['--fn'];
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
@@ -102,7 +117,7 @@
 
         if (dist < LINK_DIST) {
           ctx.strokeStyle = lineColor;
-          ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.35;
+          ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.5; // Brighter connections
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -112,8 +127,8 @@
       }
     }
 
-    const nodeColor = getVar('--fn') || '#82aaff';
-    ctx.globalAlpha = 0.55;
+    const nodeColor = cachedColors['--fn'];
+    ctx.globalAlpha = 0.8; // Brighter nodes
     ctx.fillStyle = nodeColor;
 
     nodes.forEach(n => {
@@ -129,7 +144,7 @@
     ctx.textBaseline = 'middle';
     tokens.forEach((t, idx) => {
       ctx.globalAlpha = t.opacity;
-      ctx.fillStyle = getVar(t.color) || '#82aaff';
+      ctx.fillStyle = cachedColors[t.color] || '#82aaff';
       ctx.font = `${t.size}px 'JetBrains Mono', monospace`;
       ctx.fillText(t.text, t.x, t.y);
       t.y -= t.speed;
@@ -143,7 +158,12 @@
     requestAnimationFrame(draw);
   }
 
-  requestAnimationFrame(draw);
+  // 2. Wait 50ms to ensure CSS is parsed before painting
+  setTimeout(() => {
+      updateColors();
+      requestAnimationFrame(draw);
+  }, 50);
+
 })();
 
 

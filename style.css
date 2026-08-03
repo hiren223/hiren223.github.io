@@ -146,11 +146,7 @@ body.nav-open {
   pointer-events: none;
   display: block;
 }
-.page {
-  position: relative;
-  z-index: 1;
-  padding-top: 92px;
-}
+
 
 /* ============================================================
    TOPBAR (desktop pill nav)
@@ -247,9 +243,8 @@ body.nav-open {
   gap: 5px;
   width: 34px;
   height: 34px;
-  background: var(--panel-alt);
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  background: transparent;
+  border: none;
   cursor: pointer;
   flex-shrink: 0;
   padding: 0;
@@ -442,7 +437,11 @@ body.nav-open {
 .hero {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 72px 24px 40px;
+  padding: 84px 24px 40px;
+  z-index: 1;
+  position: relative; /* Required for z-index to work */
+  background: none; /* Transparent without using the 'transparent' keyword */
+  /* Alternatively: background-color: rgba(0, 0, 0, 0); */
 }
 .hero-grid {
   display: grid;
@@ -472,7 +471,7 @@ body.nav-open {
   background: linear-gradient(90deg, var(--fn), var(--str));
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  color: transparent; /* Text gradient clip */
 }
 .hero-lede {
   color: var(--text-dim);
@@ -505,6 +504,8 @@ body.nav-open {
 .btn-outline {
   border: 1px solid var(--border);
   color: var(--text);
+ backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 .btn-outline:hover {
   border-color: var(--fn);
@@ -548,7 +549,7 @@ body.nav-open {
 /* -- HERO: all responsive rules together -- */
 @media (max-width: 1024px) {
   .hero {
-    padding: 56px 20px 32px;
+    padding: 54px 20px 32px;
   }
   .hero-grid {
     gap: 40px;
@@ -570,7 +571,7 @@ body.nav-open {
 }
 @media (max-width: 600px) {
   .hero {
-    padding: 32px 16px 24px;
+    padding: 82px 16px 24px;
   }
   .hero-lede {
     font-size: 14.5px;
@@ -1617,6 +1618,8 @@ body.nav-open {
   background: var(--panel);
   height: auto;
   padding: 0;
+  position: relative;
+  z-index: 1;
 }
 .footer-inner {
   max-width: 1200px;
@@ -1968,7 +1971,7 @@ body.nav-open {
 ============================================================ */
 .lanyard-container {
   position: relative;
-  top: -150px;
+  top: -157px;
   width: 210px;
   display: flex;
   flex-direction: column;
@@ -1980,18 +1983,20 @@ body.nav-open {
 }
 .lanyard-strap {
   width: 15px;
-  height: 100px;
+  height: 140px;
   background: var(--panel-alt);
   border: 1px solid var(--border);
   position: relative;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.05);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
+
 .lanyard-strap::before {
-  content: "hiren.dev hiren.dev ";
+  content: "hiren.dev hiren.dev hiren.dev hiren.dev hiren.dev hiren.dev hiren.dev hiren.dev";
   position: absolute;
   font-family: var(--font-mono);
   font-size: 9px;
