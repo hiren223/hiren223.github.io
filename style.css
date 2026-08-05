@@ -23,7 +23,15 @@
   --radius: 10px;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 
 /* ============================================================
    RESET & BASE
@@ -32,9 +40,20 @@
   box-sizing: border-box;
 }
 html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
   scroll-behavior: smooth;
 }
+
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+
 body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
   margin: 0;
   background: var(--bg);
   color: var(--text);
