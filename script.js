@@ -317,7 +317,13 @@ if (Form) {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: json
+        body: JSON.stringify({
+    access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c", // Make sure your access key is explicitly passed here if not in HTML
+    name: Form.name.value,
+    email: Form.email.value,
+    message: Form.message.value,
+    subject: "New Portfolio Contact Message"
+  })
       });
       const data = await res.json();
 
