@@ -307,18 +307,21 @@ if (Form) {
     showNote('sending...', 'info');
 
     try {
-      const res = await fetch('http://localhost:5000/api/contact', {
+      const formData = new FormData(Form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: Form.name.value,
-          email: Form.email.value,
-          message: Form.message.value
-        })
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
       });
       const data = await res.json();
 
-      if (data.success) {
+     if (data.success) {
         showNote("message sent — I'll get back to you soon!", 'success');
         showToast('Message sent successfully!', 'success');
         Form.reset();
