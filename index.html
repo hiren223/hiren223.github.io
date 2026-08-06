@@ -7,7 +7,7 @@
     <link
       rel="icon"
       type="image/svg+xml"
-      href="Images/photo-2.png"
+      href="Images/fav-icon.png"
       style="border-radius: 50px"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,18 +35,30 @@
     <canvas id="bg-canvas"></canvas>
 
     <!-- ================= SITE LOADER ================= -->
-    <div id="site-loader" class="site-loader">
-      <div class="loader-box">
-        <img src="Images/photo-2.png" alt="logo" class="loader-logo-img" />
-        <div class="loader-bar-track">
-          <div class="loader-bar-fill" id="loader-bar"></div>
-        </div>
-        <p class="loader-status">
-          <span class="prompt"></span> loading<span class="loader-dots"></span>
-          <span class="loader-percent" id="loader-percent">0%</span>
-        </p>
+<div id="site-loader" class="site-loader">
+  <canvas id="loaderCanvas"></canvas>
+  <div class="flash-overlay" id="flashOverlay"></div>
+
+  <div class="loader-ui">
+    <div class="loader-status">
+      <span class="prompt">&gt;</span>
+      <span class="typed" id="typedText"></span>
+      <span class="caret"></span>
+    </div>
+
+    <div class="progress-shell">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-meta">
+        <span class="loader-tag">neural sync <b id="stageLabel">initializing</b></span>
+        <span class="progress-pct"><span id="pctNum">0</span><span>%</span></span>
       </div>
     </div>
+
+    <div class="loader-tag">HIREN.DEV — DATA SCIENCE INTELLIGENCE ENGINE</div>
+  </div>
+</div>
 
     <div id="toast-container" class="toast-container"></div>
 
@@ -398,7 +410,7 @@
                       </span>
                     </span>
                     <span class="chip chip-blue" style="--lvl: 82%">
-                      <i class="devicon-numpy-plain colored"></i>NumPy
+                      <i class="devicon-numpy-plain"></i>NumPy
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -415,15 +427,7 @@
                         <span class="chip-tip-pct">85%</span>
                       </span>
                     </span>
-                    <span class="chip chip-green" style="--lvl: 78%">
-                      <i class="ri-flow-chart"></i>XGBoost
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">78%</span>
-                      </span>
-                    </span>
+              
                   </div>
                 </div>
 
@@ -457,6 +461,17 @@
                         <span class="chip-tip-pct">75%</span>
                       </span>
                     </span>
+
+                     <span class="chip chip-purple" style="--lvl: 75%">
+                      <i class="ri-bar-chart-2-line"></i>Tablue
+                      <span class="chip-tip">
+                        <span class="chip-tip-bar"
+                          ><span class="chip-tip-fill"></span
+                        ></span>
+                        <span class="chip-tip-pct">75%</span>
+                      </span>
+                    </span>
+
                   </div>
                 </div>
 
@@ -464,7 +479,7 @@
                   <span class="skill-group-title">web_dev</span>
                   <div class="chip-row">
                     <span class="chip chip-amber" style="--lvl: 100%">
-                      <i class="devicon-html5-plain colored"></i>HTML
+                      <i class="devicon-html5-plain "></i>HTML
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -474,7 +489,7 @@
                     </span>
 
                     <span class="chip chip-blue" style="--lvl: 90%">
-                      <i class="devicon-css3-plain colored"></i>CSS
+                      <i class="devicon-css3-plain "></i>CSS
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -484,8 +499,7 @@
                     </span>
 
                     <span class="chip chip-green" style="--lvl: 50%">
-                      <i class="devicon-javascript-plain colored"></i>Java
-                      Script
+                      <i class="devicon-javascript-plain "></i>Java Script
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -503,23 +517,23 @@
                         <span class="chip-tip-pct">75%</span>
                       </span>
                     </span>
-                    <span class="chip chip-purple" style="--lvl: 78%">
-                      <i class="devicon-mysql-plain"></i>MySQL
+                    <span class="chip chip-purple" style="--lvl: 60%">
+                      <i class="devicon-bootstrap-plain"></i> BootStrap
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
                         ></span>
-                        <span class="chip-tip-pct">78%</span>
+                        <span class="chip-tip-pct">60%</span>
                       </span>
                     </span>
                   </div>
                 </div>
 
                 <div class="skill-group">
-                  <span class="skill-group-title">workflow</span>
+                  <span class="skill-group-title">Tools</span>
                   <div class="chip-row">
                     <span class="chip chip-blue" style="--lvl: 88%">
-                      <i class="devicon-vscode-plain colored"></i>VS Code
+                      <i class="devicon-vscode-plain "></i> VS Code
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -528,7 +542,7 @@
                       </span>
                     </span>
                     <span class="chip chip-blue" style="--lvl: 90%">
-                      <i class="devicon-jupyter-plain colored"></i>Jupyter
+                      <i class="devicon-jupyter-plain "></i> Jupyter
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -537,7 +551,17 @@
                       </span>
                     </span>
                     <span class="chip chip-py" style="--lvl: 80%">
-                      <i class="devicon-git-plain colored"></i>Git
+                      <i class="devicon-git-plain "></i> Git
+                      <span class="chip-tip">
+                        <span class="chip-tip-bar"
+                          ><span class="chip-tip-fill"></span
+                        ></span>
+                        <span class="chip-tip-pct">80%</span>
+                      </span>
+                    </span>
+
+                     <span class="chip chip-py" style="--lvl: 80%">
+                      <i class="devicon-github-original "></i> GitHub
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
@@ -546,21 +570,12 @@
                       </span>
                     </span>
                     <span class="chip chip-amber" style="--lvl: 82%">
-                      <i class="ri-search-eye-line"></i>EDA
+                      <i class="devicon-mysql-plain "></i> MYSQL
                       <span class="chip-tip">
                         <span class="chip-tip-bar"
                           ><span class="chip-tip-fill"></span
                         ></span>
                         <span class="chip-tip-pct">82%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-green" style="--lvl: 84%">
-                      <i class="ri-tools-line"></i>Feature Engineering
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">84%</span>
                       </span>
                     </span>
                   </div>
@@ -1139,7 +1154,7 @@
                   aria-label="LinkedIn"
                   ><i class="ri-linkedin-box-fill"></i
                 ></a>
-                <a href="mailto:keraliyahiren99@gmail.com" aria-label="Email"
+                <a href="mailto:hirenkeraliya99@gmail.com" aria-label="Email"
                   ><i class="ri-mail-fill"></i
                 ></a>
                 <a href="tel:+91 63531 93330" aria-label="Phone"
