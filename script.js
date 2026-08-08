@@ -410,16 +410,16 @@ function showNote(text, type) {
   /* ================= CONSTANTS ================= */
 const COLORS = { emerald: '#10B981', cyan: '#38BDF8', purple: '#C792EA', blue: '#82AAFF' };
 const PALETTE = [COLORS.cyan, COLORS.emerald, COLORS.blue, COLORS.purple];
-  const MIN_TIME = 1200;
-  const MAX_TIME = 8000;
+  const MIN_TIME = 100;
+  const MAX_TIME = 800;
   const HANG_LIMIT = 10500;
-  const ZOOM_MS = 800;
+  const ZOOM_MS = 1000;
   const HOLD_MS = 700; // how long the finished brain stays visible before zooming
 
   const isSmall = window.innerWidth < 700;
   const NODE_COUNT = isSmall ? 160 : 320;
   const K_NEAREST = 5;
-  const TRAIL_LEN = isSmall ? 54 : 46; // long, always-visible comet tail
+  const TRAIL_LEN = isSmall ? 34 : 46; // long, always-visible comet tail
 
   function hexToRgba(hex, alpha) {
     const c = hex.replace('#', '');
