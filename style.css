@@ -1665,6 +1665,7 @@ html.is-loading body {
 }
 .footer-status-line .id-card-dot {
   flex-shrink: 0;
+  animation: blink 1.4s ease-in-out infinite alternate;
 }
 .footer-status-line.footer-muted {
   color: var(--muted);

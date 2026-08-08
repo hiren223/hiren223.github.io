@@ -407,18 +407,19 @@ function showNote(text, type) {
 
   document.documentElement.classList.add('is-loading'); // lock scroll immediately
 
-  /* ---------------- palette / constants ---------------- */
-  const COLORS = { emerald: '#10B981', cyan: '#38BDF8', purple: '#C792EA', blue: '#82AAFF' };
-  const PALETTE = [COLORS.cyan, COLORS.emerald, COLORS.blue, COLORS.purple];
-
-  const MIN_TIME = 1200;     // ms — loader never disappears faster than this
-  const MAX_TIME = 8000;     // ms — hard cap for real-progress timeline
-  const HANG_LIMIT = 10500;  // ms — absolute safety net, forces completion no matter what
-  const ZOOM_MS = 800;       // ms — final zoom-into-brain duration
+  /* ================= CONSTANTS ================= */
+const COLORS = { emerald: '#10B981', cyan: '#38BDF8', purple: '#C792EA', blue: '#82AAFF' };
+const PALETTE = [COLORS.cyan, COLORS.emerald, COLORS.blue, COLORS.purple];
+  const MIN_TIME = 1200;
+  const MAX_TIME = 8000;
+  const HANG_LIMIT = 10500;
+  const ZOOM_MS = 800;
+  const HOLD_MS = 700; // how long the finished brain stays visible before zooming
 
   const isSmall = window.innerWidth < 700;
-  const NODE_COUNT = isSmall ? 70 : 110;
-  const K_NEAREST = 3;
+  const NODE_COUNT = isSmall ? 160 : 320;
+  const K_NEAREST = 5;
+  const TRAIL_LEN = isSmall ? 54 : 46; // long, always-visible comet tail
 
   function hexToRgba(hex, alpha) {
     const c = hex.replace('#', '');
@@ -430,7 +431,7 @@ function showNote(text, type) {
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
   function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
 
-  /* ---------------- canvas setup ---------------- */
+  /* ================= CANVAS + UI REFS ================= */
   const canvas = document.getElementById('loaderCanvas');
   const ctx = canvas.getContext('2d');
   const flashOverlay = document.getElementById('flashOverlay');
@@ -445,14 +446,14 @@ function showNote(text, type) {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth; H = window.innerHeight;
     CX = W / 2; CY = H * 0.44;
-    brainR = Math.min(W, H) * 0.155;
+    brainR = Math.min(W, H) * 0.22;
     canvas.width = W * DPR; canvas.height = H * DPR;
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
   resize();
 
-  /* ---------------- real asset-load progress ---------------- */
+  /* ================= REAL ASSET-LOAD PROGRESS ================= */
   const images = Array.from(document.images || []);
   let totalTasks = images.length;
   let doneTasks = 0;
@@ -475,60 +476,34 @@ function showNote(text, type) {
   let pageReady = false;
   let displayed = 0;
 
-  const minTimeP = new Promise((r) => setTimeout(r, MIN_TIME));
-  const pageLoadedP = new Promise((r) => {
-    if (document.readyState === 'complete') r();
-    else window.addEventListener('load', r);
-  });
-  Promise.all([minTimeP, pageLoadedP]).then(() => { pageReady = true; });
+  Promise.all([
+    new Promise((r) => setTimeout(r, MIN_TIME)),
+    new Promise((r) => {
+      if (document.readyState === 'complete') r();
+      else window.addEventListener('load', r);
+    })
+  ]).then(() => { pageReady = true; });
 
   function realProgress() { return Math.min(doneTasks / totalTasks, 1); }
 
-
-  /* ---------------- anatomical brain node cloud (3D unit space) ---------------- */
-  function generateBrainPoints(count) {
+  /* ================= PERFECT SPHERE BRAIN ================= */
+  // Fibonacci sphere sampling = evenly distributed points on a perfectly round sphere
+  function generateSpherePoints(count) {
     const pts = [];
-    const hemiOffset = 0.30;
-    const cerebrumCount = Math.floor(count * 0.85);
-    let made = 0, attempts = 0;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < count; i++) {
+      const y = 1 - (i / (count - 1)) * 2; // -1..1
+      const radiusAtY = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * i;
+      const x = Math.cos(theta) * radiusAtY;
+      const z = Math.sin(theta) * radiusAtY;
 
-    while (made < cerebrumCount && attempts < cerebrumCount * 50) {
-      attempts++;
-      const side = Math.random() < 0.5 ? -1 : 1;
-      const theta = Math.acos(1 - 2 * Math.random());
-      const phi = Math.random() * Math.PI * 2;
-      let x = Math.sin(theta) * Math.cos(phi);
-      let y = Math.cos(theta);
-      let z = Math.sin(theta) * Math.sin(phi);
-
-      const rx = 0.40, ry = 0.46, rz = 0.60;
-      const frontBack = z > 0 ? 1 + 0.14 * z : 1 + 0.22 * z;
-      const gyri = 1 + 0.055 * Math.sin(phi * 7 + theta * 9) + 0.03 * Math.sin(phi * 13 - theta * 6 + 1.4);
-      const shell = 0.86 + Math.random() * 0.14;
-
-      const px = side * hemiOffset + x * rx * frontBack * gyri * shell;
-      const py = y * ry * gyri * shell;
-      const pz = z * rz * frontBack * gyri * shell;
-      if (Math.abs(px) < 0.045) continue;
-
-      let ok = true;
-      const minD = 0.09;
-      for (let i = 0; i < pts.length; i++) {
-        const dx = pts[i].x - px, dy = pts[i].y - py, dz = pts[i].z - pz;
-        if (dx * dx + dy * dy + dz * dz < minD * minD) { ok = false; break; }
-      }
-      if (!ok) continue;
-      pts.push({ x: px, y: py, z: pz, side: side < 0 ? 'left' : 'right' });
-      made++;
-    }
-
-    const stemCount = Math.max(6, count - pts.length);
-    for (let i = 0; i < stemCount; i++) {
+      const shell = 0.88 + Math.random() * 0.12; // slight shell thickness, stays round
       pts.push({
-        x: (Math.random() - 0.5) * 0.1,
-        y: -0.5 - Math.random() * 0.25,
-        z: (Math.random() - 0.5) * 0.1,
-        side: i % 2 === 0 ? 'left' : 'right'
+        x: x * shell,
+        y: y * shell,
+        z: z * shell,
+        side: x < 0 ? 'left' : 'right'
       });
     }
     return pts;
@@ -555,15 +530,15 @@ function showNote(text, type) {
     return edges;
   }
 
-  const rawPoints = generateBrainPoints(NODE_COUNT);
+  const rawPoints = generateSpherePoints(NODE_COUNT);
   const brainNodes = rawPoints.map((p) => ({
     x: p.x, y: p.y, z: p.z, side: p.side,
-    baseR: 1.6 + Math.random() * 1.8,
+    baseR: 2.6 + Math.random() * 2.6,
     phase: Math.random() * Math.PI * 2,
     speed: 0.6 + Math.random() * 0.8,
     color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
     activated: false,
-    _sx: 0, _sy: 0, _scale: 1, _z: 0
+    _sx: 0, _sy: 0, _scale: 1, _z: 0, _r: 0
   }));
   const edges = buildEdges(brainNodes, K_NEAREST);
 
@@ -588,8 +563,60 @@ function showNote(text, type) {
     }
   }
 
-  /* ---------------- incoming traveling neurons ---------------- */
+  /* ================= NODE RENDERING (small dot + tight glow) ================= */
+  function drawNodes(now, brightness) {
+    const activeOrdered = brainNodes.filter((n) => n.activated).sort((a, b) => a._z - b._z);
+    for (const n of activeOrdered) {
+      const breathe = 1 + Math.sin(now * 0.0015 * n.speed + n.phase) * 0.18;
+      const depthBright = 0.5 + ((n._z + 1) / 2) * 0.7;
+      const r = Math.max(0.9, n.baseR * n._scale * breathe);
+      n._r = r;
+
+      const glowR = r * 2.4 * brightness * depthBright;
+      const glow = ctx.createRadialGradient(n._sx, n._sy, 0, n._sx, n._sy, glowR);
+      glow.addColorStop(0, hexToRgba(n.color, 0.85 * brightness * depthBright));
+      glow.addColorStop(0.5, hexToRgba(n.color, 0.3 * brightness * depthBright));
+      glow.addColorStop(1, hexToRgba(n.color, 0));
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(n._sx, n._sy, glowR, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexToRgba(n.color, 0.95 * brightness * depthBright);
+      ctx.beginPath();
+      ctx.arc(n._sx, n._sy, r * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawEdges(now, brightness) {
+    for (const e of edges) {
+      const A = brainNodes[e.a], B = brainNodes[e.b];
+      if (!A.activated || !B.activated) continue;
+
+      const dx = B._sx - A._sx, dy = B._sy - A._sy;
+      const dist = Math.hypot(dx, dy) || 1;
+      const ux = dx / dist, uy = dy / dist;
+      const rA = (A._r || A.baseR) + 0.5;
+      const rB = (B._r || B.baseR) + 0.5;
+      if (dist <= rA + rB) continue;
+
+      const startX = A._sx + ux * rA, startY = A._sy + uy * rA;
+      const endX = B._sx - ux * rB, endY = B._sy - uy * rB;
+
+      const pulse = 0.35 + 0.4 * Math.abs(Math.sin(now * 0.0016 + e.a));
+      ctx.strokeStyle = hexToRgba(e.color, 0.1 * brightness * pulse);
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+    }
+  }
+
+  /* ================= INCOMING TRAVELERS (long, always-visible trail) ================= */
   const travelers = [];
+  const sparks = [];
   let spawnedCount = 0;
 
   function spawnNeuron(nodeIndex) {
@@ -600,15 +627,13 @@ function showNote(text, type) {
     travelers.push({
       nodeIndex,
       sx0, sy0,
-      lastX: sx0, lastY: sy0,
-      dur: 650 + Math.random() * 550,
+      dur: 750 + Math.random() * 600,
       spawnTime: performance.now() + Math.random() * 260,
       ctrlOffset: (fromLeft ? 1 : -1) * (60 + Math.random() * 90),
-      color: node.color
+      color: node.color,
+      trail: []
     });
   }
-
-  const sparks = []; // tiny arrival flashes
 
   function updateAndDrawTravelers(now, brightness) {
     for (let i = travelers.length - 1; i >= 0; i--) {
@@ -630,23 +655,37 @@ function showNote(text, type) {
       const px = omt * omt * p.sx0 + 2 * omt * ease * midX + ease * ease * tx;
       const py = omt * omt * p.sy0 + 2 * omt * ease * midY + ease * ease * ty;
 
-      // trailing streak
-      ctx.strokeStyle = hexToRgba(p.color, 0.55 * brightness);
-      ctx.lineWidth = 1.4;
-      ctx.beginPath();
-      ctx.moveTo(p.lastX, p.lastY);
-      ctx.lineTo(px, py);
-      ctx.stroke();
-      p.lastX = px; p.lastY = py;
+      // long, persistent comet trail — stays visible the whole flight
+      p.trail.push({ x: px, y: py });
+      if (p.trail.length > TRAIL_LEN) p.trail.shift();
+
+      if (p.trail.length > 1) {
+        for (let ti = 1; ti < p.trail.length; ti++) {
+          const a = p.trail[ti - 1], b = p.trail[ti];
+          const fade = ti / p.trail.length; // near head = brighter
+          ctx.strokeStyle = hexToRgba(p.color, fade * fade * 0.6 * brightness);
+          ctx.lineWidth = Math.max(0.5, fade * 2.4);
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
 
       // head glow
       const glow = ctx.createRadialGradient(px, py, 0, px, py, 7);
-      glow.addColorStop(0, hexToRgba('#FFFFFF', 0.9 * brightness));
-      glow.addColorStop(0.4, hexToRgba(p.color, 0.6 * brightness));
+      glow.addColorStop(0, hexToRgba(p.color, 0.95 * brightness));
+      glow.addColorStop(0.6, hexToRgba(p.color, 0.35 * brightness));
       glow.addColorStop(1, hexToRgba(p.color, 0));
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexToRgba(p.color, 0.95 * brightness);
+      ctx.beginPath();
+      ctx.arc(px, py, 2, 0, Math.PI * 2);
       ctx.fill();
 
       if (t >= 1) {
@@ -671,45 +710,7 @@ function showNote(text, type) {
     }
   }
 
-  /* ---------------- draw the assembled (activated) brain ---------------- */
-  function drawEdges(now, brightness) {
-    for (const e of edges) {
-      const A = brainNodes[e.a], B = brainNodes[e.b];
-      if (!A.activated || !B.activated) continue;
-      const pulse = 0.4 + 0.6 * Math.abs(Math.sin(now * 0.0016 + e.a));
-      ctx.strokeStyle = hexToRgba(e.color, 0.14 * brightness * pulse);
-      ctx.lineWidth = 0.8;
-      ctx.beginPath();
-      ctx.moveTo(A._sx, A._sy);
-      ctx.lineTo(B._sx, B._sy);
-      ctx.stroke();
-    }
-  }
-
-  function drawNodes(now, brightness) {
-    const activeOrdered = brainNodes.filter((n) => n.activated).sort((a, b) => a._z - b._z);
-    for (const n of activeOrdered) {
-      const breathe = 1 + Math.sin(now * 0.0015 * n.speed + n.phase) * 0.22;
-      const depthBright = 0.45 + ((n._z + 1) / 2) * 0.75;
-      const r = Math.max(0.6, n.baseR * n._scale * breathe);
-      const glowR = r * 5 * brightness * depthBright;
-
-      const glow = ctx.createRadialGradient(n._sx, n._sy, 0, n._sx, n._sy, glowR);
-      glow.addColorStop(0, hexToRgba(n.color, 0.55 * brightness * depthBright));
-      glow.addColorStop(1, hexToRgba(n.color, 0));
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(n._sx, n._sy, glowR, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = hexToRgba('#FFFFFF', 0.85 * brightness * depthBright);
-      ctx.beginPath();
-      ctx.arc(n._sx, n._sy, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  /* ---------------- typing status ---------------- */
+  /* ================= TYPING STATUS ================= */
   const FULL_TEXT = 'Training Intelligence...';
   let typedIdx = 0;
   (function typeStep() {
@@ -734,11 +735,12 @@ function showNote(text, type) {
     return s;
   }
 
-  /* ---------------- completion / zoom sequence ---------------- */
+  /* ================= COMPLETION: HOLD -> ZOOM -> REVEAL ================= */
   let completed = false;
   let zooming = false;
   let zoomStart = null;
   let flashFired = false;
+  let holdStart = null;
 
   function triggerZoom() {
     zooming = true;
@@ -747,7 +749,7 @@ function showNote(text, type) {
 
   function drawZoom(now) {
     const t = Math.min((now - zoomStart) / ZOOM_MS, 1);
-    const te = t * t; // accelerating, "flying toward" feel
+    const te = t * t;
     const scale = 1 + te * 70;
     const fade = Math.max(0, 1 - Math.pow(t, 1.4));
 
@@ -756,8 +758,8 @@ function showNote(text, type) {
       if (!n.activated) continue;
       const sx = CX + (n._sx - CX) * scale;
       const sy = CY + (n._sy - CY) * scale;
-      const r = Math.max(0.5, n.baseR * (1 + te * 4));
-      const glowR = r * 5 * fade;
+      const r = Math.max(0.6, n.baseR * (1 + te * 4));
+      const glowR = r * 4.5 * fade;
 
       const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
       glow.addColorStop(0, hexToRgba(n.color, 0.6 * fade));
@@ -765,8 +767,8 @@ function showNote(text, type) {
       ctx.fillStyle = glow;
       ctx.beginPath(); ctx.arc(sx, sy, glowR, 0, Math.PI * 2); ctx.fill();
 
-      ctx.fillStyle = hexToRgba('#FFFFFF', 0.9 * fade);
-      ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = hexToRgba(n.color, 0.9 * fade);
+      ctx.beginPath(); ctx.arc(sx, sy, r * 0.6, 0, Math.PI * 2); ctx.fill();
     }
 
     if (t >= 0.12 && !flashFired) {
@@ -787,24 +789,22 @@ function showNote(text, type) {
     setTimeout(() => loaderEl.remove(), 600);
   }
 
-  /* ---------------- main loop ---------------- */
+  /* ================= MAIN LOOP ================= */
   function draw(now) {
     ctx.clearRect(0, 0, W, H);
-
     const elapsed = now - startTime;
 
     if (elapsed > HANG_LIMIT && !completed) {
-      // absolute safety net — force everything to finish immediately
       brainNodes.forEach((n) => (n.activated = true));
       travelers.length = 0;
       completed = true;
       triggerZoom();
     }
 
-   if (zooming) {
-  drawZoom(now);
-  return;
-}
+    if (zooming) {
+      drawZoom(now);
+      return;
+    }
 
     const timerP = Math.min(elapsed / MAX_TIME, 1);
     const cap = pageReady ? 1 : 0.92;
@@ -826,15 +826,19 @@ function showNote(text, type) {
       spawnedCount++;
     }
 
-    drawEdges(now, brightness);
     drawNodes(now, brightness);
+    drawEdges(now, brightness);
     updateAndDrawTravelers(now, brightness);
 
     const allSpawned = spawnedCount >= NODE_COUNT;
     const allArrived = travelers.length === 0 && allSpawned;
     const minTimeElapsed = elapsed >= MIN_TIME;
+    const readyToComplete = allArrived && pageReady && displayed >= 0.999 && minTimeElapsed;
 
-    if (!completed && allArrived && pageReady && displayed >= 0.999 && minTimeElapsed) {
+    if (readyToComplete && holdStart === null) holdStart = now;
+    if (!readyToComplete) holdStart = null;
+
+    if (!completed && holdStart !== null && now - holdStart >= HOLD_MS) {
       completed = true;
       triggerZoom();
     }
@@ -845,15 +849,12 @@ function showNote(text, type) {
   requestAnimationFrame(draw);
 
   let resizeTimer = null;
-window.addEventListener('resize', () => {
-  if (completed) return;
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    resize();
-  }, 150);
-});
+  window.addEventListener('resize', () => {
+    if (completed) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 150);
+  });
 })();
-
 
 
 // ============================================================
