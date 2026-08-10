@@ -4,138 +4,127 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hiren.dev — Data Scientist</title>
-    <link rel="icon" type="image/svg+xml"  href="Images/fav-icon.png"   />
+    <link rel="icon" type="image/svg+xml" href="Images/fav-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css"
-      rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
-    
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
+    <div id="toast-container" class="toast-container"></div>
 
-      <div id="toast-container" class="toast-container"></div>
-
-      <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
+    <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
     <div class="door-system" id="doorSystem">
-      
-      <!-- 1. DOOR OVERLAY -->
-      <div class="door-loader" id="doorLoader">
-        <div class="doors-scene">
-          <div class="door-light-beam"></div>
+  <!-- 1. DOOR OVERLAY -->
+  <div class="door-loader" id="doorLoader">
+    <div class="doors-scene">
+      <div class="door-light-beam"></div>
 
-          <div class="door-half left">
-            <div class="door-face">
-              <div class="door-panel p1"></div>
-              <div class="door-panel p2"></div>
-              <div class="door-handle"></div>
+      <!-- LEFT DOOR HALF -->
+      <div class="door-half left">
+        <div class="door-face">
+          <!-- Laser Grid Lines -->
+          <div class="laser-track track-1"></div>
+          <div class="laser-track track-2"></div>
+          <div class="door-handle"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT DOOR HALF (Holographic Core Interface) -->
+      <div class="door-half right">
+        <div class="door-face">
+          <div class="laser-track track-1"></div>
+          <div class="laser-track track-2"></div>
+
+          <!-- EMBEDDED HOLOGRAPHIC REACTOR TERMINAL -->
+          <div class="reactor-terminal">
+                        
+            <div class="terminal-header">
+              <span class="status-dot"></span>
+              <span class="terminal-title">SECURITY CORE</span>
             </div>
-          </div>
 
-          <div class="door-half right">
-            <div class="door-face">
-              <div class="door-panel p1"></div>
-              <div class="door-panel p2"></div>
-              <div class="door-handle"></div>
+            <div class="password-hint-box">
+              <span class="hint-title">PASSCODE</span>
+              <span class="hint-code">3141</span>
+            </div>
 
-              <div class="lock-cluster">
-                <div class="password-hint-box">
-                  <span class="hint-title">PASSCODE</span>
-                  <span class="hint-code">2005</span>
-                </div>
-
-                <div class="keypad-container">
-                  <div class="keypad-display" id="keypadDisplay">____</div>
-                  <div class="keypad-grid">
-                    <button class="key-num" type="button">1</button>
-                    <button class="key-num" type="button">2</button>
-                    <button class="key-num" type="button">3</button>
-                    <button class="key-num" type="button">4</button>
-                    <button class="key-num" type="button">5</button>
-                    <button class="key-num" type="button">6</button>
-                    <button class="key-num" type="button">7</button>
-                    <button class="key-num" type="button">8</button>
-                    <button class="key-num" type="button">9</button>
-                    <button class="key-num clear" type="button">C</button>
-                    <button class="key-num" type="button">0</button>
-                    <button class="key-num" type="button" style="color:#10b981;">✓</button>
-                  </div>
-                </div>
+            <div class="keypad-container">
+              <div class="keypad-display" id="keypadDisplay">____</div>
+              <div class="keypad-grid">
+                <button class="key-num" type="button">1</button>
+                <button class="key-num" type="button">2</button>
+                <button class="key-num" type="button">3</button>
+                <button class="key-num" type="button">4</button>
+                <button class="key-num" type="button">5</button>
+                <button class="key-num" type="button">6</button>
+                <button class="key-num" type="button">7</button>
+                <button class="key-num" type="button">8</button>
+                <button class="key-num" type="button">9</button>
+                <button class="key-num clear" type="button">C</button>
+                <button class="key-num" type="button">0</button>
+                <button class="key-num" type="button" style="color:var(--str);">✓</button>
               </div>
             </div>
           </div>
 
-          <div class="door-label">
-            <div class="line1">HIREN KERALIYA</div>
-          </div>
+          <div class="door-handle"></div>
         </div>
       </div>
-
-    <div class="page">
-      <!-- ================= NAV / EDITOR TOP BAR ================= -->
-      <header class="topbar">
-        <div class="topbar-inner">
-          <a href="#home" class="brand">
-            <img src="Images/photo-2.png" alt="HK logo" class="brand-logo" />
-            <span class="footer-logo">HK<span class="id-cursor">.</span></span>
-          </a>
-
-          <nav class="tabs" id="nav-tabs">
-            <span class="tab-slider" id="tab-slider"></span>
-            <a href="#home" class="tab active" data-tab="home"> home.py </a>
-            <a href="#about" class="tab" data-tab="about"> about.md </a>
-            <a href="#experience" class="tab" data-tab="experience">
-              experience.log
-            </a>
-            <a href="#projects" class="tab" data-tab="projects"> projects/ </a>
-            <a href="#certs" class="tab" data-tab="certs"> certs.json </a>
-            <a href="#contact" class="tab" data-tab="contact"> contact.sh </a>
-          </nav>
-
-          <button
-            class="nav-burger"
-            id="nav-burger"
-            aria-label="Toggle menu"
-            aria-expanded="false"
-          >
-            <span></span><span></span><span></span>
-          </button>
-
-          <div class="sky-clock-pill" id="skyClockPill" title="Real-time Sky Tracker">
-  <!-- Mini Sky Viewport (Sun/Moon Orbit Track) -->
-  <div class="mini-sky-viewport" id="miniSkyViewport">
-    <div class="mini-stars"></div>
-    <div class="mini-celestial sun" id="miniSun"></div>
-    <div class="mini-celestial moon" id="miniMoon"></div>
+    </div>
   </div>
 
-  <!-- Time Display (HH:MM AM/PM) -->
-  <span class="clock-text" id="clock">00:00 AM</span>
+      <div class="page">
+        <!-- ================= NAV / EDITOR TOP BAR ================= -->
+        <header class="topbar">
+          <div class="topbar-inner">
+            <a href="#home" class="brand">
+              <img src="Images/photo-2.png" alt="HK logo" class="brand-logo" />
+              <span class="footer-logo">HK<span class="id-cursor">.</span></span>
+            </a>
 
-  <!-- Hover Status Badge -->
-  <span class="sky-status-badge" id="skyStatusBadge">DAYTIME</span>
-</div>
-        </div>
-      </header>
+            <nav class="tabs" id="nav-tabs">
+              <span class="tab-slider" id="tab-slider"></span>
+              <a href="#home" class="tab active" data-tab="home"> home.py </a>
+              <a href="#about" class="tab" data-tab="about"> about.md </a>
+              <a href="#experience" class="tab" data-tab="experience"> experience.log </a>
+              <a href="#projects" class="tab" data-tab="projects"> projects/ </a>
+              <a href="#certs" class="tab" data-tab="certs"> certs.json </a>
+              <a href="#contact" class="tab" data-tab="contact"> contact.sh </a>
+            </nav>
 
-      <!-- ================= HERO ================= -->
-      <section id="home" class="hero">
-        <div class="hero-grid">
-          <div class="editor-window hero-editor">
-            <div class="editor-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="editor-filename">hiren_keraliya.py</span>
+            <div class="sky-clock-pill" id="skyClockPill" title="Real-time Sky Tracker">
+              <div class="mini-sky-viewport" id="miniSkyViewport">
+                <div class="mini-stars"></div>
+                <div class="mini-celestial sun" id="miniSun"></div>
+                <div class="mini-celestial moon" id="miniMoon"></div>
+              </div>
+              <span class="clock-text" id="clock">00:00 AM</span>
+              <span class="sky-status-badge" id="skyStatusBadge">DAYTIME</span>
             </div>
-            <div class="editor-body">
-              <pre><code><span class="ln">1</span><span class="kw">class</span> <span class="cls">DataScientist</span>:
+
+            <button class="nav-burger" id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- ================= HERO ================= -->
+        <section id="home" class="hero">
+          <div class="hero-grid">
+            <div class="editor-window hero-editor">
+              <div class="editor-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="editor-filename">hiren_keraliya.py</span>
+              </div>
+              <div class="editor-body">
+                <pre><code><span class="ln">1</span><span class="kw">class</span> <span class="cls">DataScientist</span>:
   <span class="ln">2</span>    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>):
   <span class="ln">3</span>        <span class="var">self</span>.name = <span class="str">"Hiren Keraliya"</span>
   <span class="ln">4</span>        <span class="var">self</span>.role = <span class="str">"Data Scientist"</span>
@@ -148,1107 +137,550 @@
   <span class="ln">11</span>
   <span class="ln">12</span><span class="comment"># >>> DataScientist().say_hi()</span>
   <span class="ln">13</span><span class="output" id="typed-output"></span><span class="cursor">▌</span></code></pre>
-            </div>
-          </div>
-
-          <div class="hero-side">
-            <p class="eyebrow">
-              // BCA graduate, Silver Oak University · Data Scientist
-            </p>
-            <h1>
-              Hi, I'm Hiren.<br />
-              <span class="accent-grad">I build models</span> that make sense of
-              data.
-            </h1>
-            <p class="hero-lede">
-              Certified Data Scientist (NASSCOM Gold, 95%) with hands-on
-              experience across churn prediction, credit risk, insurance
-              analytics, epidemiology forecasting and full-stack web
-              development.
-            </p>
-
-            <div class="hero-actions">
-              <a href="#projects" class="btn btn-primary">View Projects →</a>
-              <a href="#contact" class="btn btn-outline">Get in Touch</a>
-              <a
-                href="HirenKeraliya_cv.pdf"
-                download
-                class="btn btn-outline btn-cv"
-              >
-                <i class="ri-download-2-line"></i> Download CV</a
-              >
+              </div>
             </div>
 
-            <div class="hero-stats">
-              <div class="stat">
-                <span class="stat-num">5+</span>
-                <span class="stat-label">Projects</span>
+            <div class="hero-side">
+              <p class="eyebrow">// BCA graduate, Silver Oak University · Data Scientist</p>
+              <h1>
+                Hi, I'm Hiren.<br />
+                <span class="accent-grad">I build models</span> that make sense of data.
+              </h1>
+              <p class="hero-lede">
+                Certified Data Scientist (NASSCOM Gold, 95%) with hands-on
+                experience across churn prediction, credit risk, insurance
+                analytics, epidemiology forecasting and full-stack web
+                development.
+              </p>
+
+              <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary">View Projects →</a>
+                <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                <a href="HirenKeraliya_cv.pdf" download class="btn btn-outline btn-cv">
+                  <i class="ri-download-2-line"></i> Download CV
+                </a>
               </div>
-              <div class="stat">
-                <span class="stat-num">3</span>
-                <span class="stat-label">Certifications</span>
-              </div>
-              <div class="stat">
-                <span class="stat-num">6</span>
-                <span class="stat-label">mo. Internship</span>
+
+              <div class="hero-stats">
+                <div class="stat">
+                  <span class="stat-num">5+</span>
+                  <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-num">3</span>
+                  <span class="stat-label">Certifications</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-num">6</span>
+                  <span class="stat-label">mo. Internship</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="scroll-cue">scroll ↓</div>
-      </section>
+          <div class="scroll-cue">scroll ↓</div>
+        </section>
 
-      <!-- ================= ABOUT ================= -->
-      <section id="about" class="section">
-        <div class="section-head reveal" data-delay="0">
-          <span class="tag-line"># about.md</span>
-          <h2>About Me</h2>
-        </div>
+        <!-- ================= ABOUT ================= -->
+        <section id="about" class="section">
+          <div class="section-head reveal" data-delay="0">
+            <span class="tag-line"># about.md</span>
+            <h2>About Me</h2>
+          </div>
 
-        <div class="about-grid">
-          <!-- ID Card / Lanyard -->
-          <div class="about-id-col reveal" data-delay="0">
-            <div class="lanyard-container">
-              <div class="lanyard-strap"></div>
-              <div class="breakaway-clip"></div>
-              <div class="metal-hook"></div>
-              <div class="id-card-holder">
-                <div class="card-slot"></div>
-                <div class="id-card-content">
-                  <div class="id-card-top">
-                    <span class="id-card-logo"
-                      >HK<span class="id-cursor">_</span></span
-                    >
-                    <span class="id-card-badge">
-                      <i class="ri-checkbox-circle-fill"></i> verified
-                    </span>
+          <div class="about-grid">
+            <div class="about-id-col reveal" data-delay="0">
+              <div class="lanyard-container">
+                <div class="lanyard-strap"></div>
+                <div class="breakaway-clip"></div>
+                <div class="metal-hook"></div>
+                <div class="id-card-holder">
+                  <div class="card-slot"></div>
+                  <div class="id-card-content">
+                    <div class="id-card-top">
+                      <span class="id-card-logo">HK<span class="id-cursor">_</span></span>
+                      <span class="id-card-badge"><i class="ri-checkbox-circle-fill"></i> verified</span>
+                    </div>
+                    <div class="id-photo-wrapper">
+                      <img src="Images/photo-2.png" alt="Hiren Keraliya" />
+                    </div>
+                    <div class="id-card-bottom">
+                      <span class="id-card-name">Hiren Keraliya</span>
+                      <span class="id-card-role"><span class="prompt">&gt;</span> data_scientist</span>
+                      <div class="id-card-meta">
+                        <span class="id-card-id">ID · HK-2026</span>
+                        <span class="id-card-dot"></span>
+                        <span class="id-card-status">active</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-text reveal" data-delay="1">
+              <p>
+                I am a <strong>Bachelor of Computer Applications (BCA)</strong> graduate from <strong>Silver Oak University, Ahmedabad</strong>, with a strong interest in <strong>Data Science, Machine Learning, Artificial Intelligence, and Data Analytics</strong>. I enjoy working with data to discover meaningful insights, solve real-world problems, and build predictive models.
+              </p>
+              <p>
+                During my BCA, I built a strong foundation in <strong>Web Development</strong> using <strong>HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap</strong>. As my final-year project, I co-developed <strong>Krushi Manch</strong>, a multilingual agricultural web platform that provides digital services for farmers while giving me valuable experience in full-stack development and teamwork.
+              </p>
+              <p>
+                To strengthen my technical skills, I completed a <strong>Data Science program at Datamites</strong>, where I gained hands-on experience with <strong>Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL, Statistics, Machine Learning, Data Visualization, and Exploratory Data Analysis (EDA)</strong>. I worked on real-world datasets involving data preprocessing, feature engineering, model building, hyperparameter tuning, and model evaluation.
+              </p>
+              <p>
+                My goal is to build a successful career as a <strong>Data Scientist</strong>, applying data-driven solutions to real-world challenges while continuously learning and improving my skills in <strong>Data Science, Machine Learning, and Artificial Intelligence</strong>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= EXPERIENCE ================= -->
+        <section id="experience" class="section">
+          <div class="section-head reveal" data-delay="0">
+            <span class="tag-line"># experience.log</span>
+            <h2>Experience</h2>
+            <p class="section-sub">git log --oneline --graph — the path from classroom to client work.</p>
+          </div>
+
+          <div class="exp-tabs reveal" data-delay="0">
+            <button class="exp-tab-btn active" data-tab="experience" type="button"><i class="ri-git-commit-line"></i> Experience</button>
+            <button class="exp-tab-btn" data-tab="skills" type="button"><i class="ri-code-box-line"></i> Skills</button>
+          </div>
+
+          <div class="exp-tab-panels">
+            <div class="exp-panel" data-panel="experience" style="display: block">
+              <div class="git-log">
+                <div class="commit reveal" data-delay="2">
+                  <div class="commit-marker">
+                    <span class="commit-dot"><i class="ri-graduation-cap-line"></i></span>
+                    <span class="commit-line"></span>
+                  </div>
+                  <div class="commit-body">
+                    <div class="commit-top">
+                      <span class="commit-hash">BCA</span>
+                      <span class="commit-date">2022 – 2025</span>
+                    </div>
+                    <h3>Bachelor of Computer Application</h3>
+                    <p class="commit-org">Silver Oak University, Ahmedabad</p>
+                    <p class="commit-desc">Graduated with a final-year thesis on <strong>Krushi Manch</strong>, a multilingual agricultural web platform built with a 4-person team — first hands-on experience taking a project from requirements to a deployed system.</p>
+                  </div>
+                </div>
+
+                <div class="commit reveal" data-delay="0">
+                  <div class="commit-marker">
+                    <span class="commit-dot"><i class="ri-medal-line"></i></span>
+                    <span class="commit-line"></span>
+                  </div>
+                  <div class="commit-body">
+                    <div class="commit-top">
+                      <span class="commit-hash">Certification</span>
+                      <span class="commit-date">Jun 2026</span>
+                    </div>
+                    <h3>Certified Data Scientist &amp; Data Science Foundation</h3>
+                    <p class="commit-org">NASSCOM FutureSkills Prime (Gold, 95%) · IABAC</p>
+                    <p class="commit-desc">Cleared a Government of India–aligned Data Scientist assessment with a Gold score, and earned the IABAC Data Science Foundation certification — formalising skills built during the Rubixe internship.</p>
+                  </div>
+                </div>
+
+                <div class="commit reveal" data-delay="1">
+                  <div class="commit-marker">
+                    <span class="commit-dot"><i class="ri-briefcase-4-line"></i></span>
+                    <span class="commit-line last"></span>
+                  </div>
+                  <div class="commit-body">
+                    <div class="commit-top">
+                      <span class="commit-hash">Data Science Internship</span>
+                      <span class="commit-date">Aug 2025 – Feb 2026</span>
+                    </div>
+                    <h3>Data Science Consultant Intern</h3>
+                    <p class="commit-org">Rubixe · 6-month internship</p>
+                    <p class="commit-desc">Worked across proof-of-concept and client engagements — cleaning data, engineering features, and building/evaluating classification and regression models. Delivered the Customer Churn client project plus four independent capstones (loan default, insurance claims, vaccine prediction, COVID-19 forecasting).</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-panel" data-panel="skills" style="display: none">
+              <div class="experience-skills editor-window">
+                <div class="editor-header">
+                  <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                  <span class="editor-filename">skills.json</span>
+                </div>
+                <div class="editor-body skills-body">
+                  <div class="skill-group">
+                    <span class="skill-group-title">languages_and_ml</span>
+                    <div class="chip-row">
+                      <span class="chip chip-py" style="--lvl: 90%"><i class="devicon-python-plain"></i>Python<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">90%</span></span></span>
+                      <span class="chip chip-py" style="--lvl: 90%"><i class="devicon-azuresqldatabase-plain"></i>SQL<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">90%</span></span></span>
+                      <span class="chip chip-blue" style="--lvl: 88%"><i class="devicon-pandas-plain"></i>Pandas<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">88%</span></span></span>
+                      <span class="chip chip-blue" style="--lvl: 82%"><i class="devicon-numpy-plain"></i>NumPy<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">82%</span></span></span>
+                      <span class="chip chip-green" style="--lvl: 85%"><i class="devicon-scikitlearn-plain"></i>scikit-learn<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">85%</span></span></span>
+                    </div>
                   </div>
 
-                  <div class="id-photo-wrapper">
-                    <img src="Images/photo-2.png" alt="Hiren Keraliya" />
+                  <div class="skill-group">
+                    <span class="skill-group-title">visualization</span>
+                    <div class="chip-row">
+                      <span class="chip chip-amber" style="--lvl: 80%"><i class="devicon-matplotlib-plain"></i>Matplotlib<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">80%</span></span></span>
+                      <span class="chip chip-amber" style="--lvl: 78%"><i class="ri-bar-chart-grouped-line"></i>Seaborn<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">78%</span></span></span>
+                      <span class="chip chip-purple" style="--lvl: 75%"><i class="ri-bar-chart-2-line"></i>Power BI<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">75%</span></span></span>
+                      <span class="chip chip-purple" style="--lvl: 75%"><i class="ri-bar-chart-2-line"></i>Tablue<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">75%</span></span></span>
+                    </div>
                   </div>
 
-                  <div class="id-card-bottom">
-                    <span class="id-card-name">Hiren Keraliya</span>
-                    <span class="id-card-role">
-                      <span class="prompt">&gt;</span> data_scientist
-                    </span>
-                    <div class="id-card-meta">
-                      <span class="id-card-id">ID · HK-2026</span>
-                      <span class="id-card-dot"></span>
-                      <span class="id-card-status">active</span>
+                  <div class="skill-group">
+                    <span class="skill-group-title">web_dev</span>
+                    <div class="chip-row">
+                      <span class="chip chip-amber" style="--lvl: 100%"><i class="devicon-html5-plain"></i>HTML<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">100%</span></span></span>
+                      <span class="chip chip-blue" style="--lvl: 90%"><i class="devicon-css3-plain"></i>CSS<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">90%</span></span></span>
+                      <span class="chip chip-green" style="--lvl: 50%"><i class="devicon-javascript-plain"></i>Java Script<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">50%</span></span></span>
+                      <span class="chip chip-green" style="--lvl: 75%"><i class="devicon-php-plain"></i>PHP<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">75%</span></span></span>
+                      <span class="chip chip-purple" style="--lvl: 60%"><i class="devicon-bootstrap-plain"></i>BootStrap<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">60%</span></span></span>
+                    </div>
+                  </div>
+
+                  <div class="skill-group">
+                    <span class="skill-group-title">Tools</span>
+                    <div class="chip-row">
+                      <span class="chip chip-blue" style="--lvl: 88%"><i class="devicon-vscode-plain"></i>VS Code<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">88%</span></span></span>
+                      <span class="chip chip-blue" style="--lvl: 90%"><i class="devicon-jupyter-plain"></i>Jupyter<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">90%</span></span></span>
+                      <span class="chip chip-py" style="--lvl: 80%"><i class="devicon-git-plain"></i>Git<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">80%</span></span></span>
+                      <span class="chip chip-py" style="--lvl: 80%"><i class="devicon-github-original"></i>GitHub<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">80%</span></span></span>
+                      <span class="chip chip-amber" style="--lvl: 82%"><i class="devicon-mysql-plain"></i>MYSQL<span class="chip-tip"><span class="chip-tip-bar"><span class="chip-tip-fill"></span></span><span class="chip-tip-pct">82%</span></span></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="about-text reveal" data-delay="1">
-            <p>
-              I am a
-              <strong>Bachelor of Computer Applications (BCA)</strong> graduate
-              from <strong>Silver Oak University, Ahmedabad</strong>, with a
-              strong interest in
-              <strong
-                >Data Science, Machine Learning, Artificial Intelligence, and
-                Data Analytics</strong
-              >. I enjoy working with data to discover meaningful insights,
-              solve real-world problems, and build predictive models.
-            </p>
-
-            <p>
-              During my BCA, I built a strong foundation in
-              <strong>Web Development</strong> using
-              <strong>HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap</strong>.
-              As my final-year project, I co-developed
-              <strong>Krushi Manch</strong>, a multilingual agricultural web
-              platform that provides digital services for farmers while giving
-              me valuable experience in full-stack development and teamwork.
-            </p>
-
-            <p>
-              To strengthen my technical skills, I completed a
-              <strong>Data Science program at Datamites</strong>, where I gained
-              hands-on experience with
-              <strong
-                >Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL,
-                Statistics, Machine Learning, Data Visualization, and
-                Exploratory Data Analysis (EDA)</strong
-              >. I worked on real-world datasets involving data preprocessing,
-              feature engineering, model building, hyperparameter tuning, and
-              model evaluation.
-            </p>
-
-            <p>
-              My goal is to build a successful career as a
-              <strong>Data Scientist</strong>, applying data-driven solutions to
-              real-world challenges while continuously learning and improving my
-              skills in
-              <strong
-                >Data Science, Machine Learning, and Artificial
-                Intelligence</strong
-              >.
-            </p>
+        <!-- ================= PROJECTS ================= -->
+        <section id="projects" class="section">
+          <div class="section-head reveal" data-delay="0">
+            <span class="tag-line"># projects/</span>
+            <h2>Notebook History</h2>
+            <p class="section-sub">Five executed notebooks — from a client engagement to independent capstones. Each cell shows what went in and what came out, warts included.</p>
           </div>
-        </div>
-      </section>
 
-      <!-- ================= EXPERIENCE ================= -->
-      <section id="experience" class="section">
-        <div class="section-head reveal" data-delay="0">
-          <span class="tag-line"># experience.log</span>
-          <h2>Experience</h2>
-          <p class="section-sub">
-            git log --oneline --graph — the path from classroom to client work.
-          </p>
-        </div>
-
-        <!-- ================= EXPERIENCE / SKILLS TABS ================= -->
-        <div class="exp-tabs reveal" data-delay="0">
-          <button
-            class="exp-tab-btn active"
-            data-tab="experience"
-            type="button"
-          >
-            <i class="ri-git-commit-line"></i> Experience
-          </button>
-          <button class="exp-tab-btn" data-tab="skills" type="button">
-            <i class="ri-code-box-line"></i> Skills
-          </button>
-        </div>
-
-        <div class="exp-tab-panels">
-          <!-- ===== PANEL 1: EXPERIENCE (default visible) ===== -->
-          <div class="exp-panel" data-panel="experience" style="display: block">
-            <div class="git-log">
-              <div class="commit reveal" data-delay="2">
-                <div class="commit-marker">
-                  <span class="commit-dot"
-                    ><i class="ri-graduation-cap-line"></i
-                  ></span>
-                  <span class="commit-line"></span>
-                </div>
-                <div class="commit-body">
-                  <div class="commit-top">
-                    <span class="commit-hash">BCA</span>
-                    <span class="commit-date">2022 – 2025</span>
-                  </div>
-                  <h3>Bachelor of Computer Application</h3>
-                  <p class="commit-org">Silver Oak University, Ahmedabad</p>
-                  <p class="commit-desc">
-                    Graduated with a final-year thesis on
-                    <strong>Krushi Manch</strong>, a multilingual agricultural
-                    web platform built with a 4-person team — first hands-on
-                    experience taking a project from requirements to a deployed
-                    system.
-                  </p>
+          <div class="notebook-list">
+            <article class="cell cell-web reveal" data-delay="0">
+              <div class="cell-io">
+                <span class="cell-tag tag-college"><i class="ri-graduation-cap-line"></i>GRADUATION PROJECT· COLLEGE</span>
+                <span class="cell-exec">In [1]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Krushi Manch <span class="cell-id">BCA · Silver Oak University</span></h3>
+                <p>A multilingual agricultural web platform built with a 4-person team to help farmers access reliable, region-specific crop information — over 50 crop varieties, disease guidance, a rental marketplace for equipment, and an EMI calculator. Full stack: PHP/MySQL backend, HTML/CSS/JS frontend, role-based access for farmers, buyers and admins.</p>
+                <p><span><b>Current status:</b></span> Academic / Final-Year Project — Source code restoration and debugging are currently in progress before public deployment.</p>
+                <div class="chip-row">
+                  <span class="chip chip-blue">PHP</span>
+                  <span class="chip chip-purple">MySQL</span>
+                  <span class="chip chip-green">HTML/CSS/JS</span>
                 </div>
               </div>
-
-              <div class="commit reveal" data-delay="0">
-                <div class="commit-marker">
-                  <span class="commit-dot"><i class="ri-medal-line"></i></span>
-                  <span class="commit-line"></span>
-                </div>
-                <div class="commit-body">
-                  <div class="commit-top">
-                    <span class="commit-hash">Certification</span>
-                    <span class="commit-date">Jun 2026</span>
-                  </div>
-                  <h3>
-                    Certified Data Scientist &amp; Data Science Foundation
-                  </h3>
-                  <p class="commit-org">
-                    NASSCOM FutureSkills Prime (Gold, 95%) · IABAC
-                  </p>
-                  <p class="commit-desc">
-                    Cleared a Government of India–aligned Data Scientist
-                    assessment with a Gold score, and earned the IABAC Data
-                    Science Foundation certification — formalising skills built
-                    during the Rubixe internship.
-                  </p>
+              <div class="cell-out">
+                <span class="cell-exec">Out[1]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">4</span><span class="metric-label">team members</span></div>
+                  <div class="metric"><span class="metric-val">50+</span><span class="metric-label">crop profiles</span></div>
+                  <div class="metric"><span class="metric-val">2+</span><span class="metric-label">languages supported</span></div>
                 </div>
               </div>
+            </article>
 
-              <div class="commit reveal" data-delay="1">
-                <div class="commit-marker">
-                  <span class="commit-dot"
-                    ><i class="ri-briefcase-4-line"></i
-                  ></span>
-                  <span class="commit-line last"></span>
-                </div>
-                <div class="commit-body">
-                  <div class="commit-top">
-                    <span class="commit-hash">Data Science Internship</span>
-                    <span class="commit-date">Aug 2025 – Feb 2026</span>
-                  </div>
-                  <h3>Data Science Consultant Intern</h3>
-                  <p class="commit-org">Rubixe · 6-month internship</p>
-                  <p class="commit-desc">
-                    Worked across proof-of-concept and client engagements —
-                    cleaning data, engineering features, and building/evaluating
-                    classification and regression models. Delivered the Customer
-                    Churn client project plus four independent capstones (loan
-                    default, insurance claims, vaccine prediction, COVID-19
-                    forecasting).
-                  </p>
+            <article class="cell reveal" data-delay="1">
+              <div class="cell-io">
+                <span class="cell-tag tag-client"><i class="ri-briefcase-4-line"></i> CLIENT PROJECT · INTERNSHIP</span>
+                <span class="cell-exec">In [2]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Customer Churn Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCL-0017</span></h3>
+                <p>Predicting which telecom customers are likely to churn, using tenure, contract type and billing behaviour. Built a full pipeline — cleaning, feature engineering (tenure from signup date), and classification with Logistic Regression, Decision Tree and Random Forest, using SMOTE to address heavy class imbalance.</p>
+                <div class="chip-row">
+                  <span class="chip chip-py">pandas</span>
+                  <span class="chip chip-green">scikit-learn</span>
+                  <span class="chip chip-purple">imblearn / SMOTE</span>
+                  <span class="chip chip-amber">seaborn</span>
                 </div>
               </div>
+              <div class="cell-out">
+                <span class="cell-exec">Out[2]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">79%</span><span class="metric-label">accuracy</span></div>
+                  <div class="metric metric-warn"><span class="metric-val">⚠</span><span class="metric-label">minority-class recall near 0 — imbalance still a challenge</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="cell reveal" data-delay="2">
+              <div class="cell-io">
+                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
+                <span class="cell-exec">In [3]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Home Loan Default Prediction <a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><i class="ri-share-box-line"></i></a> <span class="cell-id">PRCP-1006</span></h3>
+                <p>Predicting loan default risk from applicant and credit history data. Compared Logistic Regression, Decision Tree, Random Forest and XGBoost, tuning with GridSearchCV and evaluating on both accuracy and ROC-AUC rather than accuracy alone.</p>
+                <div class="chip-row">
+                  <span class="chip chip-py">pandas</span>
+                  <span class="chip chip-green">XGBoost</span>
+                  <span class="chip chip-blue">scikit-learn</span>
+                  <span class="chip chip-amber">seaborn</span>
+                </div>
+              </div>
+              <div class="cell-out">
+                <span class="cell-exec">Out[3]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">91.98%</span><span class="metric-label">accuracy (XGBoost)</span></div>
+                  <div class="metric"><span class="metric-val">0.761</span><span class="metric-label">ROC-AUC (best model)</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="cell reveal" data-delay="3">
+              <div class="cell-io">
+                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
+                <span class="cell-exec">In [4]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Insurance Claim Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1010</span></h3>
+                <p>Classifying likely insurance claims from a privacy-masked feature set. Trained Logistic Regression, Decision Tree, Random Forest and Gradient Boosting with SMOTE resampling — a good lesson in why accuracy alone can be misleading on imbalanced data.</p>
+                <div class="chip-row">
+                  <span class="chip chip-py">pandas</span>
+                  <span class="chip chip-green">scikit-learn</span>
+                  <span class="chip chip-purple">SMOTE</span>
+                </div>
+              </div>
+              <div class="cell-out">
+                <span class="cell-exec">Out[4]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">84.7%</span><span class="metric-label">accuracy (Logistic Regression)</span></div>
+                  <div class="metric metric-warn"><span class="metric-val">~0.50</span><span class="metric-label">ROC-AUC — high accuracy hid weak separation</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="cell reveal" data-delay="4">
+              <div class="cell-io">
+                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
+                <span class="cell-exec">In [5]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Vaccine Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1014</span></h3>
+                <p>Regression task forecasting vaccination-related figures from public health data with missing values from inconsistent regional reporting. Compared Linear Regression, Random Forest and Gradient Boosting regressors on MAE, RMSE and R².</p>
+                <div class="chip-row">
+                  <span class="chip chip-py">pandas</span>
+                  <span class="chip chip-green">scikit-learn</span>
+                  <span class="chip chip-amber">seaborn</span>
+                </div>
+              </div>
+              <div class="cell-out">
+                <span class="cell-exec">Out[5]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">R² ≈ 1.0</span><span class="metric-label">Random Forest &amp; Linear Regression</span></div>
+                  <div class="metric"><span class="metric-val">0.77</span><span class="metric-label">MAE (Random Forest)</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="cell reveal" data-delay="5">
+              <div class="cell-io">
+                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
+                <span class="cell-exec">In [6]:</span>
+              </div>
+              <div class="cell-code">
+                <h3>Johns Hopkins COVID-19 Forecasting <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1023</span></h3>
+                <p>Converted wide time-series country-level case data into global daily totals, then forecast future case counts using Linear, Ridge and Lasso Regression plus a tuned Random Forest. Time-series forecasting on cumulative counts turned out to be a much harder — and more humbling — problem than the earlier classification tasks.</p>
+                <div class="chip-row">
+                  <span class="chip chip-py">pandas</span>
+                  <span class="chip chip-blue">scikit-learn</span>
+                  <span class="chip chip-amber">matplotlib</span>
+                </div>
+              </div>
+              <div class="cell-out">
+                <span class="cell-exec">Out[6]:</span>
+                <div class="metric-row">
+                  <div class="metric"><span class="metric-val">Ridge</span><span class="metric-label">best baseline (lowest RMSE)</span></div>
+                  <div class="metric metric-warn"><span class="metric-val">R² &lt; 0</span><span class="metric-label">tuned model underfit — key lesson on time-series limits</span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ================= CERTIFICATIONS ================= -->
+        <section id="certs" class="section">
+          <div class="section-head reveal" data-delay="0">
+            <span class="tag-line"># certs.json</span>
+            <h2>Certifications</h2>
+          </div>
+
+          <div class="cert-grid">
+            <div class="cert-card reveal" data-delay="0">
+              <i class="ri-award-fill cert-icon cert-icon-gold"></i>
+              <div class="cert-badge cert-gold">GOLD · 95%</div>
+              <h3>Certified Data Scientist</h3>
+              <p class="cert-issuer">NASSCOM FutureSkills Prime · Ministry of Electronics &amp; IT, Govt. of India</p>
+              <p class="cert-date">Issued 14 Jun 2026 · ID FSP/2026/6/10294219</p>
+              <button class="cert-view-btn" onclick="openCertificate('certificates/nasscom.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
+            </div>
+
+            <div class="cert-card reveal" data-delay="1">
+              <i class="ri-shield-star-line cert-icon"></i>
+              <div class="cert-badge">FOUNDATION</div>
+              <h3>Data Science Foundation</h3>
+              <p class="cert-issuer">IABAC — International Association of Business Analytics Certification</p>
+              <p class="cert-date">Effective 04 Jun 2026 · ID IAB1120179119</p>
+              <button class="cert-view-btn" onclick="openCertificate('certificates/iabac.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
+            </div>
+
+            <div class="cert-card reveal" data-delay="3">
+              <i class="ri-award-fill cert-icon cert-icon"></i>
+              <div class="cert-badge">Deloitte.</div>
+              <h3>Data Analytics</h3>
+              <p class="cert-issuer">Deloitte Data Analytics Job Simulation</p>
+              <p class="cert-date">09 July 2026</p>
+              <button class="cert-view-btn" onclick="openCertificate('certificates/deloitte.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
+            </div>
+
+            <div class="cert-card reveal" data-delay="2">
+              <i class="ri-briefcase-4-line cert-icon"></i>
+              <div class="cert-badge">INTERNSHIP</div>
+              <h3>Data Science Consultant</h3>
+              <p class="cert-issuer">Rubixe — Disruptive Technologies at Work</p>
+              <p class="cert-date">23 Aug 2025 – 23 Feb 2026 · 6-month internship, POC &amp; client projects</p>
+              <button class="cert-view-btn" onclick="openCertificate('certificates/rubixe.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
           </div>
 
-          <!-- ===== PANEL 2: SKILLS (hidden by default) ===== -->
-          <div class="exp-panel" data-panel="skills" style="display: none">
-            <div class="experience-skills editor-window">
+          <!-- Certificate Popup -->
+          <div id="certificateModal" class="certificate-modal">
+            <div class="certificate-viewer">
+              <div class="viewer-header">
+                <h3><i class="ri-award-line"></i> Certificate Preview</h3>
+                <div class="viewer-controls">
+                  <button class="viewer-btn" id="certZoomOut" title="Zoom out"><i class="ri-subtract-line"></i></button>
+                  <span class="viewer-zoom-label" id="certZoomLabel">100%</span>
+                  <button class="viewer-btn" id="certZoomIn" title="Zoom in"><i class="ri-add-line"></i></button>
+                  <span class="viewer-divider"></span>
+                  <button class="viewer-btn" id="certPrev" title="Previous page"><i class="ri-arrow-left-s-line"></i></button>
+                  <span class="viewer-page-label" id="certPageLabel">1 / 1</span>
+                  <button class="viewer-btn" id="certNext" title="Next page"><i class="ri-arrow-right-s-line"></i></button>
+                  <span class="viewer-divider"></span>
+                  <a class="viewer-btn" id="certDownload" href="#" download title="Download"><i class="ri-download-2-line"></i></a>
+                  <button class="close-btn" onclick="closeCertificate()" title="Close"><i class="ri-close-line"></i></button>
+                </div>
+              </div>
+              <div class="viewer-canvas-wrap" id="certCanvasWrap">
+                <div class="viewer-loading" id="certLoading"><i class="ri-loader-4-line"></i> Loading certificate...</div>
+                <canvas id="certificateCanvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" class="section contact-section">
+          <div class="section-head reveal" data-delay="0">
+            <span class="tag-line"># contact.sh</span>
+            <h2>Let's Talk Data</h2>
+            <p class="section-sub">Open to internships, collaborations and anything that involves a messy dataset and a deadline.</p>
+          </div>
+
+          <div class="contact-grid">
+            <div class="editor-window contact-window reveal" data-delay="0">
               <div class="editor-header">
-                <span class="dot red"></span><span class="dot yellow"></span
-                ><span class="dot green"></span>
-                <span class="editor-filename">skills.json</span>
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="editor-filename">terminal — contact.sh</span>
               </div>
-              <div class="editor-body skills-body">
-                <div class="skill-group">
-                  <span class="skill-group-title">languages_and_ml</span>
-                  <div class="chip-row">
-                    <span class="chip chip-py" style="--lvl: 90%">
-                      <i class="devicon-python-plain"></i>Python
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">90%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-py" style="--lvl: 90%">
-                      <i class="devicon-azuresqldatabase-plain"></i>SQL
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">90%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-blue" style="--lvl: 88%">
-                      <i class="devicon-pandas-plain"></i>Pandas
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">88%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-blue" style="--lvl: 82%">
-                      <i class="devicon-numpy-plain"></i>NumPy
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">82%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-green" style="--lvl: 85%">
-                      <i class="devicon-scikitlearn-plain"></i>scikit-learn
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">85%</span>
-                      </span>
-                    </span>
-              
-                  </div>
-                </div>
+              <div class="editor-body terminal-body">
+                <p><span class="prompt">$</span> whoami</p>
+                <p class="terminal-out">hiren_keraliya · data scientist</p>
+                <p><span class="prompt">$</span> cat contact_info.txt</p>
 
-                <div class="skill-group">
-                  <span class="skill-group-title">visualization</span>
-                  <div class="chip-row">
-                    <span class="chip chip-amber" style="--lvl: 80%">
-                      <i class="devicon-matplotlib-plain"></i>Matplotlib
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">80%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-amber" style="--lvl: 78%">
-                      <i class="ri-bar-chart-grouped-line"></i>Seaborn
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">78%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-purple" style="--lvl: 75%">
-                      <i class="ri-bar-chart-2-line"></i>Power BI
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">75%</span>
-                      </span>
-                    </span>
+                <ul class="contact-links">
+                  <li><span class="contact-icon"><i class="ri-mail-fill"></i></span><a href="mailto:hirenkeraliya99@gmail.com" class="contact-val" id="contact-email">hirenkeraliya99@gmail.com</a></li>
+                  <li><span class="contact-icon"><i class="ri-phone-fill"></i></span><a href="tel:+916353193330" class="contact-val" id="contact-phone">+91 63531 93330</a></li>
+                  <li><span class="contact-icon"><i class="ri-linkedin-box-fill"></i></span><a href="https://www.linkedin.com/in/hiren-keraliya-440700259/" target="_blank" rel="noopener" class="contact-val" id="contact-linkedin">LinkedIn Profile</a></li>
+                  <li><span class="contact-icon"><i class="ri-github-fill"></i></span><a href="https://github.com/hiren223" target="_blank" rel="noopener" class="contact-val" id="contact-github">GitHub Profile</a></li>
+                </ul>
 
-                     <span class="chip chip-purple" style="--lvl: 75%">
-                      <i class="ri-bar-chart-2-line"></i>Tablue
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">75%</span>
-                      </span>
-                    </span>
-
-                  </div>
-                </div>
-
-                <div class="skill-group">
-                  <span class="skill-group-title">web_dev</span>
-                  <div class="chip-row">
-                    <span class="chip chip-amber" style="--lvl: 100%">
-                      <i class="devicon-html5-plain "></i>HTML
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">100%</span>
-                      </span>
-                    </span>
-
-                    <span class="chip chip-blue" style="--lvl: 90%">
-                      <i class="devicon-css3-plain "></i>CSS
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">90%</span>
-                      </span>
-                    </span>
-
-                    <span class="chip chip-green" style="--lvl: 50%">
-                      <i class="devicon-javascript-plain "></i>Java Script
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">50%</span>
-                      </span>
-                    </span>
-
-                    <span class="chip chip-green" style="--lvl: 75%">
-                      <i class="devicon-php-plain"></i>PHP
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">75%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-purple" style="--lvl: 60%">
-                      <i class="devicon-bootstrap-plain"></i> BootStrap
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">60%</span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="skill-group">
-                  <span class="skill-group-title">Tools</span>
-                  <div class="chip-row">
-                    <span class="chip chip-blue" style="--lvl: 88%">
-                      <i class="devicon-vscode-plain "></i> VS Code
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">88%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-blue" style="--lvl: 90%">
-                      <i class="devicon-jupyter-plain "></i> Jupyter
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">90%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-py" style="--lvl: 80%">
-                      <i class="devicon-git-plain "></i> Git
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">80%</span>
-                      </span>
-                    </span>
-
-                     <span class="chip chip-py" style="--lvl: 80%">
-                      <i class="devicon-github-original "></i> GitHub
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">80%</span>
-                      </span>
-                    </span>
-                    <span class="chip chip-amber" style="--lvl: 82%">
-                      <i class="devicon-mysql-plain "></i> MYSQL
-                      <span class="chip-tip">
-                        <span class="chip-tip-bar"
-                          ><span class="chip-tip-fill"></span
-                        ></span>
-                        <span class="chip-tip-pct">82%</span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                <p><span class="prompt">$</span> <span class="cursor">▌</span></p>
               </div>
+            </div>
+
+            <div class="editor-window contact-form-window reveal" data-delay="1">
+              <div class="editor-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="editor-filename">send_message.py</span>
+              </div>
+              <form class="editor-body contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="069cb0b8-1614-49a5-9f97-edc09efd038c" />
+                <label class="form-label"><span class="kw">name</span> =</label>
+                <input type="text" name="name" placeholder='"Your name"' required />
+                <label class="form-label"><span class="kw">email</span> =</label>
+                <input type="email" name="email" placeholder='"your@email.com"' required />
+                <label class="form-label"><span class="kw">message</span> =</label>
+                <textarea name="message" rows="5" placeholder='"Say hello, or pitch a project..."' required></textarea>
+                <button type="submit" class="btn btn-primary form-submit">send_message() →</button>
+                <p class="form-note" id="form-note"></p>
+              </form>
             </div>
           </div>
-        </div>
-      </section>
-      <!-- ============ END EXPERIENCE / SKILLS TABS ============ -->
+        </section>
 
-      <!-- ================= PROJECTS ================= -->
-      <section id="projects" class="section">
-        <div class="section-head reveal" data-delay="0">
-          <span class="tag-line"># projects/</span>
-          <h2>Notebook History</h2>
-          <p class="section-sub">
-            Five executed notebooks — from a client engagement to independent
-            capstones. Each cell shows what went in and what came out, warts
-            included.
-          </p>
-        </div>
-
-        <div class="notebook-list">
-          <!-- Project 1: Krushi Manch -->
-          <article class="cell cell-web reveal" data-delay="0">
-            <div class="cell-io">
-              <span class="cell-tag tag-college">
-                <i class="ri-graduation-cap-line"></i>GRADUATION PROJECT·
-                COLLEGE
-              </span>
-              <span class="cell-exec">In [1]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>
-                Krushi Manch
-                <span class="cell-id">BCA · Silver Oak University</span>
-              </h3>
-              <p>
-                A multilingual agricultural web platform built with a 4-person
-                team to help farmers access reliable, region-specific crop
-                information — over 50 crop varieties, disease guidance, a rental
-                marketplace for equipment, and an EMI calculator. Full stack:
-                PHP/MySQL backend, HTML/CSS/JS frontend, role-based access for
-                farmers, buyers and admins.
-              </p>
-              <p ><span><b>Current status:</b></span>
-    Academic / Final-Year Project — Source code restoration and
-    debugging are currently in progress before public deployment.
-</p>
-              <div class="chip-row">
-                <span class="chip chip-blue">PHP</span>
-                <span class="chip chip-purple">MySQL</span>
-                <span class="chip chip-green">HTML/CSS/JS</span>
-              </div>
-            </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[1]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">4</span>
-                  <span class="metric-label">team members</span>
-                </div>
-                <div class="metric">
-                  <span class="metric-val">50+</span>
-                  <span class="metric-label">crop profiles</span>
-                </div>
-                <div class="metric">
-                  <span class="metric-val">2+</span>
-                  <span class="metric-label">languages supported</span>
+        <!-- ================= FOOTER ================= -->
+        <footer class="footer">
+          <div class="footer-inner">
+            <div class="footer-top">
+              <div class="footer-brand">
+                <span class="footer-logo">HK<span class="id-cursor">_</span></span>
+                <p class="footer-tagline">Turning messy data into models that hold up.</p>
+                <div class="footer-socials">
+                  <a href="https://github.com/hiren223" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+                  <a href="https://www.linkedin.com/in/hiren-keraliya-440700259/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a>
+                  <a href="mailto:hirenkeraliya99@gmail.com" aria-label="Email"><i class="ri-mail-fill"></i></a>
+                  <a href="tel:+916353193330" aria-label="Phone"><i class="ri-phone-fill"></i></a>
                 </div>
               </div>
-               
-            </div>
-          </article>
 
-          <!-- Project 2: Customer Churn -->
-          <article class="cell reveal" data-delay="1">
-            <div class="cell-io">
-              <span class="cell-tag tag-client">
-                <i class="ri-briefcase-4-line"></i> CLIENT PROJECT · INTERNSHIP
-              </span>
-              <span class="cell-exec">In [2]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>
-                Customer Churn Prediction <span><a class="chip chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span>
-                <span class="cell-id">PRCL-0017</span> 
-              </h3>
-              <p>
-                Predicting which telecom customers are likely to churn, using
-                tenure, contract type and billing behaviour. Built a full
-                pipeline — cleaning, feature engineering (tenure from signup
-                date), and classification with Logistic Regression, Decision
-                Tree and Random Forest, using SMOTE to address heavy class
-                imbalance.
-              </p>
-              <div class="chip-row">
-                <span class="chip chip-py">pandas</span>
-                <span class="chip chip-green">scikit-learn</span>
-                <span class="chip chip-purple">imblearn / SMOTE</span>
-                <span class="chip chip-amber">seaborn</span>
+              <div class="footer-col">
+                <span class="footer-col-title"># navigate</span>
+                <a href="#home">home.py</a>
+                <a href="#about">about.md</a>
+                <a href="#experience">experience.log</a>
+                <a href="#projects">projects/</a>
               </div>
-             
-            </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[2]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">79%</span>
-                  <span class="metric-label">accuracy</span>
-                </div>
-                <div class="metric metric-warn">
-                  <span class="metric-val">⚠</span>
-                  <span class="metric-label">
-                    minority-class recall near 0 — imbalance still a challenge
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
 
-          <!-- Project 3: Home Loan Default -->
-          <article class="cell reveal" data-delay="2">
-            <div class="cell-io">
-              <span class="cell-tag tag-capstone">
-                <i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP
-              </span>
-              <span class="cell-exec">In [3]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>
-                Home Loan Default Prediction <a class="chip chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><i class="ri-share-box-line"></i></a>
-                <span class="cell-id">PRCP-1006</span>
-              </h3>
-              <p>
-                Predicting loan default risk from applicant and credit history
-                data. Compared Logistic Regression, Decision Tree, Random Forest
-                and XGBoost, tuning with GridSearchCV and evaluating on both
-                accuracy and ROC-AUC rather than accuracy alone.
-              </p>
-              <div class="chip-row">
-                <span class="chip chip-py">pandas</span>
-                <span class="chip chip-green">XGBoost</span>
-                <span class="chip chip-blue">scikit-learn</span>
-                <span class="chip chip-amber">seaborn</span>
+              <div class="footer-col">
+                <span class="footer-col-title"># more</span>
+                <a href="#certs">certs.json</a>
+                <a href="#contact">contact.sh</a>
+                <a href="HirenKeraliya_cv.pdf" download>resume.pdf</a>
               </div>
-            </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[3]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">91.98%</span>
-                  <span class="metric-label">accuracy (XGBoost)</span>
-                </div>
-                <div class="metric">
-                  <span class="metric-val">0.761</span>
-                  <span class="metric-label">ROC-AUC (best model)</span>
-                </div>
-              </div>
-               
-            </div>
-          </article>
 
-          <!-- Project 4: Insurance Claim -->
-          <article class="cell reveal" data-delay="3">
-            <div class="cell-io">
-              <span class="cell-tag tag-capstone">
-                <i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP
-              </span>
-              <span class="cell-exec">In [4]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>
-                Insurance Claim Prediction <span><a class="chip chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span>
-                <span class="cell-id">PRCP-1010</span>
-              </h3>
-              <p>
-                Classifying likely insurance claims from a privacy-masked
-                feature set. Trained Logistic Regression, Decision Tree, Random
-                Forest and Gradient Boosting with SMOTE resampling — a good
-                lesson in why accuracy alone can be misleading on imbalanced
-                data.
-              </p>
-              <div class="chip-row">
-                <span class="chip chip-py">pandas</span>
-                <span class="chip chip-green">scikit-learn</span>
-                <span class="chip chip-purple">SMOTE</span>
+              <div class="footer-col footer-terminal">
+                <span class="footer-col-title"># status</span>
+                <p class="footer-status-line"><span class="id-card-dot"></span> available for opportunities</p>
+                <p class="footer-status-line footer-muted"><span class="prompt">$</span> echo $LOCATION</p>
+                <p class="footer-status-line footer-out">Ahmedabad, India</p>
               </div>
             </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[4]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">84.7%</span>
-                  <span class="metric-label"
-                    >accuracy (Logistic Regression)</span
-                  >
-                </div>
-                <div class="metric metric-warn">
-                  <span class="metric-val">~0.50</span>
-                  <span class="metric-label">
-                    ROC-AUC — high accuracy hid weak separation
-                  </span>
-                </div>
-              </div>
-              
-            </div>
-          </article>
 
-          <!-- Project 5: Vaccine Prediction -->
-          <article class="cell reveal" data-delay="4">
-            <div class="cell-io">
-              <span class="cell-tag tag-capstone">
-                <i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP
-              </span>
-              <span class="cell-exec">In [5]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>Vaccine Prediction <span><a class="chip chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1014</span></h3>
-              <p>
-                Regression task forecasting vaccination-related figures from
-                public health data with missing values from inconsistent
-                regional reporting. Compared Linear Regression, Random Forest
-                and Gradient Boosting regressors on MAE, RMSE and R².
-              </p>
-              <div class="chip-row">
-                <span class="chip chip-py">pandas</span>
-                <span class="chip chip-green">scikit-learn</span>
-                <span class="chip chip-amber">seaborn</span>
-              </div>
-            </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[5]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">R² ≈ 1.0</span>
-                  <span class="metric-label"
-                    >Random Forest &amp; Linear Regression</span
-                  >
-                </div>
-                <div class="metric">
-                  <span class="metric-val">0.77</span>
-                  <span class="metric-label">MAE (Random Forest)</span>
-                </div>
-              </div>
-               
-            </div>
-          </article>
-
-          <!-- Project 6: COVID -->
-          <article class="cell reveal" data-delay="5">
-            <div class="cell-io">
-              <span class="cell-tag tag-capstone">
-                <i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP
-              </span>
-              <span class="cell-exec">In [6]:</span>
-            </div>
-            <div class="cell-code">
-              <h3>
-                Johns Hopkins COVID-19 Forecasting <span><a class="chip chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb" target="_blank"><i class="ri-share-box-line"></i></a>
-</span>
-                <span class="cell-id">PRCP-1023</span>
-              </h3>
-              <p>
-                Converted wide time-series country-level case data into global
-                daily totals, then forecast future case counts using Linear,
-                Ridge and Lasso Regression plus a tuned Random Forest.
-                Time-series forecasting on cumulative counts turned out to be a
-                much harder — and more humbling — problem than the earlier
-                classification tasks.
-              </p>
-              <div class="chip-row">
-                <span class="chip chip-py">pandas</span>
-                <span class="chip chip-blue">scikit-learn</span>
-                <span class="chip chip-amber">matplotlib</span>
-              </div>
-            </div>
-            <div class="cell-out">
-              <span class="cell-exec">Out[6]:</span>
-              <div class="metric-row">
-                <div class="metric">
-                  <span class="metric-val">Ridge</span>
-                  <span class="metric-label">best baseline (lowest RMSE)</span>
-                </div>
-                <div class="metric metric-warn">
-                  <span class="metric-val">R² &lt; 0</span>
-                  <span class="metric-label">
-                    tuned model underfit — key lesson on time-series limits
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ================= CERTIFICATIONS ================= -->
-      <section id="certs" class="section">
-        <div class="section-head reveal" data-delay="0">
-          <span class="tag-line"># certs.json</span>
-          <h2>Certifications</h2>
-        </div>
-
-        <div class="cert-grid">
-          <div class="cert-card reveal" data-delay="0">
-            <i class="ri-award-fill cert-icon cert-icon-gold"></i>
-            <div class="cert-badge cert-gold">GOLD · 95%</div>
-            <h3>Certified Data Scientist</h3>
-            <p class="cert-issuer">
-              NASSCOM FutureSkills Prime · Ministry of Electronics &amp; IT,
-              Govt. of India
-            </p>
-            <p class="cert-date">Issued 14 Jun 2026 · ID FSP/2026/6/10294219</p>
-            <button
-              class="cert-view-btn"
-              onclick="openCertificate('certificates/nasscom.pdf')"
-            >
-              <i class="ri-eye-line"></i> View Certificate
-            </button>
-          </div>
-
-          <div class="cert-card reveal" data-delay="1">
-            <i class="ri-shield-star-line cert-icon"></i>
-            <div class="cert-badge">FOUNDATION</div>
-            <h3>Data Science Foundation</h3>
-            <p class="cert-issuer">
-              IABAC — International Association of Business Analytics
-              Certification
-            </p>
-            <p class="cert-date">Effective 04 Jun 2026 · ID IAB1120179119</p>
-            <button
-              class="cert-view-btn"
-              onclick="openCertificate('certificates/iabac.pdf')"
-            >
-              <i class="ri-eye-line"></i> View Certificate
-            </button>
-          </div>
-
-          <div class="cert-card reveal" data-delay="3">
-            <i class="ri-award-fill cert-icon cert-icon"></i>
-            <div class="cert-badge">Deloitte.</div>
-            <h3>Data Analytics</h3>
-            <p class="cert-issuer">Deloitte Data Analytics Job Simulation</p>
-            <p class="cert-date">09 July 2026</p>
-            <button
-              class="cert-view-btn"
-              onclick="openCertificate('certificates/deloitte.pdf')"
-            >
-              <i class="ri-eye-line"></i> View Certificate
-            </button>
-          </div>
-
-          <div class="cert-card reveal" data-delay="2">
-            <i class="ri-briefcase-4-line cert-icon"></i>
-            <div class="cert-badge">INTERNSHIP</div>
-            <h3>Data Science Consultant</h3>
-            <p class="cert-issuer">Rubixe — Disruptive Technologies at Work</p>
-            <p class="cert-date">
-              23 Aug 2025 – 23 Feb 2026 · 6-month internship, POC &amp; client
-              projects
-            </p>
-            <button
-              class="cert-view-btn"
-              onclick="openCertificate('certificates/rubixe.pdf')"
-            >
-              <i class="ri-eye-line"></i> View Certificate
-            </button>
-          </div>
-        </div>
-
-        <!-- Certificate Popup -->
-        <div id="certificateModal" class="certificate-modal">
-          <div class="certificate-viewer">
-            <div class="viewer-header">
-              <h3><i class="ri-award-line"></i> Certificate Preview</h3>
-              <div class="viewer-controls">
-                <button class="viewer-btn" id="certZoomOut" title="Zoom out">
-                  <i class="ri-subtract-line"></i>
-                </button>
-                <span class="viewer-zoom-label" id="certZoomLabel">100%</span>
-                <button class="viewer-btn" id="certZoomIn" title="Zoom in">
-                  <i class="ri-add-line"></i>
-                </button>
-                <span class="viewer-divider"></span>
-                <button class="viewer-btn" id="certPrev" title="Previous page">
-                  <i class="ri-arrow-left-s-line"></i>
-                </button>
-                <span class="viewer-page-label" id="certPageLabel">1 / 1</span>
-                <button class="viewer-btn" id="certNext" title="Next page">
-                  <i class="ri-arrow-right-s-line"></i>
-                </button>
-                <span class="viewer-divider"></span>
-                <a
-                  class="viewer-btn"
-                  id="certDownload"
-                  href="#"
-                  download
-                  title="Download"
-                >
-                  <i class="ri-download-2-line"></i>
-                </a>
-                <button
-                  class="close-btn"
-                  onclick="closeCertificate()"
-                  title="Close"
-                >
-                  <i class="ri-close-line"></i>
-                </button>
-              </div>
-            </div>
-            <div class="viewer-canvas-wrap" id="certCanvasWrap">
-              <div class="viewer-loading" id="certLoading">
-                <i class="ri-loader-4-line"></i> Loading certificate...
-              </div>
-              <canvas id="certificateCanvas"></canvas>
+            <div class="footer-bottom">
+              <p class="footer-copy"><span class="prompt">$</span> whoami → hiren.dev © 2026</p>
+              <button class="footer-top-btn" id="footer-top-btn" type="button">back to top <i class="ri-arrow-up-line"></i></button>
             </div>
           </div>
-        </div>
-      </section>
-      <!-- ================= CONTACT ================= -->
-      <section id="contact" class="section contact-section">
-        <div class="section-head reveal" data-delay="0">
-          <span class="tag-line"># contact.sh</span>
-          <h2>Let's Talk Data</h2>
-          <p class="section-sub">
-            Open to internships, collaborations and anything that involves a
-            messy dataset and a deadline.
-          </p>
-        </div>
-
-        <div class="contact-grid">
-          <!-- Terminal-style contact info -->
-          <div class="editor-window contact-window reveal" data-delay="0">
-            <div class="editor-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="editor-filename">terminal — contact.sh</span>
-            </div>
-            <div class="editor-body terminal-body">
-              <p><span class="prompt">$</span> whoami</p>
-              <p class="terminal-out">hiren_keraliya · data scientist</p>
-              <p><span class="prompt">$</span> cat contact_info.txt</p>
-
-              <ul class="contact-links">
-                <li>
-                  <span class="contact-icon"><i class="ri-mail-fill"></i></span>
-                  <a
-                    href="mailto:hirenkeraliya99@gmail.com"
-                    class="contact-val"
-                    id="contact-email"
-                  >
-                    hirenkeraliya99@gmail.com
-                  </a>
-                </li>
-                <li>
-                  <span class="contact-icon"
-                    ><i class="ri-phone-fill"></i
-                  ></span>
-                  <a
-                    href="tel:+916353193330"
-                    class="contact-val"
-                    id="contact-phone"
-                  >
-                    +91 63531 93330
-                  </a>
-                </li>
-                <li>
-                  <span class="contact-icon"
-                    ><i class="ri-linkedin-box-fill"></i
-                  ></span>
-
-                  <a
-                    href="https://www.linkedin.com/in/hiren-keraliya-440700259/"
-                    target="_blank"
-                    rel="noopener"
-                    class="contact-val"
-                    id="contact-linkedin"
-                  >
-                    LinkedIn Profile
-                  </a>
-                </li>
-                <li>
-                  <span class="contact-icon"
-                    ><i class="ri-github-fill"></i
-                  ></span>
-
-                  <a
-                    href="https://github.com/hiren223"
-                    target="_blank"
-                    rel="noopener"
-                    class="contact-val"
-                    id="contact-github"
-                  >
-                    GitHub Profile
-                  </a>
-                </li>
-              </ul>
-
-              <p><span class="prompt">$</span> <span class="cursor">▌</span></p>
-            </div>
-          </div>
-
-          <!-- Contact form styled as a script -->
-          <div class="editor-window contact-form-window reveal" data-delay="1">
-            <div class="editor-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="editor-filename">send_message.py</span>
-            </div>
-            <form
-              class="editor-body contact-form"
-              id="contact-form"
-              action="https://api.web3forms.com/submit"
-              method="POST"
-            >
-              
-              <input
-                type="hidden"
-                name="access_key"
-                value="069cb0b8-1614-49a5-9f97-edc09efd038c"
-              />
-
-              <label class="form-label"><span class="kw">name</span> =</label>
-              <input
-                type="text"
-                name="name"
-                placeholder='"Your name"'
-                required
-              />
-
-              <label class="form-label"><span class="kw">email</span> =</label>
-              <input
-                type="email"
-                name="email"
-                placeholder='"your@email.com"'
-                required
-              />
-
-              <label class="form-label"
-                ><span class="kw">message</span> =</label
-              >
-              <textarea
-                name="message"
-                rows="5"
-                placeholder='"Say hello, or pitch a project..."'
-                required
-              ></textarea>
-
-              <button type="submit" class="btn btn-primary form-submit">
-                send_message() →
-              </button>
-              <p class="form-note" id="form-note"></p>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= FOOTER ================= -->
-      <!-- ================= FOOTER ================= -->
-      <footer class="footer">
-        <div class="footer-inner">
-          <div class="footer-top">
-            <div class="footer-brand">
-              <span class="footer-logo"
-                >HK<span class="id-cursor">_</span></span
-              >
-              <p class="footer-tagline">
-                Turning messy data into models that hold up.
-              </p>
-              <div class="footer-socials">
-                <a
-                  href="https://github.com/hiren223"
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="GitHub"
-                  ><i class="ri-github-fill"></i
-                ></a>
-
-                <a
-                  href="https://www.linkedin.com/in/hiren-keraliya-440700259/"
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="LinkedIn"
-                  ><i class="ri-linkedin-box-fill"></i
-                ></a>
-                <a href="mailto:hirenkeraliya99@gmail.com" aria-label="Email"
-                  ><i class="ri-mail-fill"></i
-                ></a>
-                <a href="tel:+91 63531 93330" aria-label="Phone"
-                  ><i class="ri-phone-fill"></i
-                ></a>
-              </div>
-            </div>
-
-            <div class="footer-col">
-              <span class="footer-col-title"># navigate</span>
-              <a href="#home">home.py</a>
-              <a href="#about">about.md</a>
-              <a href="#experience">experience.log</a>
-              <a href="#projects">projects/</a>
-            </div>
-
-            <div class="footer-col">
-              <span class="footer-col-title"># more</span>
-              <a href="#certs">certs.json</a>
-              <a href="#contact">contact.sh</a>
-              <a href="HirenKeraliya_cv.pdf" download>resume.pdf</a>
-            </div>
-
-            <div class="footer-col footer-terminal">
-              <span class="footer-col-title"># status</span>
-              <p class="footer-status-line">
-                <span class="id-card-dot"></span> available for opportunities
-              </p>
-              <p class="footer-status-line footer-muted">
-                <span class="prompt">$</span> echo $LOCATION
-              </p>
-              <p class="footer-status-line footer-out">Ahmedabad, India</p>
-            </div>
-          </div>
-
-          <div class="footer-bottom">
-            <p class="footer-copy">
-              <span class="prompt">$</span> whoami → hiren.dev © 2026
-            </p>
-            <button class="footer-top-btn" id="footer-top-btn" type="button">
-              back to top <i class="ri-arrow-up-line"></i>
-            </button>
-          </div>
-        </div>
-      </footer>
-      <!-- ============ END FOOTER ============ -->
+        </footer>
+      </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-      // ================= FOOTER: BACK TO TOP =================
-      document
-        .getElementById("footer-top-btn")
-        ?.addEventListener("click", () => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      // ============ END BACK TO TOP ============
+      document.getElementById("footer-top-btn")?.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     </script>
   </body>
+</html>

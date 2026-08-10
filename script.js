@@ -1,6 +1,6 @@
 // ================= DOOR LOCK LOGIC =================
 (function () {
-  const CORRECT_PASSCODE = "2005";
+  const CORRECT_PASSCODE = "3141";
   let enteredCode = "";
   let isUnlocked = false;
 
@@ -52,20 +52,17 @@
   }
 
   function beginOpening() {
-    // 1. Swing doors inward
     doorLoader.classList.add("opening");
 
-    // 2. Light ray expands, then reveal main content slowly after 600ms
     setTimeout(() => {
       if (doorSystem) doorSystem.classList.add("unlocked");
       document.body.classList.add("door-unlocked");
     }, 600);
 
-    // 3. Remove loader overlay after transition finishes
     setTimeout(() => {
       doorLoader.classList.add("hidden");
       setTimeout(() => doorLoader.remove(), 1000);
-    }, 2000);
+    }, 600);
   }
 })();
 
@@ -98,9 +95,6 @@
   items.forEach(el => observer.observe(el));
 })();
 
-
-
-
 // ============================================================
 // ANIMATED BACKGROUND
 // ============================================================
@@ -111,7 +105,6 @@
   const ctx = canvas.getContext('2d');
   let w, h, dpr;
 
-  // 1. Cache colors so we don't call getComputedStyle 60 times a second
   let cachedColors = {
     '--border': '#232b38',
     '--fn': '#10B981', 
@@ -149,7 +142,7 @@
     y: Math.random() * h,
     vx: (Math.random() - 0.5) * 0.4,
     vy: (Math.random() - 0.5) * 0.4,
-    r: Math.random() * 2 + 1.5 // Slightly larger nodes
+    r: Math.random() * 2 + 1.5
   }));
   const LINK_DIST = 150;
 
@@ -188,7 +181,7 @@
 
         if (dist < LINK_DIST) {
           ctx.strokeStyle = lineColor;
-          ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.5; // Brighter connections
+          ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.5;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -199,7 +192,7 @@
     }
 
     const nodeColor = cachedColors['--fn'];
-    ctx.globalAlpha = 0.8; // Brighter nodes
+    ctx.globalAlpha = 0.8;
     ctx.fillStyle = nodeColor;
 
     nodes.forEach(n => {
@@ -229,50 +222,18 @@
     requestAnimationFrame(draw);
   }
 
-  // 2. Wait 50ms to ensure CSS is parsed before painting
   setTimeout(() => {
-      updateColors();
-      requestAnimationFrame(draw);
+    updateColors();
+    requestAnimationFrame(draw);
   }, 50);
-
 })();
 
-
-// ============================================================
-// LIVE CLOCK (topbar)
-// ============================================================
-function updateClock() {
-  const el = document.getElementById('clock');
-  if (!el) return;
-
-  const now = new Date();
-  let hours = now.getHours();
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  
-  // Determine AM or PM
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  
-  // Convert 24-hour time to 12-hour format
-  hours = hours % 12;
-  hours = hours ? hours : 12; // The hour '0' should be '12'
-  const h = String(hours).padStart(2, '0');
-
-  // Display time format: HH:MM AM/PM
-  el.textContent = `${h}:${minutes} ${ampm}`;
-}
-
-// Initial call
-updateClock();
-
-// Update every second (1000ms) to ensure exact minute syncing without 1-min lag
-setInterval(updateClock, 1000);
-
-// ================= REAL-TIME MINI SKY & CLOCK (HH:MM AM/PM) =================
+// ================= REAL-TIME MINI SKY & CLOCK =================
 (function () {
   "use strict";
 
-  const SUNRISE = 6;  // 06:00 AM
-  const SUNSET = 18;  // 06:00 PM
+  const SUNRISE = 6;
+  const SUNSET = 18;
 
   const miniSkyViewport = document.getElementById('miniSkyViewport');
   const miniSun = document.getElementById('miniSun');
@@ -294,7 +255,6 @@ setInterval(updateClock, 1000);
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    // 1. Time string in 12-hour format (HH:MM AM/PM)
     let h12 = hours % 12;
     h12 = h12 ? h12 : 12;
     const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -303,12 +263,10 @@ setInterval(updateClock, 1000);
     
     clockEl.textContent = `${h}:${m} ${ampm}`;
 
-    // 2. Real-time decimal hour progress
     const decimalTime = hours + (minutes / 60);
     const isDaytime = decimalTime >= SUNRISE && decimalTime < SUNSET;
 
     if (isDaytime) {
-      // DAYTIME: Sun
       const dayProgress = (decimalTime - SUNRISE) / (SUNSET - SUNRISE);
       const pos = getArcCoordinates(dayProgress);
 
@@ -337,7 +295,6 @@ setInterval(updateClock, 1000);
         if (skyStatusBadge) skyStatusBadge.textContent = '☀️ DAYTIME';
       }
     } else {
-      // NIGHTTIME: Moon
       let nightProgress;
       if (decimalTime >= SUNSET) {
         nightProgress = (decimalTime - SUNSET) / (24 - SUNSET + SUNRISE);
@@ -366,9 +323,8 @@ setInterval(updateClock, 1000);
   setInterval(updateSkyAndClock, 1000);
 })();
 
-
 // ============================================================
-// TYPED OUTPUT EFFECT (hero code block)
+// TYPED OUTPUT EFFECT
 // ============================================================
 const typedText = "Hiren Keraliya | let's build something with your data.";
 const outputEl = document.getElementById('typed-output');
@@ -384,7 +340,6 @@ function typeChar() {
   }
 }
 setTimeout(typeChar, 600);
-
 
 // ============================================================
 // MOBILE NAV BURGER TOGGLE
@@ -433,23 +388,20 @@ if (navBurger && navTabs) {
   });
 }
 
-
-
-// ================= SKILL CHIP TAP-TO-SHOW (mobile) =================
-  document.querySelectorAll(".chip").forEach((chip) => {
-    chip.setAttribute("tabindex", "0"); // enables :focus-within on tap
-    chip.addEventListener("click", (e) => {
-      const alreadyOpen = chip.classList.contains("tip-open");
-      document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
-      if (!alreadyOpen) chip.classList.add("tip-open");
-    });
+// ================= SKILL CHIP TAP-TO-SHOW =================
+document.querySelectorAll(".chip").forEach((chip) => {
+  chip.setAttribute("tabindex", "0");
+  chip.addEventListener("click", (e) => {
+    const alreadyOpen = chip.classList.contains("tip-open");
+    document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
+    if (!alreadyOpen) chip.classList.add("tip-open");
   });
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".chip")) {
-      document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
-    }
-  });
-
+});
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".chip")) {
+    document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
+  }
+});
 
 // ============================================================
 // ACTIVE SECTION HIGHLIGHT
@@ -475,9 +427,8 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-
 // ============================================================
-// CONTACT FORM SUBMISSION (Vercel serverless function)
+// CONTACT FORM SUBMISSION
 // ============================================================
 const Form = document.getElementById('contact-form');
 const fNote = document.getElementById('form-note');
@@ -493,7 +444,6 @@ if (Form) {
     try {
       const formData = new FormData(Form);
       const object = Object.fromEntries(formData);
-      const json = JSON.stringify(object);
 
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -502,16 +452,16 @@ if (Form) {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-    access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c", // Make sure your access key is explicitly passed here if not in HTML
-    name: Form.name.value,
-    email: Form.email.value,
-    message: Form.message.value,
-    subject: "New Portfolio Contact Message"
-  })
+          access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c",
+          name: Form.name.value,
+          email: Form.email.value,
+          message: Form.message.value,
+          subject: "New Portfolio Contact Message"
+        })
       });
       const data = await res.json();
 
-     if (data.success) {
+      if (data.success) {
         showNote("message sent — I'll get back to you soon!", 'success');
         showToast('Message sent successfully!', 'success');
         Form.reset();
@@ -538,50 +488,48 @@ function showNote(text, type) {
   fNote.classList.add('note-visible');
 }
 
- (function () {
-    const tabBtns = document.querySelectorAll(".exp-tab-btn");
-    const panels = document.querySelectorAll(".exp-panel");
+(function () {
+  const tabBtns = document.querySelectorAll(".exp-tab-btn");
+  const panels = document.querySelectorAll(".exp-panel");
 
-    function animateSkillBars() {
-      document.querySelectorAll(".skill-bar-fill").forEach((bar) => {
-        const pct = bar.dataset.pct || "0";
-        bar.style.setProperty("--fill-pct", pct + "%");
-        bar.classList.remove("filled");
-        void bar.offsetWidth; // reflow to restart transition
-        bar.classList.add("filled");
-      });
-    }
+  function animateSkillBars() {
+    document.querySelectorAll(".skill-bar-fill").forEach((bar) => {
+      const pct = bar.dataset.pct || "0";
+      bar.style.setProperty("--fill-pct", pct + "%");
+      bar.classList.remove("filled");
+      void bar.offsetWidth;
+      bar.classList.add("filled");
+    });
+  }
 
-    tabBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const target = btn.dataset.tab;
-        if (btn.classList.contains("active")) return;
+  tabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.tab;
+      if (btn.classList.contains("active")) return;
 
-        tabBtns.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+      tabBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-        panels.forEach((panel) => {
-          if (panel.dataset.panel === target) {
-            panel.style.display = "flex";
-            panel.classList.remove("exp-panel-anim");
-            void panel.offsetWidth;
-            panel.classList.add("exp-panel-anim");
+      panels.forEach((panel) => {
+        if (panel.dataset.panel === target) {
+          panel.style.display = "flex";
+          panel.classList.remove("exp-panel-anim");
+          void panel.offsetWidth;
+          panel.classList.add("exp-panel-anim");
 
-            if (target === "skills") {
-              setTimeout(animateSkillBars, 150);
-            }
-          } else {
-            panel.style.display = "none";
+          if (target === "skills") {
+            setTimeout(animateSkillBars, 150);
           }
-        });
+        } else {
+          panel.style.display = "none";
+        }
       });
     });
-  })();
-  // ============ END EXPERIENCE / SKILLS TAB SWITCHER ============
-
+  });
+})();
 
 // ============================================================
-// CERTIFICATE VIEWER MODAL (custom PDF.js renderer)
+// CERTIFICATE VIEWER MODAL
 // ============================================================
 (function initCertificateModal() {
   const modal = document.getElementById('certificateModal');
@@ -721,5 +669,3 @@ function showToast(text, type = 'success', duration = 4000) {
   const timer = setTimeout(dismiss, duration);
   toast.addEventListener('mouseenter', () => clearTimeout(timer));
 }
-
-
