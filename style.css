@@ -535,21 +535,22 @@ a {
 }
 
 .topbar {
-  position: fixed;
+  position: fixed !important;
   top: 16px;
-  width: calc(100% - 32px);
-  max-width: 1200px;
-  margin-left: auto !important;
-  margin-right: auto !important;
   left: 0;
   right: 0;
-  z-index: 1000;
-  background: rgba(16, 21, 29, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  margin: 0 auto !important;
+  z-index: 1000 !important; /* Pinned below toast notifications */
+  background: rgba(16, 21, 29, 0.95) !important; /* Slightly darker background so text stays crisp */
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid var(--border);
   border-radius: 50px;
   box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55);
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .topbar-inner {
@@ -1793,14 +1794,15 @@ a {
 ================================================================ */
 .toast-container {
   position: fixed;
-  top: 24px;
+  top: 80px; /* Shifted down slightly so toasts don't block mobile topbar items */
   right: 24px;
-  z-index: 200;
+  z-index: 999999 !important; /* Higher stacking priority than topbar */
   display: flex;
   flex-direction: column;
   gap: 10px;
   pointer-events: none;
 }
+
 .toast {
   display: flex;
   align-items: center;
@@ -1813,7 +1815,7 @@ a {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--text);
-  box-shadow: 0 20px 50px -18px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 50px -18px rgba(0, 0, 0, 0.8);
   min-width: 260px;
   max-width: 340px;
   transform: translateX(120%);
@@ -1821,6 +1823,7 @@ a {
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1.2), opacity 0.3s ease;
   pointer-events: auto;
 }
+
 .toast.show { transform: translateX(0); opacity: 1; }
 .toast.hide { transform: translateX(120%); opacity: 0; }
 .toast-icon { font-size: 18px; flex-shrink: 0; }
@@ -1842,6 +1845,10 @@ a {
 .toast-close:hover { color: var(--text); }
 
 @media (max-width: 480px) {
-  .toast-container { left: 16px; right: 16px; top: 16px; }
+  .toast-container { 
+    left: 16px; 
+    right: 16px; 
+    top: 70px; /* Avoids covering mobile nav bar triggers */
+  }
   .toast { min-width: 0; max-width: none; }
 }

@@ -434,8 +434,9 @@ const Form = document.getElementById('contact-form');
 const fNote = document.getElementById('form-note');
 
 if (Form) {
-  // Real-time validation on blur
-  const inputs = Form.querySelectorAll('input[required], textarea[required]');
+  // Select all input and textarea elements inside the form
+  const inputs = Form.querySelectorAll('input[name="name"], input[name="email"], textarea[name="message"]');
+
   inputs.forEach((input) => {
     input.addEventListener('blur', () => validateField(input));
     input.addEventListener('input', () => clearFieldError(input));
@@ -444,7 +445,7 @@ if (Form) {
   Form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Run full form validation
+    // 1. Run full validation check before fetch call
     let isValid = true;
     inputs.forEach((input) => {
       if (!validateField(input)) {
@@ -453,13 +454,13 @@ if (Form) {
     });
 
     if (!isValid) {
-      showNote('please fix form errors above', 'error');
-      showToast('Please correct input errors', 'error');
+      showNote('please fill out all required fields correctly', 'error');
+      if (typeof showToast === 'function') showToast('Please correct input errors', 'error');
       return;
     }
 
     const submitBtn = Form.querySelector('.form-submit');
-    submitBtn.disabled = true;
+    if (submitBtn) submitBtn.disabled = true;
     showNote('sending...', 'info');
 
     try {
@@ -471,9 +472,9 @@ if (Form) {
         },
         body: JSON.stringify({
           access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c",
-          name: Form.name.value.trim(),
-          email: Form.email.value.trim(),
-          message: Form.message.value.trim(),
+          name: Form.querySelector('[name="name"]').value.trim(),
+          email: Form.querySelector('[name="email"]').value.trim(),
+          message: Form.querySelector('[name="message"]').value.trim(),
           subject: "New Portfolio Contact Message"
         })
       });
@@ -482,39 +483,42 @@ if (Form) {
 
       if (data.success) {
         showNote("message sent — I'll get back to you soon!", 'success');
-        showToast('Message sent successfully!', 'success');
+        if (typeof showToast === 'function') showToast('Message sent successfully!', 'success');
         Form.reset();
         clearAllErrors();
       } else {
-        const errText = data.error || 'submission failed — please check API key or inputs';
+        const errText = data.message || data.error || 'submission failed — please check inputs';
         showNote(errText, 'error');
-        showToast(errText, 'error');
+        if (typeof showToast === 'function') showToast(errText, 'error');
       }
     } catch (err) {
       showNote('network error — please try again', 'error');
-      showToast('network error — please try again', 'error');
+      if (typeof showToast === 'function') showToast('network error — please try again', 'error');
     } finally {
-      submitBtn.disabled = false;
+      if (submitBtn) submitBtn.disabled = false;
     }
   });
 }
 
-// Field validation helper function
+// Safer Field Validation Function
 function validateField(input) {
-  const errorEl = document.getElementById(`${input.id}-error`);
+  const val = input.value.trim();
+  const fieldName = input.name || 'Field';
   let errorMessage = '';
 
-  if (input.validity.valueMissing) {
-    errorMessage = `${input.name} is required`;
-  } else if (input.type === 'email' && !validateEmail(input.value)) {
-    errorMessage = input.dataset.error || 'Invalid email format';
-  } else if (input.validity.tooShort) {
-    errorMessage = input.dataset.error || `Must be at least ${input.minLength} characters`;
+  if (!val) {
+    errorMessage = `${fieldName} is required`;
+  } else if (input.name === 'email' && !validateEmail(val)) {
+    errorMessage = 'Please enter a valid email address';
+  } else if (input.name === 'name' && val.length < 2) {
+    errorMessage = 'Name must be at least 2 characters';
+  } else if (input.name === 'message' && val.length < 10) {
+    errorMessage = 'Message must be at least 10 characters';
   }
 
   if (errorMessage) {
     input.classList.add('input-error');
-    if (errorEl) errorEl.textContent = `>>> ${errorMessage}`;
+    showFieldError(input, errorMessage);
     return false;
   } else {
     clearFieldError(input);
@@ -526,9 +530,20 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function showFieldError(input, message) {
+  let errorEl = input.nextElementSibling;
+  if (!errorEl || !errorEl.classList.contains('field-error')) {
+    errorEl = document.getElementById(`${input.id}-error`);
+  }
+  if (errorEl) errorEl.textContent = `>>> ${message}`;
+}
+
 function clearFieldError(input) {
   input.classList.remove('input-error');
-  const errorEl = document.getElementById(`${input.id}-error`);
+  let errorEl = input.nextElementSibling;
+  if (!errorEl || !errorEl.classList.contains('field-error')) {
+    errorEl = document.getElementById(`${input.id}-error`);
+  }
   if (errorEl) errorEl.textContent = '';
 }
 
@@ -539,6 +554,7 @@ function clearAllErrors() {
 }
 
 function showNote(text, type) {
+  if (!fNote) return;
   fNote.textContent = '>>> ' + text;
   fNote.classList.remove('note-success', 'note-error', 'note-visible');
   void fNote.offsetWidth;
