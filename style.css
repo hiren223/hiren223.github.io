@@ -438,6 +438,121 @@ a {
   font-weight: 600;
   color: var(--text);
 }
+
+/* ============================================================
+   COMPACT TOPBAR SKY & CLOCK WIDGET
+============================================================ */
+.sky-clock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  padding: 4px 12px 4px 6px;
+  border-radius: 30px;
+  position: relative;
+  cursor: default;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+/* Mini Sky Window (Orbit Track) */
+.mini-sky-viewport {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top, #0284c7), var(--sky-bottom, #38bdf8));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 1.2s ease;
+  flex-shrink: 0;
+}
+
+/* Nighttime Stars Effect */
+.mini-stars {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 8px 6px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 24px 14px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 32px 5px, rgba(255,255,255,0.8), rgba(0,0,0,0));
+  opacity: var(--star-opacity, 0);
+  transition: opacity 1.2s ease;
+}
+
+/* Sun & Moon Mini Bodies */
+.mini-celestial {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.5s linear, top 0.5s linear, opacity 0.8s ease;
+  z-index: 2;
+}
+
+.mini-celestial.sun {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  box-shadow: 0 0 6px #ffd66b, 0 0 10px #ffd66b;
+}
+
+.mini-celestial.moon {
+  width: 7px;
+  height: 7px;
+  background: #e2e8f0;
+  box-shadow: 0 0 5px rgba(226, 232, 240, 0.8);
+}
+
+/* Clock Text */
+.clock-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* Tooltip Badge on Hover */
+.sky-status-badge {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--fn);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(-4px);
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.sky-clock-pill:hover .sky-status-badge {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .clock-text {
+    font-size: 11px;
+  }
+  .mini-sky-viewport {
+    width: 32px;
+    height: 18px;
+  }
+}
+
 .clock {
   font-family: var(--font-mono);
   font-size: 12px;
