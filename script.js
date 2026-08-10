@@ -267,7 +267,7 @@ updateClock();
 // Update every second (1000ms) to ensure exact minute syncing without 1-min lag
 setInterval(updateClock, 1000);
 
-// ================= REAL-TIME MINI SKY & CLOCK CONTROLLER =================
+// ================= REAL-TIME MINI SKY & CLOCK (HH:MM AM/PM) =================
 (function () {
   "use strict";
 
@@ -282,11 +282,10 @@ setInterval(updateClock, 1000);
 
   if (!miniSkyViewport || !clockEl) return;
 
-  // Arc path math: progress (0 to 1) -> x% and y% inside mini viewport
   function getArcCoordinates(progress) {
-    const angle = progress * Math.PI; // 0 to 180 degrees
-    const x = 15 + (1 - Math.cos(angle)) * 35; // 15% to 85% width
-    const y = 80 - Math.sin(angle) * 55;        // 80% to 25% height
+    const angle = progress * Math.PI;
+    const x = 15 + (1 - Math.cos(angle)) * 35;
+    const y = 80 - Math.sin(angle) * 55;
     return { x, y };
   }
 
@@ -294,24 +293,22 @@ setInterval(updateClock, 1000);
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
 
-    // 1. Time string in 12-hour format
+    // 1. Time string in 12-hour format (HH:MM AM/PM)
     let h12 = hours % 12;
     h12 = h12 ? h12 : 12;
     const ampm = hours >= 12 ? 'PM' : 'AM';
     const h = String(h12).padStart(2, '0');
     const m = String(minutes).padStart(2, '0');
-    const s = String(seconds).padStart(2, '0');
     
-    clockEl.textContent = `${h}:${m}:${s} ${ampm}`;
+    clockEl.textContent = `${h}:${m} ${ampm}`;
 
-    // 2. Exact decimal hour calculation (e.g. 14.5 for 2:30 PM)
-    const decimalTime = hours + (minutes / 60) + (seconds / 3600);
+    // 2. Real-time decimal hour progress
+    const decimalTime = hours + (minutes / 60);
     const isDaytime = decimalTime >= SUNRISE && decimalTime < SUNSET;
 
     if (isDaytime) {
-      // DAYTIME: Sun is active
+      // DAYTIME: Sun
       const dayProgress = (decimalTime - SUNRISE) / (SUNSET - SUNRISE);
       const pos = getArcCoordinates(dayProgress);
 
@@ -319,30 +316,28 @@ setInterval(updateClock, 1000);
       miniSun.style.top = `${pos.y}%`;
       miniSun.style.opacity = '1';
 
-      // Hide moon
       miniMoon.style.left = '50%';
       miniMoon.style.top = '130%';
       miniMoon.style.opacity = '0';
 
-      // Sky Palette States
       if (decimalTime < 8) {
         miniSkyViewport.style.setProperty('--sky-top', '#1e1b4b');
         miniSkyViewport.style.setProperty('--sky-bottom', '#f97316');
         miniSkyViewport.style.setProperty('--star-opacity', '0');
-        skyStatusBadge.textContent = '🌅 SUNRISE';
+        if (skyStatusBadge) skyStatusBadge.textContent = '🌅 SUNRISE';
       } else if (decimalTime > 16) {
         miniSkyViewport.style.setProperty('--sky-top', '#31103f');
         miniSkyViewport.style.setProperty('--sky-bottom', '#ea580c');
         miniSkyViewport.style.setProperty('--star-opacity', '0.1');
-        skyStatusBadge.textContent = '🌇 SUNSET';
+        if (skyStatusBadge) skyStatusBadge.textContent = '🌇 SUNSET';
       } else {
         miniSkyViewport.style.setProperty('--sky-top', '#0284c7');
         miniSkyViewport.style.setProperty('--sky-bottom', '#38bdf8');
         miniSkyViewport.style.setProperty('--star-opacity', '0');
-        skyStatusBadge.textContent = '☀️ DAYTIME';
+        if (skyStatusBadge) skyStatusBadge.textContent = '☀️ DAYTIME';
       }
     } else {
-      // NIGHTTIME: Moon is active
+      // NIGHTTIME: Moon
       let nightProgress;
       if (decimalTime >= SUNSET) {
         nightProgress = (decimalTime - SUNSET) / (24 - SUNSET + SUNRISE);
@@ -356,16 +351,14 @@ setInterval(updateClock, 1000);
       miniMoon.style.top = `${pos.y}%`;
       miniMoon.style.opacity = '1';
 
-      // Hide sun
       miniSun.style.left = '50%';
       miniSun.style.top = '130%';
       miniSun.style.opacity = '0';
 
-      // Night Palette
       miniSkyViewport.style.setProperty('--sky-top', '#030712');
       miniSkyViewport.style.setProperty('--sky-bottom', '#0f172a');
       miniSkyViewport.style.setProperty('--star-opacity', '0.85');
-      skyStatusBadge.textContent = '🌙 NIGHTTIME';
+      if (skyStatusBadge) skyStatusBadge.textContent = '🌙 NIGHTTIME';
     }
   }
 
