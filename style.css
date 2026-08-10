@@ -1677,6 +1677,21 @@ a {
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
+/* Input Error Styling */
+.contact-form input.input-error,
+.contact-form textarea.input-error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 8px rgba(243, 139, 168, 0.4) !important;
+}
+
+.field-error {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--danger);
+  margin-top: 2px;
+  min-height: 14px;
+  display: block;
+}
 .contact-form input::placeholder,
 .contact-form textarea::placeholder { color: var(--muted); }
 .contact-form input:focus,

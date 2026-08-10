@@ -434,17 +434,35 @@ const Form = document.getElementById('contact-form');
 const fNote = document.getElementById('form-note');
 
 if (Form) {
+  // Real-time validation on blur
+  const inputs = Form.querySelectorAll('input[required], textarea[required]');
+  inputs.forEach((input) => {
+    input.addEventListener('blur', () => validateField(input));
+    input.addEventListener('input', () => clearFieldError(input));
+  });
+
   Form.addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    // Run full form validation
+    let isValid = true;
+    inputs.forEach((input) => {
+      if (!validateField(input)) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      showNote('please fix form errors above', 'error');
+      showToast('Please correct input errors', 'error');
+      return;
+    }
 
     const submitBtn = Form.querySelector('.form-submit');
     submitBtn.disabled = true;
     showNote('sending...', 'info');
 
     try {
-      const formData = new FormData(Form);
-      const object = Object.fromEntries(formData);
-
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 
@@ -453,20 +471,22 @@ if (Form) {
         },
         body: JSON.stringify({
           access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c",
-          name: Form.name.value,
-          email: Form.email.value,
-          message: Form.message.value,
+          name: Form.name.value.trim(),
+          email: Form.email.value.trim(),
+          message: Form.message.value.trim(),
           subject: "New Portfolio Contact Message"
         })
       });
+
       const data = await res.json();
 
       if (data.success) {
         showNote("message sent — I'll get back to you soon!", 'success');
         showToast('Message sent successfully!', 'success');
         Form.reset();
+        clearAllErrors();
       } else {
-        const errText = data.error || 'something went wrong';
+        const errText = data.error || 'submission failed — please check API key or inputs';
         showNote(errText, 'error');
         showToast(errText, 'error');
       }
@@ -479,6 +499,45 @@ if (Form) {
   });
 }
 
+// Field validation helper function
+function validateField(input) {
+  const errorEl = document.getElementById(`${input.id}-error`);
+  let errorMessage = '';
+
+  if (input.validity.valueMissing) {
+    errorMessage = `${input.name} is required`;
+  } else if (input.type === 'email' && !validateEmail(input.value)) {
+    errorMessage = input.dataset.error || 'Invalid email format';
+  } else if (input.validity.tooShort) {
+    errorMessage = input.dataset.error || `Must be at least ${input.minLength} characters`;
+  }
+
+  if (errorMessage) {
+    input.classList.add('input-error');
+    if (errorEl) errorEl.textContent = `>>> ${errorMessage}`;
+    return false;
+  } else {
+    clearFieldError(input);
+    return true;
+  }
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function clearFieldError(input) {
+  input.classList.remove('input-error');
+  const errorEl = document.getElementById(`${input.id}-error`);
+  if (errorEl) errorEl.textContent = '';
+}
+
+function clearAllErrors() {
+  if (!Form) return;
+  Form.querySelectorAll('.input-error').forEach((el) => el.classList.remove('input-error'));
+  Form.querySelectorAll('.field-error').forEach((el) => (el.textContent = ''));
+}
+
 function showNote(text, type) {
   fNote.textContent = '>>> ' + text;
   fNote.classList.remove('note-success', 'note-error', 'note-visible');
@@ -487,46 +546,6 @@ function showNote(text, type) {
   if (type === 'error') fNote.classList.add('note-error');
   fNote.classList.add('note-visible');
 }
-
-(function () {
-  const tabBtns = document.querySelectorAll(".exp-tab-btn");
-  const panels = document.querySelectorAll(".exp-panel");
-
-  function animateSkillBars() {
-    document.querySelectorAll(".skill-bar-fill").forEach((bar) => {
-      const pct = bar.dataset.pct || "0";
-      bar.style.setProperty("--fill-pct", pct + "%");
-      bar.classList.remove("filled");
-      void bar.offsetWidth;
-      bar.classList.add("filled");
-    });
-  }
-
-  tabBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.tab;
-      if (btn.classList.contains("active")) return;
-
-      tabBtns.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      panels.forEach((panel) => {
-        if (panel.dataset.panel === target) {
-          panel.style.display = "flex";
-          panel.classList.remove("exp-panel-anim");
-          void panel.offsetWidth;
-          panel.classList.add("exp-panel-anim");
-
-          if (target === "skills") {
-            setTimeout(animateSkillBars, 150);
-          }
-        } else {
-          panel.style.display = "none";
-        }
-      });
-    });
-  });
-})();
 
 // ============================================================
 // CERTIFICATE VIEWER MODAL

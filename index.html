@@ -614,17 +614,47 @@
                 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
                 <span class="editor-filename">send_message.py</span>
               </div>
-              <form class="editor-body contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="069cb0b8-1614-49a5-9f97-edc09efd038c" />
-                <label class="form-label"><span class="kw">name</span> =</label>
-                <input type="text" name="name" placeholder='"Your name"' required />
-                <label class="form-label"><span class="kw">email</span> =</label>
-                <input type="email" name="email" placeholder='"your@email.com"' required />
-                <label class="form-label"><span class="kw">message</span> =</label>
-                <textarea name="message" rows="5" placeholder='"Say hello, or pitch a project..."' required></textarea>
-                <button type="submit" class="btn btn-primary form-submit">send_message() →</button>
-                <p class="form-note" id="form-note"></p>
-              </form>
+             <form class="editor-body contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+  <input type="hidden" name="access_key" value="069cb0b8-1614-49a5-9f97-edc09efd038c" />
+
+  <label class="form-label" for="name"><span class="kw">name</span> =</label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    placeholder='"Your name"'
+    required
+    minlength="2"
+    data-error="Name must be at least 2 characters"
+  />
+  <span class="field-error" id="name-error"></span>
+
+  <label class="form-label" for="email"><span class="kw">email</span> =</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    placeholder='"your@email.com"'
+    required
+    data-error="Please enter a valid email address"
+  />
+  <span class="field-error" id="email-error"></span>
+
+  <label class="form-label" for="message"><span class="kw">message</span> =</label>
+  <textarea
+    id="message"
+    name="message"
+    rows="5"
+    placeholder='"Say hello, or pitch a project..."'
+    required
+    minlength="10"
+    data-error="Message must be at least 10 characters"
+  ></textarea>
+  <span class="field-error" id="message-error"></span>
+
+  <button type="submit" class="btn btn-primary form-submit">send_message() →</button>
+  <p class="form-note" id="form-note"></p>
+</form>
             </div>
           </div>
         </section>
