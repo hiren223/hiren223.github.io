@@ -246,12 +246,26 @@ function updateClock() {
   if (!el) return;
 
   const now = new Date();
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  el.textContent = `${h}:${m}`;
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  
+  // Determine AM or PM
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  // Convert 24-hour time to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12; // The hour '0' should be '12'
+  const h = String(hours).padStart(2, '0');
+
+  // Display time format: HH:MM AM/PM
+  el.textContent = `${h}:${minutes} ${ampm}`;
 }
+
+// Initial call
 updateClock();
-setInterval(updateClock, 1000 * 30);
+
+// Update every second (1000ms) to ensure exact minute syncing without 1-min lag
+setInterval(updateClock, 1000);
 
 
 // ============================================================
