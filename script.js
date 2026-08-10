@@ -1,3 +1,74 @@
+// ================= DOOR LOCK LOGIC =================
+(function () {
+  const CORRECT_PASSCODE = "2005";
+  let enteredCode = "";
+  let isUnlocked = false;
+
+  const doorSystem = document.getElementById("doorSystem");
+  const doorLoader = document.getElementById("doorLoader");
+  const keypadDisplay = document.getElementById("keypadDisplay");
+  
+  if (!doorLoader || !keypadDisplay) return;
+
+  const keys = doorLoader.querySelectorAll(".key-num");
+
+  keys.forEach((key) => {
+    key.addEventListener("click", () => {
+      if (isUnlocked) return;
+      const val = key.textContent.trim();
+
+      if (val === "C") {
+        enteredCode = "";
+        updateDisplay();
+      } else if (val === "✓") {
+        verifyPasscode();
+      } else if (enteredCode.length < 4) {
+        enteredCode += val;
+        updateDisplay();
+        if (enteredCode.length === 4) verifyPasscode();
+      }
+    });
+  });
+
+  function updateDisplay() {
+    keypadDisplay.textContent = enteredCode ? enteredCode.padEnd(4, "_") : "____";
+  }
+
+  function verifyPasscode() {
+    if (enteredCode === CORRECT_PASSCODE) {
+      isUnlocked = true;
+      keypadDisplay.textContent = "OPEN";
+      keypadDisplay.classList.add("success");
+
+      setTimeout(beginOpening, 300);
+    } else {
+      keypadDisplay.classList.add("error");
+      setTimeout(() => {
+        enteredCode = "";
+        keypadDisplay.classList.remove("error");
+        updateDisplay();
+      }, 600);
+    }
+  }
+
+  function beginOpening() {
+    // 1. Swing doors inward
+    doorLoader.classList.add("opening");
+
+    // 2. Light ray expands, then reveal main content slowly after 600ms
+    setTimeout(() => {
+      if (doorSystem) doorSystem.classList.add("unlocked");
+      document.body.classList.add("door-unlocked");
+    }, 600);
+
+    // 3. Remove loader overlay after transition finishes
+    setTimeout(() => {
+      doorLoader.classList.add("hidden");
+      setTimeout(() => doorLoader.remove(), 1000);
+    }, 2000);
+  }
+})();
+
 // ============================================================
 // SCROLL REVEAL
 // ============================================================
@@ -537,3 +608,5 @@ function showToast(text, type = 'success', duration = 4000) {
   const timer = setTimeout(dismiss, duration);
   toast.addEventListener('mouseenter', () => clearTimeout(timer));
 }
+
+

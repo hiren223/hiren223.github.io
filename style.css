@@ -1,5 +1,5 @@
 /* ============================================================
-   TOKENS
+   TOKENS & RESET
 ============================================================ */
 :root {
   --bg: #0a0e14;
@@ -23,37 +23,23 @@
   --radius: 10px;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-
-/* ============================================================
-   RESET & BASE
-============================================================ */
 * {
   box-sizing: border-box;
 }
+
 html {
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
 }
 
-html::-webkit-scrollbar, 
+html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  display: none;
 }
 
-
 body {
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none;
   scrollbar-width: none;
   margin: 0;
   background: var(--bg);
@@ -62,20 +48,250 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background 0.25s ease, color 0.25s ease;
+  overflow: hidden !important;
 }
+
+body.door-unlocked {
+  overflow: auto !important;
+}
+
+body.nav-open {
+  overflow: hidden !important;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 ::selection {
   background: var(--kw);
   color: #0a0e14;
 }
-body.nav-open {
-  overflow: hidden;
-  height: 100vh;
-  width: 100%;
-  position: fixed;
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================================
+   DOOR SYSTEM & STICKY NAVBAR FIX
+============================================================ */
+/* HIDE PORTFOLIO CONTENT BY DEFAULT */
+.door-system .page {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  filter: brightness(0.1) blur(12px);
+  transition: filter 1.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 1.8s ease;
+}
+
+/* SHOW CONTENT WHEN UNLOCKED (CRITICAL: 'filter: none' & 'transform: none' restores sticky positioning) */
+.door-system.unlocked .page {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+/* DOOR OVERLAY STYLES */
+.door-loader {
+  position: fixed; inset: 0; z-index: 999999;
+  overflow: hidden; background: var(--bg);
+  transition: opacity 0.9s ease;
+}
+.door-loader.hidden { opacity: 0; pointer-events: none; }
+
+.doors-scene {
+  position: absolute; inset: 0;
+  perspective: 1400px; perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.door-half {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  transform-style: preserve-3d;
+  transition: transform 2.4s cubic-bezier(0.25, 1, 0.3, 1);
+  will-change: transform;
+}
+.door-half.left { left: 0; transform-origin: left center; }
+.door-half.right { left: 50%; transform-origin: right center; }
+
+/* INWARD SWING */
+.door-loader.opening .door-half.left { transform: rotateY(105deg); }
+.door-loader.opening .door-half.right { transform: rotateY(-105deg); }
+
+.door-face {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 40%),
+    linear-gradient(90deg, rgba(255,255,255,0.01), rgba(0,0,0,0.4)),
+    var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.8);
+}
+
+.door-panel {
+  position: absolute; left: 10%; right: 10%; border-radius: var(--radius);
+  background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.05), inset 0 -4px 8px rgba(0,0,0,0.6);
+}
+.door-panel.p1 { top: 8%; height: 38%; }
+.door-panel.p2 { bottom: 8%; height: 44%; }
+
+.door-handle {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 180px; border-radius: 4px;
+  background: linear-gradient(180deg, var(--border), var(--panel-alt));
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.door-half.left .door-handle { right: 24px; }
+.door-half.right .door-handle { left: 24px; }
+
+.lock-cluster {
+  position: absolute; left: 48px; top: 50%; transform: translateY(-50%);
+  display: flex; align-items: center; gap: 20px; z-index: 4;
+}
+
+.password-hint-box {
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column; gap: 4px; pointer-events: none;
+}
+.password-hint-box .hint-title { 
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; 
+  letter-spacing: 0.15em; color: var(--text-dim); 
+}
+.password-hint-box .hint-code { 
+  font-family: var(--font-mono); font-size: 16px; font-weight: 700; 
+  color: var(--fn); letter-spacing: 0.25em; 
+}
+
+.keypad-container {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; width: 140px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+}
+.keypad-display {
+  background: var(--panel-alt); border: 1px solid var(--border);
+  border-radius: 6px; height: 32px; margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.2em; color: var(--fn); transition: all 0.3s ease;
+}
+.keypad-display.error { color: var(--danger); border-color: var(--danger); }
+.keypad-display.success { color: var(--str); border-color: var(--str); box-shadow: 0 0 12px var(--str); }
+
+.keypad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.key-num {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 6px; height: 30px; color: var(--text);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.key-num:hover { background: var(--panel-alt); color: var(--fn); }
+.key-num.clear { color: var(--danger); }
+
+.door-label {
+  position: absolute; top: 7%; left: 50%; transform: translateX(-50%);
+  z-index: 3; padding: 10px 24px;
+  background: var(--panel-alt); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6); text-align: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.door-loader.opening .door-label { opacity: 0; transform: translateX(-50%) translateY(-15px); }
+.door-label .line1 { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.2em; color: var(--fn); font-weight: 700; }
+
+.door-light-beam {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 0px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 1000px 100% at 50% 50%, var(--fn) 0%, var(--str) 45%, transparent 80%);
+  opacity: 0; transition: opacity 0.8s ease, width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1; pointer-events: none; filter: blur(20px);
+}
+.door-loader.opening .door-light-beam { opacity: 0.45; width: 100vw; }
+
+@media (max-width: 768px) {
+  .lock-cluster { left: 16px; flex-direction: column; gap: 10px; }
+  .keypad-container { width: 120px; padding: 10px; position: relative;
+        top: 45px;
+        left: 32px; }
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE LOCK CLUSTER ADJUSTMENTS
+============================================================ */
+@media (max-width: 768px) {
+  /* Position the lock cluster closer to the seam on smaller screens */
+  .lock-cluster {
+    left: 12px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Make the passcode hint box smaller */
+  .password-hint-box {
+    padding: 6px 10px;
+    border-radius: 6px;
+    position: relative;
+    left: 30px;
+    top: 30px;
+  }
+  .password-hint-box .hint-title {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .password-hint-box .hint-code {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+  }
+
+  /* Make the keypad container compact */
+  .keypad-container {
+    width: 104px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  /* Make keypad display smaller */
+  .keypad-display {
+    height: 24px;
+    font-size: 11px;
+    margin-bottom: 6px;
+    letter-spacing: 0.15em;
+  }
+
+  /* Reduce key grid gaps and key button dimensions */
+  .keypad-grid {
+    gap: 4px;
+  }
+  .key-num {
+    height: 24px;
+    font-size: 10px;
+    border-radius: 4px;
+  }
+}
+
+/* Extra small devices (phones under 400px wide) */
+@media (max-width: 400px) {
+  .lock-cluster {
+    left: 6px;
+    transform: translateY(-50%) scale(0.9);
+  }
 }
 
 /* ============================================================
@@ -155,7 +371,7 @@ body.nav-open {
 }
 
 /* ============================================================
-   ANIMATED BACKGROUND + PAGE WRAPPER
+   ANIMATED BACKGROUND
 ============================================================ */
 #bg-canvas {
   position: fixed;
@@ -167,18 +383,18 @@ body.nav-open {
   display: block;
 }
 
-
 /* ============================================================
-   TOPBAR (desktop pill nav)
+   TOPBAR (STICKY NAVIGATION)
 ============================================================ */
 .topbar {
-  position: fixed;
-  top: 16px;
+  position: sticky !important;
+  top: 16px !important;
   left: 16px;
   right: 16px;
-  z-index: 50;
-  background: rgba(16, 21, 29, 0.85);
+  z-index: 1000 !important;
+  background: rgba(16, 21, 29, 0.92);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 50px;
   box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55);
@@ -287,12 +503,11 @@ body.nav-open {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* -- mobile nav backdrop (dims + blurs page behind drawer) -- */
+/* -- mobile nav backdrop -- */
 .nav-backdrop {
   display: none;
 }
 
-/* -- TOPBAR: all responsive rules for topbar/nav live HERE, together -- */
 @media (max-width: 720px) {
   .topbar-inner {
     flex-wrap: nowrap;
@@ -353,7 +568,6 @@ body.nav-open {
     border-bottom: 1px solid var(--border);
   }
 
-  /* backdrop only exists/renders on mobile */
   .nav-backdrop {
     display: block;
     position: fixed;
@@ -371,10 +585,9 @@ body.nav-open {
     pointer-events: auto;
   }
 }
-/* ============ END TOPBAR / MOBILE NAV ============ */
 
 /* ============================================================
-   EDITOR WINDOW (shared component)
+   EDITOR WINDOW
 ============================================================ */
 .editor-window {
   background: var(--panel);
@@ -459,9 +672,8 @@ body.nav-open {
   margin: 0 auto;
   padding: 84px 24px 40px;
   z-index: 1;
-  position: relative; /* Required for z-index to work */
-  background: none; /* Transparent without using the 'transparent' keyword */
-  /* Alternatively: background-color: rgba(0, 0, 0, 0); */
+  position: relative;
+  background: none;
 }
 .hero-grid {
   display: grid;
@@ -491,7 +703,7 @@ body.nav-open {
   background: linear-gradient(90deg, var(--fn), var(--str));
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* Text gradient clip */
+  color: transparent;
 }
 .hero-lede {
   color: var(--text-dim);
@@ -524,7 +736,7 @@ body.nav-open {
 .btn-outline {
   border: 1px solid var(--border);
   color: var(--text);
- backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 .btn-outline:hover {
@@ -566,7 +778,6 @@ body.nav-open {
   margin-top: 48px;
 }
 
-/* -- HERO: all responsive rules together -- */
 @media (max-width: 1024px) {
   .hero {
     padding: 54px 20px 32px;
@@ -618,10 +829,8 @@ body.nav-open {
   }
 }
 
-
-
 /* ============================================================
-   SECTIONS (generic heading wrapper used by every section)
+   SECTIONS
 ============================================================ */
 .section {
   max-width: 1200px;
@@ -658,7 +867,7 @@ body.nav-open {
 }
 
 /* ============================================================
-   ABOUT: TEXT (LEFT) + ID CARD (RIGHT)
+   ABOUT
 ============================================================ */
 .about-grid {
   display: grid;
@@ -700,20 +909,19 @@ body.nav-open {
 }
 
 /* ============================================================
-   SKILLS PANEL (shared component — used inside Experience tabs)
+   SKILLS PANEL & CHIPS
 ============================================================ */
-
 .experience-skills {
-  width: 120%;
+  width: 100%;
   max-width: 640px;
-  margin: 0 auto; /* centers the whole panel under the tab buttons */
+  margin: 0 auto;
 }
 
 .skills-body {
   display: flex;
   flex-direction: column;
   gap: 26px;
-  align-items: center; /* center each skill-group as a block */
+  align-items: center;
 }
 
 .skill-group {
@@ -741,7 +949,6 @@ body.nav-open {
   background: var(--border);
 }
 
-
 .chip {
   display: inline-flex;
   justify-content: center;
@@ -754,6 +961,8 @@ body.nav-open {
   border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--panel-alt);
+  position: relative;
+  overflow: visible;
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -776,18 +985,6 @@ body.nav-open {
 .chip-green { color: var(--str); border-color: rgba(166, 227, 161, 0.3); }
 .chip-amber { color: var(--num); border-color: rgba(245, 169, 127, 0.3); }
 .chip-purple { color: var(--kw); border-color: rgba(199, 146, 234, 0.3); }
-
-@media (max-width: 600px) {
-  .skills-body {
-    gap: 16px;
-  }
-}
-
-/* ================= SKILL CHIP HOVER GRAPH ================= */
-.chip {
-  position: relative;
-  overflow: visible;
-}
 
 .chip-tip {
   position: absolute;
@@ -813,13 +1010,11 @@ body.nav-open {
   z-index: 20;
 }
 
-/* little arrow pointing down to the chip */
 .chip-tip::after {
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
   width: 8px;
   height: 8px;
   background: var(--panel);
@@ -829,7 +1024,8 @@ body.nav-open {
 }
 
 .chip:hover .chip-tip,
-.chip:focus-within .chip-tip {
+.chip:focus-within .chip-tip,
+.chip.tip-open .chip-tip {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
@@ -856,7 +1052,8 @@ body.nav-open {
 }
 
 .chip:hover .chip-tip-fill,
-.chip:focus-within .chip-tip-fill {
+.chip:focus-within .chip-tip-fill,
+.chip.tip-open .chip-tip-fill {
   width: var(--lvl);
 }
 
@@ -869,6 +1066,9 @@ body.nav-open {
 }
 
 @media (max-width: 600px) {
+  .skills-body {
+    gap: 16px;
+  }
   .chip-tip {
     min-width: 100px;
     padding: 6px 8px;
@@ -876,21 +1076,10 @@ body.nav-open {
   .chip-tip-bar {
     width: 54px;
   }
-  .chip{
+  .chip {
     margin: 0.2rem;
   }
-
-  /* show tooltip when tapped on mobile */
-.chip.tip-open .chip-tip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
 }
-.chip.tip-open .chip-tip-fill {
-  width: var(--lvl);
-}
-}
-/* ============ END SKILL CHIP HOVER GRAPH ============ */
 
 /* ============================================================
    PROJECTS / NOTEBOOK CELLS
@@ -1022,7 +1211,7 @@ body.nav-open {
 }
 
 /* ============================================================
-   CERTIFICATE VIEW BUTTON + MODAL VIEWER
+   CERTIFICATE MODAL VIEWER
 ============================================================ */
 .cert-view-btn {
   display: inline-flex;
@@ -1646,15 +1835,6 @@ body.nav-open {
 .exp-panel-anim {
   animation: expPanelIn 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
-.experience-skills {
-  width: 100%;
-  max-width: 640px;
-}
-/* NOTE: legacy grid layout kept for backward compatibility if re-enabled */
-.experience-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-}
 
 @media (max-width: 600px) {
   .exp-tabs {
@@ -1667,21 +1847,9 @@ body.nav-open {
     font-size: 12px;
   }
 }
-@media (max-width: 860px) {
-  .experience-grid {
-    grid-template-columns: 1fr;
-  }
-  .experience-skills {
-    position: static;
-    order: 1;
-  }
-  .git-log {
-    order: 2;
-  }
-}
 
 /* ============================================================
-   EXPERIENCE / GIT LOG (timeline)
+   EXPERIENCE / GIT LOG
 ============================================================ */
 .commit {
   display: grid;
@@ -2028,6 +2196,7 @@ body.nav-open {
 .id-card-status {
   color: var(--str);
 }
+
 @keyframes lanyardDrop {
   0% { transform: translateY(-120vh) rotate(0deg); opacity: 0; }
   50% { opacity: 1; }

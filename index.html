@@ -15,11 +15,67 @@
     <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css"
       rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
+    
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
 
       <div id="toast-container" class="toast-container"></div>
+
+      <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
+    <div class="door-system" id="doorSystem">
+      
+      <!-- 1. DOOR OVERLAY -->
+      <div class="door-loader" id="doorLoader">
+        <div class="doors-scene">
+          <div class="door-light-beam"></div>
+
+          <div class="door-half left">
+            <div class="door-face">
+              <div class="door-panel p1"></div>
+              <div class="door-panel p2"></div>
+              <div class="door-handle"></div>
+            </div>
+          </div>
+
+          <div class="door-half right">
+            <div class="door-face">
+              <div class="door-panel p1"></div>
+              <div class="door-panel p2"></div>
+              <div class="door-handle"></div>
+
+              <div class="lock-cluster">
+                <div class="password-hint-box">
+                  <span class="hint-title">PASSCODE</span>
+                  <span class="hint-code">2005</span>
+                </div>
+
+                <div class="keypad-container">
+                  <div class="keypad-display" id="keypadDisplay">____</div>
+                  <div class="keypad-grid">
+                    <button class="key-num" type="button">1</button>
+                    <button class="key-num" type="button">2</button>
+                    <button class="key-num" type="button">3</button>
+                    <button class="key-num" type="button">4</button>
+                    <button class="key-num" type="button">5</button>
+                    <button class="key-num" type="button">6</button>
+                    <button class="key-num" type="button">7</button>
+                    <button class="key-num" type="button">8</button>
+                    <button class="key-num" type="button">9</button>
+                    <button class="key-num clear" type="button">C</button>
+                    <button class="key-num" type="button">0</button>
+                    <button class="key-num" type="button" style="color:#10b981;">✓</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="door-label">
+            <div class="line1">HIREN KERALIYA</div>
+          </div>
+        </div>
+      </div>
 
     <div class="page">
       <!-- ================= NAV / EDITOR TOP BAR ================= -->
