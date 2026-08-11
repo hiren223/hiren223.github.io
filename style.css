@@ -543,7 +543,7 @@ a {
   max-width: 1200px;
   margin: 0 auto !important;
   z-index: 1000 !important; /* Pinned below toast notifications */
-  background: rgba(16, 21, 29, 0.95) !important; /* Slightly darker background so text stays crisp */
+     background: rgb(16 21 29 / 24%) !important;/* Slightly darker background so text stays crisp */
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid var(--border);
@@ -581,7 +581,8 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--panel-alt);
+  background: #141a2400;
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   padding: 4px 12px 4px 6px;
   border-radius: 30px;
@@ -1168,6 +1169,61 @@ a {
 /* ================================================================
    SECTION: EXPERIENCE
 ================================================================ */
+/* ================= SCROLL-SYNCED TIMELINE GLOW ================= */
+.git-log {
+  position: relative;
+}
+
+/* static faint base line spanning the full timeline */
+.git-log-track {
+  position: absolute;
+  left: 16px;
+  top: 17px;
+  bottom: 17px;
+  width: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  z-index: 0;
+}
+
+/* glowing fill that grows in height as the user scrolls */
+.git-log-progress {
+  position: absolute;
+  left: 16px;
+  top: 17px;
+  width: 2px;
+  height: 0%;
+  background: linear-gradient(180deg, var(--fn), var(--str));
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--fn), 0 0 20px rgba(130, 170, 255, 0.45);
+  z-index: 0;
+  animation: trackPulse 2.4s ease-in-out infinite alternate;
+}
+@keyframes trackPulse {
+  0% { box-shadow: 0 0 8px var(--fn), 0 0 16px rgba(130, 170, 255, 0.35); }
+  100% { box-shadow: 0 0 14px var(--fn), 0 0 28px rgba(130, 170, 255, 0.6); }
+}
+
+/* dots light up once the glow passes them */
+.commit-dot {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.commit-dot.lit {
+  border-color: var(--fn);
+  background: var(--fn);
+  color: var(--bg);
+  box-shadow: 0 0 14px var(--fn), 0 0 26px rgba(130, 170, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+  .git-log-track,
+  .git-log-progress {
+    left: 12px;
+  }
+}
+
 .exp-tabs {
   display: flex;
   justify-content: center;
@@ -1353,7 +1409,7 @@ a {
   color: var(--fn);
   transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
-.commit-line { width: 2px; flex: 1; background: var(--border); margin-top: 4px; }
+.commit-line { width: 2px; flex: 1; margin-top: 4px; }
 .commit-body { padding: 14px 18px 30px; border-radius: var(--radius); margin-top: -8px; transition: background 0.3s ease; }
 .commit:hover .commit-body { background: var(--panel-alt); }
 .commit:hover .commit-dot { transform: scale(1.12); background: var(--fn); color: var(--bg); }

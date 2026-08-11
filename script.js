@@ -388,20 +388,86 @@ if (navBurger && navTabs) {
   });
 }
 
-// ================= SKILL CHIP TAP-TO-SHOW =================
-document.querySelectorAll(".chip").forEach((chip) => {
-  chip.setAttribute("tabindex", "0");
-  chip.addEventListener("click", (e) => {
-    const alreadyOpen = chip.classList.contains("tip-open");
-    document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
-    if (!alreadyOpen) chip.classList.add("tip-open");
+// ================= EXPERIENCE TIMELINE: SCROLL-SYNCED GLOW =================
+(function () {
+  const gitLog = document.querySelector('.git-log');
+  const progressEl = document.getElementById('gitLogProgress');
+  if (!gitLog || !progressEl) return;
+
+  const dots = () => document.querySelectorAll('.commit-dot');
+
+  function updateTimelineGlow() {
+    const rect = gitLog.getBoundingClientRect();
+    if (rect.height === 0) return; // section hidden (e.g. Skills tab active) — skip safely
+
+    const viewportH = window.innerHeight;
+    const triggerLine = viewportH * 0.55; // where in the viewport progress is measured from
+
+    let progressPx = triggerLine - rect.top;
+    progressPx = Math.max(0, Math.min(progressPx, rect.height));
+
+    const pct = (progressPx / rect.height) * 100;
+    progressEl.style.height = pct + '%';
+
+    dots().forEach((dot) => {
+      const dotRect = dot.getBoundingClientRect();
+      const dotOffset = dotRect.top - rect.top + dotRect.height / 2;
+      dot.classList.toggle('lit', progressPx >= dotOffset);
+    });
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateTimelineGlow();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', updateTimelineGlow);
+  document.addEventListener('DOMContentLoaded', updateTimelineGlow);
+
+  // re-check when the Experience tab becomes visible again (in case Skills was active)
+  document.querySelectorAll('.exp-tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => setTimeout(updateTimelineGlow, 60));
+  });
+
+  updateTimelineGlow();
+})();
+// ============ END TIMELINE SCROLL GLOW ============
+// ================= EXPERIENCE / SKILLS TAB SWITCHER =================
+
+document.addEventListener('DOMContentLoaded', function () {
+  const tabBtns = document.querySelectorAll('.exp-tab-btn');
+  const panels = document.querySelectorAll('.exp-panel');
+
+  if (!tabBtns.length || !panels.length) return; // section not on this page — skip safely
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      if (btn.classList.contains('active')) return; // already selected, no-op
+
+      tabBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      panels.forEach((panel) => {
+        if (panel.dataset.panel === target) {
+          panel.style.display = 'flex';
+          panel.classList.remove('exp-panel-anim');
+          void panel.offsetWidth; // force reflow so the animation replays every time
+          panel.classList.add('exp-panel-anim');
+        } else {
+          panel.style.display = 'none';
+        }
+      });
+    });
   });
 });
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".chip")) {
-    document.querySelectorAll(".chip.tip-open").forEach((c) => c.classList.remove("tip-open"));
-  }
-});
+// ============ END EXPERIENCE / SKILLS TAB SWITCHER ============
 
 // ============================================================
 // ACTIVE SECTION HIGHLIGHT
