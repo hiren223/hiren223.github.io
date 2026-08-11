@@ -349,13 +349,13 @@ a {
   background: var(--panel-alt);
   border: 1px solid var(--border);
   border-radius: 4px;
-  height: 26px;
+  height: 30px;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.2em;
   color: var(--fn);
@@ -383,10 +383,10 @@ a {
   background: var(--panel-alt);
   border: 1px solid var(--border);
   border-radius: 4px;
-  height: 24px;
+  height: 30px;
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -896,7 +896,7 @@ a {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 90px 24px;
+  padding:50px 24px;
 }
 .section-head { margin-bottom: 48px; max-width: 760px; }
 .tag-line { font-family: var(--font-mono); color: var(--fn); font-size: 13px; }
@@ -1719,7 +1719,7 @@ a {
 .contact-key { color: var(--muted); min-width: 62px; }
 .contact-val { color: var(--fn); border-bottom: 1px dashed transparent; transition: border-color 0.15s, color 0.15s; }
 .contact-val:hover { color: var(--str); border-color: var(--str); }
-.contact-form { display: flex; flex-direction: column; gap: 6px; }
+.contact-form { display: flex; flex-direction: column;  }
 .form-label { color: var(--text-dim); font-size: 13px; margin-top: 10px; }
 .contact-form input,
 .contact-form textarea {

@@ -7,7 +7,7 @@
   const doorSystem = document.getElementById("doorSystem");
   const doorLoader = document.getElementById("doorLoader");
   const keypadDisplay = document.getElementById("keypadDisplay");
-  
+
   if (!doorLoader || !keypadDisplay) return;
 
   const keys = doorLoader.querySelectorAll(".key-num");
@@ -21,11 +21,11 @@
         enteredCode = "";
         updateDisplay();
       } else if (val === "✓") {
-        verifyPasscode();
+        verifyPasscode(); // ONLY trigger point for verification now
       } else if (enteredCode.length < 4) {
         enteredCode += val;
         updateDisplay();
-        if (enteredCode.length === 4) verifyPasscode();
+        // removed: auto-verify on reaching 4 digits — user must press ✓ now
       }
     });
   });
@@ -35,6 +35,13 @@
   }
 
   function verifyPasscode() {
+    if (enteredCode.length < 4) {
+      // not enough digits entered yet — flash error instead of silently doing nothing
+      keypadDisplay.classList.add("error");
+      setTimeout(() => keypadDisplay.classList.remove("error"), 400);
+      return;
+    }
+
     if (enteredCode === CORRECT_PASSCODE) {
       isUnlocked = true;
       keypadDisplay.textContent = "OPEN";
@@ -93,7 +100,7 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   items.forEach(el => observer.observe(el));
-})();
+})();                 
 
 // ============================================================
 // ANIMATED BACKGROUND

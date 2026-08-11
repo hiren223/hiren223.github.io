@@ -12,6 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
@@ -28,7 +31,7 @@
       <div class="door-half left">
         <div class="door-face">
           <!-- Laser Grid Lines -->
-          <div class="laser-track track-1"></div>
+           <div class="laser-track track-1"></div>
           <div class="laser-track track-2"></div>
           <div class="door-handle"></div>
         </div>
@@ -116,7 +119,7 @@
         <!-- ================= HERO ================= -->
         <section id="home" class="hero">
           <div class="hero-grid">
-            <div class="editor-window hero-editor">
+            <div  class="editor-window hero-editor">
               <div class="editor-header">
                 <span class="dot red"></span>
                 <span class="dot yellow"></span>
@@ -182,13 +185,13 @@
 
         <!-- ================= ABOUT ================= -->
         <section id="about" class="section">
-          <div class="section-head reveal" data-delay="0">
+          <div data-aos="fade-right" data-aos-duration="1500" class="section-head" >
             <span class="tag-line"># about.md</span>
             <h2>About Me</h2>
           </div>
 
-          <div class="about-grid">
-            <div class="about-id-col reveal" data-delay="0">
+          <div  class="about-grid">
+            <div class="about-id-col" data-aos="fade-down" data-aos-duration="1500">
               <div class="lanyard-container">
                 <div class="lanyard-strap"></div>
                 <div class="breakaway-clip"></div>
@@ -217,7 +220,7 @@
               </div>
             </div>
 
-            <div class="about-text reveal" data-delay="1">
+            <div data-aos="zoom-in-up" data-aos-duration="1500" class="about-text " data-delay="1">
               <p>
                 I am a <strong>Bachelor of Computer Applications (BCA)</strong> graduate from <strong>Silver Oak University, Ahmedabad</strong>, with a strong interest in <strong>Data Science, Machine Learning, Artificial Intelligence, and Data Analytics</strong>. I enjoy working with data to discover meaningful insights, solve real-world problems, and build predictive models.
               </p>
@@ -236,7 +239,7 @@
 
         <!-- ================= EXPERIENCE ================= -->
         <section id="experience" class="section">
-          <div class="section-head reveal" data-delay="0">
+          <div data-aos="fade-right" data-aos-duration="1500"class="section-head" >
             <span class="tag-line"># experience.log</span>
             <h2>Experience</h2>
             <p class="section-sub">git log --oneline --graph — the path from classroom to client work.</p>
@@ -252,7 +255,7 @@
               <div class="git-log">
                 <div class="git-log-track"></div>
   <div class="git-log-progress" id="gitLogProgress"></div>
-                <div class="commit reveal" data-delay="2">
+                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="2">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-graduation-cap-line"></i></span>
                     <span class="commit-line"></span>
@@ -268,7 +271,7 @@
                   </div>
                 </div>
 
-                <div class="commit reveal" data-delay="0">
+                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="0">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-medal-line"></i></span>
                     <span class="commit-line"></span>
@@ -284,7 +287,7 @@
                   </div>
                 </div>
 
-                <div class="commit reveal" data-delay="1">
+                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="1">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-briefcase-4-line"></i></span>
                     <span class="commit-line last"></span>
@@ -359,14 +362,14 @@
 
         <!-- ================= PROJECTS ================= -->
         <section id="projects" class="section">
-          <div class="section-head reveal" data-delay="0">
+          <div class="section-head " data-aos="fade-right" data-aos-duration="1500">
             <span class="tag-line"># projects/</span>
             <h2>Notebook History</h2>
             <p class="section-sub">Five executed notebooks — from a client engagement to independent capstones. Each cell shows what went in and what came out, warts included.</p>
           </div>
 
           <div class="notebook-list">
-            <article class="cell cell-web reveal" data-delay="0">
+            <article class="cell cell-web" data-aos="fade-up" data-aos-duration="1500">
               <div class="cell-io">
                 <span class="cell-tag tag-college"><i class="ri-graduation-cap-line"></i>GRADUATION PROJECT· COLLEGE</span>
                 <span class="cell-exec">In [1]:</span>
@@ -391,7 +394,7 @@
               </div>
             </article>
 
-            <article class="cell reveal" data-delay="1">
+            <article class="cell" data-aos="fade-up" data-aos-duration="1500" >
               <div class="cell-io">
                 <span class="cell-tag tag-client"><i class="ri-briefcase-4-line"></i> CLIENT PROJECT · INTERNSHIP</span>
                 <span class="cell-exec">In [2]:</span>
@@ -415,7 +418,7 @@
               </div>
             </article>
 
-            <article class="cell reveal" data-delay="2">
+            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
               <div class="cell-io">
                 <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
                 <span class="cell-exec">In [3]:</span>
@@ -439,7 +442,7 @@
               </div>
             </article>
 
-            <article class="cell reveal" data-delay="3">
+            <article class="cell "data-aos="fade-up" data-aos-duration="1500">
               <div class="cell-io">
                 <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
                 <span class="cell-exec">In [4]:</span>
@@ -462,7 +465,7 @@
               </div>
             </article>
 
-            <article class="cell reveal" data-delay="4">
+            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
               <div class="cell-io">
                 <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
                 <span class="cell-exec">In [5]:</span>
@@ -485,7 +488,7 @@
               </div>
             </article>
 
-            <article class="cell reveal" data-delay="5">
+            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
               <div class="cell-io">
                 <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
                 <span class="cell-exec">In [6]:</span>
@@ -512,13 +515,13 @@
 
         <!-- ================= CERTIFICATIONS ================= -->
         <section id="certs" class="section">
-          <div class="section-head reveal" data-delay="0">
+          <div class="section-head" data-aos="fade-right" data-aos-duration="1500">
             <span class="tag-line"># certs.json</span>
             <h2>Certifications</h2>
           </div>
 
           <div class="cert-grid">
-            <div class="cert-card reveal" data-delay="0">
+            <div class="cert-card" data-aos="fade-up-right" data-aos-duration="1500">
               <i class="ri-award-fill cert-icon cert-icon-gold"></i>
               <div class="cert-badge cert-gold">GOLD · 95%</div>
               <h3>Certified Data Scientist</h3>
@@ -527,7 +530,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/nasscom.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card reveal" data-delay="1">
+            <div class="cert-card" data-aos="fade-up-center" data-aos-duration="1500">
               <i class="ri-shield-star-line cert-icon"></i>
               <div class="cert-badge">FOUNDATION</div>
               <h3>Data Science Foundation</h3>
@@ -536,7 +539,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/iabac.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card reveal" data-delay="3">
+            <div class="cert-card" data-aos="fade-up-left" data-aos-duration="1500">
               <i class="ri-award-fill cert-icon cert-icon"></i>
               <div class="cert-badge">Deloitte.</div>
               <h3>Data Analytics</h3>
@@ -545,7 +548,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/deloitte.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card reveal" data-delay="2">
+            <div class="cert-card" data-aos="fade-up" data-aos-duration="1500">
               <i class="ri-briefcase-4-line cert-icon"></i>
               <div class="cert-badge">INTERNSHIP</div>
               <h3>Data Science Consultant</h3>
@@ -583,35 +586,48 @@
 
         <!-- ================= CONTACT ================= -->
         <section id="contact" class="section contact-section">
-          <div class="section-head reveal" data-delay="0">
+          <div class="section-head" data-aos="fade-right" data-aos-duration="1500">
             <span class="tag-line"># contact.sh</span>
             <h2>Let's Talk Data</h2>
             <p class="section-sub">Open to internships, collaborations and anything that involves a messy dataset and a deadline.</p>
           </div>
 
           <div class="contact-grid">
-            <div class="editor-window contact-window reveal" data-delay="0">
-              <div class="editor-header">
-                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                <span class="editor-filename">terminal — contact.sh</span>
-              </div>
-              <div class="editor-body terminal-body">
-                <p><span class="prompt">$</span> whoami</p>
-                <p class="terminal-out">hiren_keraliya · data scientist</p>
-                <p><span class="prompt">$</span> cat contact_info.txt</p>
+  <div class="editor-window contact-window" data-aos="fade-right" data-aos-duration="1500">
+    <div class="editor-header">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="editor-filename">terminal — contact.sh</span>
+    </div>
+    <div class="editor-body terminal-body">
+      <p><span class="prompt">$</span> whoami</p>
+      <p class="terminal-out">hiren_keraliya · data scientist</p>
+      
+      <!-- ADDED: System status / availability command -->
+      <p><span class="prompt">$</span> ./check_status.sh</p>
+      <p class="terminal-out"><span style="color: #a6e3a1;">●</span> Status: Open to Opportunities & Collaborations</p>
 
-                <ul class="contact-links">
-                  <li><span class="contact-icon"><i class="ri-mail-fill"></i></span><a href="mailto:hirenkeraliya99@gmail.com" class="contact-val" id="contact-email">hirenkeraliya99@gmail.com</a></li>
-                  <li><span class="contact-icon"><i class="ri-phone-fill"></i></span><a href="tel:+916353193330" class="contact-val" id="contact-phone">+91 63531 93330</a></li>
-                  <li><span class="contact-icon"><i class="ri-linkedin-box-fill"></i></span><a href="https://www.linkedin.com/in/hiren-keraliya-440700259/" target="_blank" rel="noopener" class="contact-val" id="contact-linkedin">LinkedIn Profile</a></li>
-                  <li><span class="contact-icon"><i class="ri-github-fill"></i></span><a href="https://github.com/hiren223" target="_blank" rel="noopener" class="contact-val" id="contact-github">GitHub Profile</a></li>
-                </ul>
+      <p><span class="prompt">$</span> cat contact_info.txt</p>
 
-                <p><span class="prompt">$</span> <span class="cursor">▌</span></p>
-              </div>
-            </div>
+      <ul class="contact-links">
+        <li><span class="contact-icon"><i class="ri-mail-fill"></i></span><a href="mailto:hirenkeraliya99@gmail.com" class="contact-val" id="contact-email">hirenkeraliya99@gmail.com</a></li>
+        <li><span class="contact-icon"><i class="ri-phone-fill"></i></span><a href="tel:+916353193330" class="contact-val" id="contact-phone">+91 63531 93330</a></li>
+        
+        <!-- ADDED: Location entry -->
 
-            <div class="editor-window contact-form-window reveal" data-delay="1">
+
+        <li><span class="contact-icon"><i class="ri-linkedin-box-fill"></i></span><a href="https://www.linkedin.com/in/hiren-keraliya-440700259/" target="_blank" rel="noopener" class="contact-val" id="contact-linkedin">LinkedIn Profile</a></li>
+        <li><span class="contact-icon"><i class="ri-github-fill"></i></span><a href="https://github.com/hiren223" target="_blank" rel="noopener" class="contact-val" id="contact-github">GitHub Profile</a></li>
+      </ul>
+
+      <!-- ADDED: Tech stack & echo message -->
+      <p><span class="prompt">$</span> echo $CORE_SKILLS</p>
+      <p class="terminal-out">Python · Machine Learning · Data Science </p>
+
+      <p><span class="prompt">$</span> <span class="cursor">▌</span></p>
+    </div>
+  </div>
+
+            <div class="editor-window contact-form-window" data-aos="fade-left" data-aos-duration="1500">
               <div class="editor-header">
                 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
                 <span class="editor-filename">send_message.py</span>
@@ -713,6 +729,9 @@
       document.getElementById("footer-top-btn")?.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
+    </script>
+    <script>
+      AOS.init();
     </script>
   </body>
 </html>
