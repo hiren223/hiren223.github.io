@@ -666,9 +666,7 @@
     placeholder='"Your name"'
     required
     minlength="2"
-    data-error="Name must be at least 2 characters"
   />
-  <span class="field-error" id="name-error"></span>
 
   <label class="form-label" for="email"><span class="kw">email</span> =</label>
   <input
@@ -677,9 +675,9 @@
     name="email"
     placeholder='"your@email.com"'
     required
-    data-error="Please enter a valid email address"
+    
   />
-  <span class="field-error" id="email-error"></span>
+  
 
   <label class="form-label" for="message"><span class="kw">message</span> =</label>
   <textarea
@@ -689,9 +687,8 @@
     placeholder='"Say hello, or pitch a project..."'
     required
     minlength="10"
-    data-error="Message must be at least 10 characters"
   ></textarea>
-  <span class="field-error" id="message-error"></span>
+
 
   <button type="submit" class="btn btn-primary form-submit">send_message() →</button>
   <p class="form-note" id="form-note"></p>

@@ -537,7 +537,7 @@ if (Form) {
 
     if (!isValid) {
       showNote('please fill out all required fields correctly', 'error');
-      if (typeof showToast === 'function') showToast('Please correct input errors', 'error');
+      if (typeof showToast === 'function') showToast('please fill out all required fields correctly', 'error');
       return;
     }
 
