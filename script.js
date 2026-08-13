@@ -351,49 +351,58 @@ setTimeout(typeChar, 600);
 // ============================================================
 // MOBILE NAV BURGER TOGGLE
 // ============================================================
-const navBurger = document.getElementById('nav-burger');
-const navTabs = document.getElementById('nav-tabs');
+document.addEventListener('DOMContentLoaded',()=>{
+const navBurger=document.getElementById('nav-burger');
+const navTabs=document.getElementById('nav-tabs');
+const topbar=document.querySelector('.topbar');
 
-if (navBurger && navTabs) {
-  function openMenu() {
-    navTabs.classList.add('open');
-    navBurger.classList.add('open');
-    navBurger.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('nav-open');
-  }
+if(!navBurger||!navTabs||!topbar)return;
 
-  function closeMenu() {
-    navTabs.classList.remove('open');
-    navBurger.classList.remove('open');
-    navBurger.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
-  }
-
-  navBurger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (navTabs.classList.contains('open')) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  navTabs.querySelectorAll('.tab').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      closeMenu();
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (
-      navTabs.classList.contains('open') &&
-      !navTabs.contains(e.target) &&
-      !navBurger.contains(e.target)
-    ) {
-      closeMenu();
-    }
-  });
+function openMenu(){
+topbar.classList.add('open');
+navTabs.classList.add('open');
+navBurger.classList.add('open');
+navBurger.setAttribute('aria-expanded','true');
 }
+
+function closeMenu(){
+topbar.classList.remove('open');
+navTabs.classList.remove('open');
+navBurger.classList.remove('open');
+navBurger.setAttribute('aria-expanded','false');
+}
+
+navBurger.addEventListener('click',e=>{
+e.preventDefault();
+e.stopPropagation();
+if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+
+if(topbar.classList.contains('open')){
+closeMenu();
+}else{
+openMenu();
+}
+},true);
+
+navTabs.querySelectorAll('.tab').forEach(tab=>{
+tab.addEventListener('click',e=>{
+e.stopPropagation();
+closeMenu();
+});
+});
+
+document.addEventListener('click',e=>{
+if(!topbar.contains(e.target)){
+closeMenu();
+}
+});
+
+window.addEventListener('resize',()=>{
+if(window.innerWidth>720){
+closeMenu();
+}
+});
+});
 
 // ================= EXPERIENCE TIMELINE: SCROLL-SYNCED GLOW =================
 (function () {
