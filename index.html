@@ -14,10 +14,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+   
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
+    <div id="vanta-bg"></div>
     <div id="toast-container" class="toast-container"></div>
 
     <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
@@ -753,5 +754,23 @@
     <script>
       AOS.init();
     </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
+
+<script>
+  VANTA.BIRDS({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+    backgroundColor: "#10151d",
+  color1: "#f5a97f",
+  color2: "#f38ba8",
+  scale: 1.00,
+  scaleMobile: 1.00
+})
+</script>
   </body>
 </html>
