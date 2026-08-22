@@ -104,6 +104,43 @@
 })();                 
 
 // ============================================================
+// Project case study
+// ============================================================
+const openKrushiCaseStudy=document.getElementById("openKrushiCaseStudy");
+const closeKrushiCase=document.getElementById("closeKrushiCase");
+const krushiCaseModal=document.getElementById("krushiCaseModal");
+const krushiCaseOverlay=document.getElementById("krushiCaseOverlay");
+
+function openKrushiModal(){
+krushiCaseModal.classList.add("active");
+document.body.style.overflow="hidden";
+}
+
+function closeKrushiModal(){
+krushiCaseModal.classList.remove("active");
+document.body.style.overflow="";
+}
+
+if(openKrushiCaseStudy){
+openKrushiCaseStudy.addEventListener("click",openKrushiModal);
+}
+
+if(closeKrushiCase){
+closeKrushiCase.addEventListener("click",closeKrushiModal);
+}
+
+if(krushiCaseOverlay){
+krushiCaseOverlay.addEventListener("click",closeKrushiModal);
+}
+
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape"&&krushiCaseModal.classList.contains("active")){
+closeKrushiModal();
+}
+});
+
+
+// ============================================================
 // ANIMATED BACKGROUND
 // ============================================================
 (function initBackground() {
@@ -132,7 +169,7 @@
     /*
      * Normal graph connection distance.
      */
-    linkDistance: 145,
+    linkDistance: 100,
 
     /*
      * Distance at which nodes react
