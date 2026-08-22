@@ -12,13 +12,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet"
+/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
    
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
-    <div id="vanta-bg"></div>
     <div id="toast-container" class="toast-container"></div>
 
     <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
@@ -278,7 +279,7 @@
             <div class="exp-panel" data-panel="experience" style="display: block">
               <div class="git-log">
                 <div class="git-log-track"></div>
-  <div class="git-log-progress" id="gitLogProgress"></div>
+                <div class="git-log-progress" id="gitLogProgress"></div>
                 <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="2">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-graduation-cap-line"></i></span>
@@ -328,7 +329,7 @@
                 </div>
               </div>
             </div>
-
+<!--================================= Skill Panale =======================================  -->
             <div class="exp-panel" data-panel="skills" style="display: none">
               <div class="experience-skills editor-window">
                 <div class="editor-header">
@@ -424,7 +425,13 @@
                 <span class="cell-exec">In [2]:</span>
               </div>
               <div class="cell-code">
-                <h3>Customer Churn Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCL-0017</span></h3>
+                <h3>Customer Churn Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg></a></span> <span class="cell-id">PRCL-0017</span></h3>
                 <p>Predicting which telecom customers are likely to churn, using tenure, contract type and billing behaviour. Built a full pipeline — cleaning, feature engineering (tenure from signup date), and classification with Logistic Regression, Decision Tree and Random Forest, using SMOTE to address heavy class imbalance.</p>
                 <div class="chip-row">
                   <span class="chip chip-py">pandas</span>
@@ -448,7 +455,13 @@
                 <span class="cell-exec">In [3]:</span>
               </div>
               <div class="cell-code">
-                <h3>Home Loan Default Prediction <a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><i class="ri-share-box-line"></i></a> <span class="cell-id">PRCP-1006</span></h3>
+                <h3>Home Loan Default Prediction <a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg></a> <span class="cell-id">PRCP-1006</span></h3>
                 <p>Predicting loan default risk from applicant and credit history data. Compared Logistic Regression, Decision Tree, Random Forest and XGBoost, tuning with GridSearchCV and evaluating on both accuracy and ROC-AUC rather than accuracy alone.</p>
                 <div class="chip-row">
                   <span class="chip chip-py">pandas</span>
@@ -472,7 +485,13 @@
                 <span class="cell-exec">In [4]:</span>
               </div>
               <div class="cell-code">
-                <h3>Insurance Claim Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1010</span></h3>
+                <h3>Insurance Claim Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg></a></span> <span class="cell-id">PRCP-1010</span></h3>
                 <p>Classifying likely insurance claims from a privacy-masked feature set. Trained Logistic Regression, Decision Tree, Random Forest and Gradient Boosting with SMOTE resampling — a good lesson in why accuracy alone can be misleading on imbalanced data.</p>
                 <div class="chip-row">
                   <span class="chip chip-py">pandas</span>
@@ -495,7 +514,13 @@
                 <span class="cell-exec">In [5]:</span>
               </div>
               <div class="cell-code">
-                <h3>Vaccine Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1014</span></h3>
+                <h3>Vaccine Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg></a></span> <span class="cell-id">PRCP-1014</span></h3>
                 <p>Regression task forecasting vaccination-related figures from public health data with missing values from inconsistent regional reporting. Compared Linear Regression, Random Forest and Gradient Boosting regressors on MAE, RMSE and R².</p>
                 <div class="chip-row">
                   <span class="chip chip-py">pandas</span>
@@ -518,7 +543,13 @@
                 <span class="cell-exec">In [6]:</span>
               </div>
               <div class="cell-code">
-                <h3>Johns Hopkins COVID-19 Forecasting <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb" target="_blank"><i class="ri-share-box-line"></i></a></span> <span class="cell-id">PRCP-1023</span></h3>
+                <h3>Johns Hopkins COVID-19 Forecasting <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg></a></span> <span class="cell-id">PRCP-1023</span></h3>
                 <p>Converted wide time-series country-level case data into global daily totals, then forecast future case counts using Linear, Ridge and Lasso Regression plus a tuned Random Forest. Time-series forecasting on cumulative counts turned out to be a much harder — and more humbling — problem than the earlier classification tasks.</p>
                 <div class="chip-row">
                   <span class="chip chip-py">pandas</span>
@@ -555,8 +586,8 @@
             </div>
 
             <div class="cert-card" data-aos="fade-up-center" data-aos-duration="1500">
-              <i class="ri-shield-star-line cert-icon"></i>
-              <div class="cert-badge">FOUNDATION</div>
+              <i class="ri-shield-star-line cert-icon cert-icon-gold"></i>
+              <div class="cert-badge cert-gold">FOUNDATION</div>
               <h3>Data Science Foundation</h3>
               <p class="cert-issuer">IABAC — International Association of Business Analytics Certification</p>
               <p class="cert-date">Effective 04 Jun 2026 · ID IAB1120179119</p>
@@ -564,8 +595,8 @@
             </div>
 
             <div class="cert-card" data-aos="fade-up-left" data-aos-duration="1500">
-              <i class="ri-award-fill cert-icon cert-icon"></i>
-              <div class="cert-badge">Deloitte.</div>
+              <i class="ri-award-fill cert-icon cert-icon-gold"></i>
+              <div class="cert-badge cert-gold">Deloitte.</div>
               <h3>Data Analytics</h3>
               <p class="cert-issuer">Deloitte Data Analytics Job Simulation</p>
               <p class="cert-date">09 July 2026</p>
@@ -573,8 +604,8 @@
             </div>
 
             <div class="cert-card" data-aos="fade-up" data-aos-duration="1500">
-              <i class="ri-briefcase-4-line cert-icon"></i>
-              <div class="cert-badge">INTERNSHIP</div>
+              <i class="ri-briefcase-4-line cert-icon cert-icon-gold"></i>
+              <div class="cert-badge cert-gold">INTERNSHIP</div>
               <h3>Data Science Consultant</h3>
               <p class="cert-issuer">Rubixe — Disruptive Technologies at Work</p>
               <p class="cert-date">23 Aug 2025 – 23 Feb 2026 · 6-month internship, POC &amp; client projects</p>
@@ -754,24 +785,6 @@
     <script>
       AOS.init();
     </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
 
-<script>
-  VANTA.BIRDS({
-  el: "#vanta-bg",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200.00,
-  minWidth: 200.00,
-    backgroundColor: "#10151d",
-  color1: "#f5a97f",
-  color2: "#f38ba8",
-  scale: 1.00,
-  scaleMobile: 1.00,
-  quantity: 3.00
-});
-</script>
   </body>
 </html>

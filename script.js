@@ -1,3 +1,4 @@
+
 // ================= DOOR LOCK LOGIC =================
 (function () {
   const CORRECT_PASSCODE = "3141";
@@ -106,133 +107,646 @@
 // ANIMATED BACKGROUND
 // ============================================================
 (function initBackground() {
-  const canvas = document.getElementById('bg-canvas');
+  const canvas = document.getElementById("bg-canvas");
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  let w, h, dpr;
+  const ctx = canvas.getContext("2d", {
+    alpha: true
+  });
 
-  let cachedColors = {
-    '--border': '#232b38',
-    '--fn': '#10B981', 
-    '--str': '#38BDF8', 
-    '--kw': '#a0aabf',
-    '--num': '#ffffff'
+  let w = 0;
+  let h = 0;
+  let dpr = 1;
+
+  const mouse = {
+    x: -1000,
+    y: -1000,
+    active: false,
+    radius: 210,
+    splitRadius: 32
   };
 
-  function updateColors() {
-    const rootStyles = getComputedStyle(document.documentElement);
-    Object.keys(cachedColors).forEach(key => {
-      const val = rootStyles.getPropertyValue(key).trim();
-      if (val) cachedColors[key] = val;
-    });
-  }
+  const CONFIG = {
+    nodeCount: 70,
+
+    /*
+     * Normal graph connection distance.
+     */
+    linkDistance: 145,
+
+    /*
+     * Distance at which nodes react
+     * to the mouse.
+     */
+    mouseDistance: 220,
+
+    /*
+     * Distance where the node starts
+     * splitting away from the mouse.
+     */
+    splitDistance: 42,
+
+    /*
+     * Infinite movement speed.
+     */
+    speed: 0.22,
+
+    /*
+     * Mouse attraction strength.
+     */
+    connectStrength: 0.018,
+
+    /*
+     * Mouse split/repulsion strength.
+     */
+    splitStrength: 0.18
+  };
+
+  let nodes = [];
+
+  /* --------------------------------
+     Resize
+  -------------------------------- */
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(
+      window.devicePixelRatio || 1,
+      1.5
+    );
+
     w = window.innerWidth;
     h = window.innerHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = w + 'px';
-    canvas.style.height = h + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    updateColors(); 
-  }
-  
-  resize();
-  window.addEventListener('resize', resize);
 
-  const NODE_COUNT = Math.round((w * h) / 35000); 
-  const nodes = Array.from({ length: Math.max(50, Math.min(NODE_COUNT, 100)) }, () => ({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
-    r: Math.random() * 2 + 1.5
-  }));
-  const LINK_DIST = 150;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
 
-  const TOKENS = [
-    '{ }', '</>', 'def', 'import pandas as pd', 'SELECT * FROM data',
-    'R\u00B2', 'ROC-AUC', '[ ]', '\u03BB', 'while True:', 'GET /api/v1',
-    'model.fit(X, y)', 'accuracy: 0.92', 'df.head()', '=> null',
-    'CREATE TABLE', 'try / except', '0.761', 'np.array([...])'
-  ];
-  const colorVars = ['--fn', '--str', '--kw', '--num'];
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
 
-  function spawnToken(recycle) {
-    return {
-      text: TOKENS[Math.floor(Math.random() * TOKENS.length)],
-      x: Math.random() * w,
-      y: recycle ? h + 20 : Math.random() * h,
-      speed: Math.random() * 0.3 + 0.1, 
-      size: Math.random() * 6 + 12, 
-      color: colorVars[Math.floor(Math.random() * colorVars.length)],
-      opacity: Math.random() * 0.4 + 0.1,
-      drift: (Math.random() - 0.5) * 0.1
-    };
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    createNodes();
   }
 
-  const tokens = Array.from({ length: 16 }, () => spawnToken());
+  /* --------------------------------
+     Create nodes
+  -------------------------------- */
 
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
+  function createNodes() {
+  const count = CONFIG.nodeCount;
 
-    const lineColor = cachedColors['--fn'];
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+  nodes = Array.from(
+    { length: count },
+    () => {
+      const angle = Math.random() * Math.PI * 2;
 
-        if (dist < LINK_DIST) {
-          ctx.strokeStyle = lineColor;
-          ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.5;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+
+        vx:
+          Math.cos(angle) *
+          (CONFIG.speed + Math.random() * 0.25),
+
+        vy:
+          Math.sin(angle) *
+          (CONFIG.speed + Math.random() * 0.25),
+
+        radius: Math.random() * 1.6 + 1.2,
+
+        phase: Math.random() * Math.PI * 2
+      };
+    }
+  );
+}
+
+  /* --------------------------------
+     Mouse
+  -------------------------------- */
+
+  window.addEventListener(
+    "mousemove",
+    (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+      mouse.active = true;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "mouseleave",
+    () => {
+      mouse.active = false;
+      mouse.x = -1000;
+      mouse.y = -1000;
+    }
+  );
+
+  /* --------------------------------
+     Infinite movement
+  -------------------------------- */
+
+  function updateNodes() {
+    nodes.forEach((node) => {
+      /*
+       * Natural movement.
+       */
+
+      node.x += node.vx;
+      node.y += node.vy;
+
+      /*
+       * Tiny organic movement.
+       */
+
+      node.phase += 0.008;
+
+      node.vx +=
+        Math.cos(node.phase) * 0.001;
+
+      node.vy +=
+        Math.sin(node.phase * 0.8) * 0.001;
+
+      /*
+       * Mouse interaction.
+       */
+
+      if (mouse.active) {
+        const dx = node.x - mouse.x;
+        const dy = node.y - mouse.y;
+
+        const distance = Math.sqrt(
+          dx * dx + dy * dy
+        );
+
+        /*
+         * Mouse is close.
+         */
+
+        if (
+          distance <
+          CONFIG.mouseDistance
+        ) {
+          /*
+           * VERY close:
+           *
+           * Split node away from cursor.
+           */
+
+          if (
+            distance <
+            CONFIG.splitDistance
+          ) {
+            const safeDistance =
+              Math.max(distance, 0.001);
+
+            const force =
+              (1 -
+                distance /
+                  CONFIG.splitDistance) *
+              CONFIG.splitStrength;
+
+            node.vx +=
+              (dx / safeDistance) *
+              force;
+
+            node.vy +=
+              (dy / safeDistance) *
+              force;
+          }
+
+          /*
+           * Normal close:
+           *
+           * Gently pull node toward
+           * the mouse.
+           *
+           * This makes the graph connect
+           * naturally around the cursor.
+           */
+
+          else {
+            const safeDistance =
+              Math.max(distance, 0.001);
+
+            const influence =
+              1 -
+              distance /
+                CONFIG.mouseDistance;
+
+            const force =
+              influence *
+              CONFIG.connectStrength;
+
+            node.vx -=
+              (dx / safeDistance) *
+              force;
+
+            node.vy -=
+              (dy / safeDistance) *
+              force;
+          }
         }
       }
-    }
 
-    const nodeColor = cachedColors['--fn'];
-    ctx.globalAlpha = 0.8;
-    ctx.fillStyle = nodeColor;
+      /*
+       * Keep movement controlled.
+       */
 
-    nodes.forEach(n => {
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fill();
-      n.x += n.vx;
-      n.y += n.vy;
-      if (n.x < 0 || n.x > w) n.vx *= -1;
-      if (n.y < 0 || n.y > h) n.vy *= -1;
+      const maxSpeed = 0.85;
+
+      const speed = Math.sqrt(
+        node.vx * node.vx +
+          node.vy * node.vy
+      );
+
+      if (speed > maxSpeed) {
+        node.vx =
+          (node.vx / speed) *
+          maxSpeed;
+
+        node.vy =
+          (node.vy / speed) *
+          maxSpeed;
+      }
+
+      /*
+       * Infinite wrapping.
+       *
+       * Nodes never disappear.
+       */
+
+      const padding = 25;
+
+      if (node.x < -padding) {
+        node.x = w + padding;
+      }
+
+      if (node.x > w + padding) {
+        node.x = -padding;
+      }
+
+      if (node.y < -padding) {
+        node.y = h + padding;
+      }
+
+      if (node.y > h + padding) {
+        node.y = -padding;
+      }
     });
+  }
 
-    ctx.textBaseline = 'middle';
-    tokens.forEach((t, idx) => {
-      ctx.globalAlpha = t.opacity;
-      ctx.fillStyle = cachedColors[t.color] || '#82aaff';
-      ctx.font = `${t.size}px 'JetBrains Mono', monospace`;
-      ctx.fillText(t.text, t.x, t.y);
-      t.y -= t.speed;
-      t.x += t.drift;
-      if (t.y < -20) {
-        tokens[idx] = spawnToken(true);
+  /* --------------------------------
+     Draw normal connections
+  -------------------------------- */
+
+  function drawNodeConnections() {
+    for (
+      let i = 0;
+      i < nodes.length;
+      i++
+    ) {
+      const a = nodes[i];
+
+      for (
+        let j = i + 1;
+        j < nodes.length;
+        j++
+      ) {
+        const b = nodes[j];
+
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+
+        const distance = Math.sqrt(
+          dx * dx + dy * dy
+        );
+
+        if (
+          distance >
+          CONFIG.linkDistance
+        ) {
+          continue;
+        }
+
+        const opacity =
+          (1 -
+            distance /
+              CONFIG.linkDistance) *
+          0.20;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          a.x,
+          a.y
+        );
+
+        ctx.lineTo(
+          b.x,
+          b.y
+        );
+
+        ctx.strokeStyle =
+          `rgba(168, 140, 255, ${opacity})`;
+
+        ctx.lineWidth = 0.7;
+
+        ctx.stroke();
+      }
+    }
+  }
+
+  /* --------------------------------
+     Mouse connections
+  -------------------------------- */
+
+  function drawMouseConnections() {
+    if (!mouse.active) return;
+
+    /*
+     * Find nodes near mouse.
+     */
+
+    const nearbyNodes = [];
+
+    nodes.forEach((node) => {
+      const dx =
+        node.x - mouse.x;
+
+      const dy =
+        node.y - mouse.y;
+
+      const distance = Math.sqrt(
+        dx * dx +
+          dy * dy
+      );
+
+      if (
+        distance <
+        mouse.radius
+      ) {
+        nearbyNodes.push({
+          node,
+          distance
+        });
       }
     });
 
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(draw);
+    /*
+     * Sort closest first.
+     */
+
+    nearbyNodes.sort(
+      (a, b) =>
+        a.distance -
+        b.distance
+    );
+
+    /*
+     * Connect only the closest
+     * nodes to the mouse.
+     */
+
+    const maxConnections = 8;
+
+    nearbyNodes
+      .slice(0, maxConnections)
+      .forEach(
+        ({
+          node,
+          distance
+        }) => {
+          /*
+           * If the cursor is directly
+           * over the node, don't connect.
+           *
+           * The node is splitting.
+           */
+
+          if (
+            distance <
+            CONFIG.splitDistance
+          ) {
+            return;
+          }
+
+          const opacity =
+            (1 -
+              distance /
+                mouse.radius) *
+            0.65;
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            mouse.x,
+            mouse.y
+          );
+
+          ctx.lineTo(
+            node.x,
+            node.y
+          );
+
+          ctx.strokeStyle =
+            `rgba(196, 181, 253, ${opacity})`;
+
+          ctx.lineWidth = 1;
+
+          ctx.stroke();
+
+          /*
+           * Mouse connection point.
+           */
+
+          ctx.beginPath();
+
+          ctx.arc(
+            node.x,
+            node.y,
+            node.radius + 1.5,
+            0,
+            Math.PI * 2
+          );
+
+          ctx.fillStyle =
+            `rgba(196, 181, 253, ${opacity + 0.15})`;
+
+          ctx.fill();
+        }
+      );
+
+    /*
+     * Draw mouse as graph node.
+     */
+
+    ctx.beginPath();
+
+    ctx.arc(
+      mouse.x,
+      mouse.y,
+      3,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle =
+      "rgba(255,255,255,0.95)";
+
+    ctx.fill();
+
+    /*
+     * Mouse ring.
+     */
+
+    ctx.beginPath();
+
+    ctx.arc(
+      mouse.x,
+      mouse.y,
+      11,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.strokeStyle =
+      "rgba(168,140,255,0.45)";
+
+    ctx.lineWidth = 1;
+
+    ctx.stroke();
   }
 
-  setTimeout(() => {
-    updateColors();
-    requestAnimationFrame(draw);
-  }, 50);
+  /* --------------------------------
+     Draw nodes
+  -------------------------------- */
+
+  function drawNodes() {
+    nodes.forEach((node) => {
+      let radius =
+        node.radius;
+
+      let opacity = 0.45;
+
+      if (mouse.active) {
+        const dx =
+          node.x - mouse.x;
+
+        const dy =
+          node.y - mouse.y;
+
+        const distance =
+          Math.sqrt(
+            dx * dx +
+              dy * dy
+          );
+
+        if (
+          distance <
+          mouse.radius
+        ) {
+          const influence =
+            1 -
+            distance /
+              mouse.radius;
+
+          radius +=
+            influence * 1.8;
+
+          opacity +=
+            influence * 0.35;
+        }
+      }
+
+      /*
+       * Node glow.
+       */
+
+      ctx.beginPath();
+
+      ctx.arc(
+        node.x,
+        node.y,
+        radius * 3,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle =
+        `rgba(168,140,255,${opacity * 0.05})`;
+
+      ctx.fill();
+
+      /*
+       * Node.
+       */
+
+      ctx.beginPath();
+
+      ctx.arc(
+        node.x,
+        node.y,
+        radius,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle =
+        `rgba(216,205,255,${opacity})`;
+
+      ctx.fill();
+    });
+  }
+
+  /* --------------------------------
+     Main animation
+  -------------------------------- */
+
+  function animate() {
+    ctx.clearRect(
+      0,
+      0,
+      w,
+      h
+    );
+
+    updateNodes();
+
+    drawNodeConnections();
+
+    drawMouseConnections();
+
+    drawNodes();
+
+    requestAnimationFrame(
+      animate
+    );
+  }
+
+  /* --------------------------------
+     Start
+  -------------------------------- */
+
+  resize();
+
+  window.addEventListener(
+    "resize",
+    resize,
+    { passive: true }
+  );
+
+  requestAnimationFrame(
+    animate
+  );
 })();
 
 // ================= REAL-TIME MINI SKY & CLOCK =================
