@@ -95,13 +95,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!container || cards.length < 2) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
 
-    const topOffset = window.innerWidth <= 768 ? 90 : 150;
+    const isMobile = window.innerWidth <= 768;
 
     cards.forEach((card) => {
+      const oldWrapper = card.closest(".card-wrapper");
+
+      if (oldWrapper) {
+        oldWrapper.replaceWith(card);
+      }
+    });
+
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (
+        trigger.vars.id &&
+        String(trigger.vars.id).startsWith("project-card-")
+      ) {
+        trigger.kill();
+      }
+    });
+
+    gsap.killTweensOf(cards);
+
+    if (isMobile) {
+      initMobileStack(container, cards);
+    } else {
+      initDesktopStack(container, cards);
+    }
+
+    ScrollTrigger.refresh();
+  }
+
+  function initDesktopStack(container, cards) {
+    cards.forEach((card) => {
       const wrapper = document.createElement("div");
+
       wrapper.className = "card-wrapper";
+
       card.parentNode.insertBefore(wrapper, card);
       wrapper.appendChild(card);
     });
@@ -112,17 +145,21 @@ document.addEventListener("DOMContentLoaded", () => {
     wrappers.forEach((wrapper, index) => {
       const card = stackCards[index];
 
-      let scale = 1;
-      let rotation = 0;
+      const isLast = index === stackCards.length - 1;
 
-      if (index !== stackCards.length - 1) {
-        scale = 0.9 + 0.025 * index;
-        rotation = -10;
-      }
+      const scale = isLast
+        ? 1
+        : 0.9 + 0.025 * index;
+
+      const rotation = isLast
+        ? 0
+        : -10;
 
       gsap.set(card, {
         scale: 1,
         rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0,
         transformOrigin: "top center",
         force3D: true
       });
@@ -130,31 +167,74 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.to(card, {
         scale: scale,
         rotationX: rotation,
-        transformOrigin: "top center",
         ease: "none",
 
         scrollTrigger: {
           trigger: wrapper,
 
-          start: `top ${topOffset + 10 * index}px`,
+          start: `top ${150 + index * 10}px`,
 
           end: "bottom 550px",
+
           endTrigger: container,
 
           scrub: true,
 
           pin: wrapper,
+
           pinSpacing: false,
 
           anticipatePin: 1,
+
+          fastScrollEnd: false,
+
           invalidateOnRefresh: true,
 
           id: `project-card-${index + 1}`
         }
       });
     });
+  }
 
-    ScrollTrigger.refresh();
+  function initMobileStack(container, cards) {
+    cards.forEach((card, index) => {
+      gsap.set(card, {
+        position: "relative",
+        zIndex: index + 1,
+        scale: 1,
+        rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0,
+        x: 0,
+        y: 0,
+        opacity: 1,
+        filter: "none",
+        transformOrigin: "top center",
+        force3D: true
+      });
+
+      if (index === cards.length - 1) return;
+
+      gsap.to(card, {
+        scale: 0.96,
+        y: -8,
+        ease: "none",
+
+        scrollTrigger: {
+          trigger: cards[index + 1],
+
+          start: "top 85%",
+
+          end: "top 20%",
+
+          scrub: 0.8,
+
+          invalidateOnRefresh: true,
+
+          id: `project-card-${index + 1}`
+        }
+      });
+    });
   }
 
   if (document.readyState === "loading") {
@@ -166,9 +246,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.addEventListener("load", () => {
-    if (window.ScrollTrigger) {
-      ScrollTrigger.refresh();
-    }
+    ScrollTrigger.refresh();
+  });
+
+  let resizeTimer;
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+
+    resizeTimer = setTimeout(() => {
+      window.location.reload();
+    }, 250);
   });
 })();
 
