@@ -97,6 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const topOffset = window.innerWidth <= 768 ? 90 : 150;
+
     cards.forEach((card) => {
       const wrapper = document.createElement("div");
       wrapper.className = "card-wrapper";
@@ -130,16 +132,23 @@ document.addEventListener("DOMContentLoaded", () => {
         rotationX: rotation,
         transformOrigin: "top center",
         ease: "none",
+
         scrollTrigger: {
           trigger: wrapper,
-          start: `top ${150 + 10 * index}px`,
+
+          start: `top ${topOffset + 10 * index}px`,
+
           end: "bottom 550px",
           endTrigger: container,
+
           scrub: true,
+
           pin: wrapper,
           pinSpacing: false,
+
           anticipatePin: 1,
           invalidateOnRefresh: true,
+
           id: `project-card-${index + 1}`
         }
       });
@@ -149,7 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setup, { once: true });
+    document.addEventListener("DOMContentLoaded", setup, {
+      once: true
+    });
   } else {
     setup();
   }
