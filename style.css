@@ -1988,18 +1988,23 @@ a {
 .stack-container {
   position: relative;
   width: 100%;
-  overflow: visible;
+  max-width: 100%;
+  overflow: visible !important;
 }
 
 .card-wrapper {
   position: relative;
   width: 100%;
-  overflow: visible;
+  max-width: 100%;
+  overflow: visible !important;
 }
 
 .stack-card {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   transform-origin: top center;
   will-change: transform;
   backface-visibility: hidden;
@@ -2026,94 +2031,79 @@ a {
 @media (max-width: 768px) {
   .stack-container {
     width: 100%;
-    max-width: 100%;
-    padding: 0 12px;
+    padding: 0 10px;
     box-sizing: border-box;
-    overflow: visible !important;
   }
 
   .card-wrapper {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: visible !important;
   }
 
   .stack-card {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    box-sizing: border-box;
+    margin: 0;
     overflow: hidden;
+    box-sizing: border-box;
     border-radius: 18px;
-  }
-
-  .stack-card .cell-code,
-  .stack-card .cell-out {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
-  .stack-card h3 {
-    font-size: 1.05rem;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  .stack-card p {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-  }
-
-  .stack-card .chip-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    max-width: 100%;
-  }
-
-  .stack-card .chip {
-    max-width: 100%;
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  .stack-card .metric-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .stack-card .metric {
-    min-width: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .stack-card .metric-label {
-    overflow-wrap: anywhere;
   }
 
   .stack-card .cell-io {
     width: 100%;
     min-width: 0;
     flex-wrap: wrap;
-    gap: 8px;
+    box-sizing: border-box;
   }
 
-  .stack-card .cell-tag {
+  .stack-card .cell-code,
+  .stack-card .cell-out {
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
-    white-space: normal;
-    line-height: 1.4;
+    box-sizing: border-box;
   }
 
-  .stack-card .cell-exec {
-    flex-shrink: 0;
+  .stack-card h3 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.35;
+  }
+
+  .stack-card p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.6;
+  }
+
+  .stack-card .chip-row {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .stack-card .metric-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stack-card .metric {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .stack-card .metric-label {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
@@ -2128,24 +2118,16 @@ a {
 
   .stack-card .cell-code,
   .stack-card .cell-out {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .stack-card h3 {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
   }
 
   .stack-card p {
     font-size: 0.78rem;
-  }
-
-  .stack-card .metric-val {
-    font-size: 1.15rem;
-  }
-
-  .stack-card .metric-label {
-    font-size: 0.72rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
