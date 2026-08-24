@@ -1990,6 +1990,7 @@ a {
   width: 100%;
   max-width: 100%;
   overflow: visible !important;
+   padding-bottom: 220px !important;
 }
 
 .card-wrapper {
@@ -2033,6 +2034,7 @@ a {
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
+     padding-bottom: 300px !important;
   }
 
   .card-wrapper {
@@ -2110,6 +2112,7 @@ a {
 @media (max-width: 480px) {
   .stack-container {
     padding: 0 8px;
+     padding-bottom: 340px !important;
   }
 
   .stack-card {
