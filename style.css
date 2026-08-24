@@ -2019,16 +2019,135 @@ a {
   overflow: visible !important;
 }
 
+/* ============================================================
+   MOBILE PROJECT CARDS
+   ============================================================ */
+
 @media (max-width: 768px) {
   .stack-container {
-    padding-bottom: 12vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+    overflow: visible !important;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible !important;
   }
 
   .stack-card {
-    margin-bottom: 70px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .stack-card .cell-code,
+  .stack-card .cell-out {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .stack-card h3 {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .stack-card p {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .stack-card .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .stack-card .chip {
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .stack-card .metric-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .stack-card .metric {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .stack-card .metric-label {
+    overflow-wrap: anywhere;
+  }
+
+  .stack-card .cell-io {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack-card .cell-tag {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .stack-card .cell-exec {
+    flex-shrink: 0;
   }
 }
 
+@media (max-width: 480px) {
+  .stack-container {
+    padding: 0 8px;
+  }
+
+  .stack-card {
+    border-radius: 16px;
+  }
+
+  .stack-card .cell-code,
+  .stack-card .cell-out {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .stack-card h3 {
+    font-size: 0.98rem;
+  }
+
+  .stack-card p {
+    font-size: 0.78rem;
+  }
+
+  .stack-card .metric-val {
+    font-size: 1.15rem;
+  }
+
+  .stack-card .metric-label {
+    font-size: 0.72rem;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .stack-card {
     transform: none !important;
