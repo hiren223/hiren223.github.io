@@ -1,77 +1,164 @@
 
-// ================= DOOR LOCK LOGIC =================
-(function () {
-  const CORRECT_PASSCODE = "3141";
-  let enteredCode = "";
-  let isUnlocked = false;
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("aiLoader");
+  const progress = document.getElementById("loadingProgress");
+  const percent = document.getElementById("loaderPercent");
+  const message = document.getElementById("loaderMessage");
+  const ready = document.getElementById("systemReady");
 
-  const doorSystem = document.getElementById("doorSystem");
-  const doorLoader = document.getElementById("doorLoader");
-  const keypadDisplay = document.getElementById("keypadDisplay");
-
-  if (!doorLoader || !keypadDisplay) return;
-
-  const keys = doorLoader.querySelectorAll(".key-num");
-
-  keys.forEach((key) => {
-    key.addEventListener("click", () => {
-      if (isUnlocked) return;
-      const val = key.textContent.trim();
-
-      if (val === "C") {
-        enteredCode = "";
-        updateDisplay();
-      } else if (val === "✓") {
-        verifyPasscode(); // ONLY trigger point for verification now
-      } else if (enteredCode.length < 4) {
-        enteredCode += val;
-        updateDisplay();
-        // removed: auto-verify on reaching 4 digits — user must press ✓ now
-      }
-    });
-  });
-
-  function updateDisplay() {
-    keypadDisplay.textContent = enteredCode ? enteredCode.padEnd(4, "_") : "____";
+  if (!loader || !progress || !percent || !message || !ready) {
+    return;
   }
 
-  function verifyPasscode() {
-    if (enteredCode.length < 4) {
-      // not enough digits entered yet — flash error instead of silently doing nothing
-      keypadDisplay.classList.add("error");
-      setTimeout(() => keypadDisplay.classList.remove("error"), 400);
+  // Make sure scrolling is available initially
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+
+  const messages = [
+    "INITIALIZING AI SYSTEM...",
+    "LOADING DATA MODULES...",
+    "CONNECTING NEURAL NETWORK...",
+    "ANALYZING SYSTEM COMPONENTS...",
+    "LOADING PORTFOLIO...",
+    "FINALIZING INTERFACE..."
+  ];
+
+  const duration = 2200;
+  const startTime = performance.now();
+
+  function animateLoader(currentTime) {
+    const elapsed = currentTime - startTime;
+
+    const value = Math.min(
+      100,
+      Math.floor((elapsed / duration) * 100)
+    );
+
+    progress.style.width = `${value}%`;
+    percent.textContent = `${value}%`;
+
+    const messageIndex = Math.min(
+      messages.length - 1,
+      Math.floor(value / 17)
+    );
+
+    message.textContent = messages[messageIndex];
+
+    if (value < 100) {
+      requestAnimationFrame(animateLoader);
       return;
     }
 
-    if (enteredCode === CORRECT_PASSCODE) {
-      isUnlocked = true;
-      keypadDisplay.textContent = "OPEN";
-      keypadDisplay.classList.add("success");
+    // Loader completed
+    message.textContent = "SYSTEM READY";
+    percent.textContent = "100%";
 
-      setTimeout(beginOpening, 300);
-    } else {
-      keypadDisplay.classList.add("error");
+    ready.classList.add("show");
+
+    setTimeout(() => {
+
+      // Fade loader
+      loader.classList.add("hide");
+
+      // IMPORTANT: unlock scrolling
+      document.documentElement.style.overflow = "auto";
+      document.body.style.overflow = "auto";
+
+      document.documentElement.style.height = "auto";
+      document.body.style.height = "auto";
+
+      // Remove loader
       setTimeout(() => {
-        enteredCode = "";
-        keypadDisplay.classList.remove("error");
-        updateDisplay();
-      }, 600);
+        loader.remove();
+      }, 900);
+
+    }, 600);
+  }
+
+  requestAnimationFrame(animateLoader);
+});
+
+// ============================================================
+// Project card sticy
+// ============================================================
+(function initProjectStack() {
+  function setup() {
+    if (!window.gsap || !window.ScrollTrigger) {
+      console.error("GSAP or ScrollTrigger is not loaded.");
+      return;
     }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = document.querySelector(".stack-container");
+    const cards = gsap.utils.toArray(".stack-card");
+
+    if (!container || cards.length < 2) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    cards.forEach((card) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "card-wrapper";
+      card.parentNode.insertBefore(wrapper, card);
+      wrapper.appendChild(card);
+    });
+
+    const wrappers = gsap.utils.toArray(".card-wrapper");
+    const stackCards = gsap.utils.toArray(".stack-card");
+
+    wrappers.forEach((wrapper, index) => {
+      const card = stackCards[index];
+
+      let scale = 1;
+      let rotation = 0;
+
+      if (index !== stackCards.length - 1) {
+        scale = 0.9 + 0.025 * index;
+        rotation = -10;
+      }
+
+      gsap.set(card, {
+        scale: 1,
+        rotationX: 0,
+        transformOrigin: "top center",
+        force3D: true
+      });
+
+      gsap.to(card, {
+        scale: scale,
+        rotationX: rotation,
+        transformOrigin: "top center",
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapper,
+          start: `top ${150 + 10 * index}px`,
+          end: "bottom 550px",
+          endTrigger: container,
+          scrub: true,
+          pin: wrapper,
+          pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          id: `project-card-${index + 1}`
+        }
+      });
+    });
+
+    ScrollTrigger.refresh();
   }
 
-  function beginOpening() {
-    doorLoader.classList.add("opening");
-
-    setTimeout(() => {
-      if (doorSystem) doorSystem.classList.add("unlocked");
-      document.body.classList.add("door-unlocked");
-    }, 600);
-
-    setTimeout(() => {
-      doorLoader.classList.add("hidden");
-      setTimeout(() => doorLoader.remove(), 1000);
-    }, 600);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup, { once: true });
+  } else {
+    setup();
   }
+
+  window.addEventListener("load", () => {
+    if (window.ScrollTrigger) {
+      ScrollTrigger.refresh();
+    }
+  });
 })();
 
 // ============================================================
@@ -169,34 +256,30 @@ closeKrushiModal();
     /*
      * Normal graph connection distance.
      */
-    linkDistance: 100,
+    linkDistance: -10,
 
     /*
      * Distance at which nodes react
-     * to the mouse.
+     * to the mouse (visual connection only).
      */
-    mouseDistance: 220,
+    mouseDistance: -50,
 
     /*
      * Distance where the node starts
-     * splitting away from the mouse.
+     * splitting away from the mouse (repulsion).
      */
     splitDistance: 42,
 
     /*
      * Infinite movement speed.
      */
-    speed: 0.22,
-
-    /*
-     * Mouse attraction strength.
-     */
-    connectStrength: 0.018,
+    speed: 0.15,
 
     /*
      * Mouse split/repulsion strength.
+     * ONLY repulsion - no attraction!
      */
-    splitStrength: 0.18
+    splitStrength: 0.10
   };
 
   let nodes = [];
@@ -237,32 +320,32 @@ closeKrushiModal();
   -------------------------------- */
 
   function createNodes() {
-  const count = CONFIG.nodeCount;
+    const count = CONFIG.nodeCount;
 
-  nodes = Array.from(
-    { length: count },
-    () => {
-      const angle = Math.random() * Math.PI * 2;
+    nodes = Array.from(
+      { length: count },
+      () => {
+        const angle = Math.random() * Math.PI * 2;
 
-      return {
-        x: Math.random() * w,
-        y: Math.random() * h,
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
 
-        vx:
-          Math.cos(angle) *
-          (CONFIG.speed + Math.random() * 0.25),
+          vx:
+            Math.cos(angle) *
+            (CONFIG.speed + Math.random() * 0.25),
 
-        vy:
-          Math.sin(angle) *
-          (CONFIG.speed + Math.random() * 0.25),
+          vy:
+            Math.sin(angle) *
+            (CONFIG.speed + Math.random() * 0.25),
 
-        radius: Math.random() * 1.6 + 1.2,
+          radius: Math.random() * 1.6 + 1.2,
 
-        phase: Math.random() * Math.PI * 2
-      };
-    }
-  );
-}
+          phase: Math.random() * Math.PI * 2
+        };
+      }
+    );
+  }
 
   /* --------------------------------
      Mouse
@@ -294,7 +377,7 @@ closeKrushiModal();
   function updateNodes() {
     nodes.forEach((node) => {
       /*
-       * Natural movement.
+       * Natural movement - ALWAYS MOVING
        */
 
       node.x += node.vx;
@@ -313,7 +396,7 @@ closeKrushiModal();
         Math.sin(node.phase * 0.8) * 0.001;
 
       /*
-       * Mouse interaction.
+       * ONLY REPULSION from mouse - NO ATTRACTION
        */
 
       if (mouse.active) {
@@ -325,73 +408,36 @@ closeKrushiModal();
         );
 
         /*
-         * Mouse is close.
+         * VERY close to mouse:
+         * Push node AWAY from cursor (repulsion only)
          */
 
         if (
           distance <
-          CONFIG.mouseDistance
+          CONFIG.splitDistance
         ) {
-          /*
-           * VERY close:
-           *
-           * Split node away from cursor.
-           */
+          const safeDistance =
+            Math.max(distance, 0.001);
 
-          if (
-            distance <
-            CONFIG.splitDistance
-          ) {
-            const safeDistance =
-              Math.max(distance, 0.001);
-
-            const force =
-              (1 -
-                distance /
-                  CONFIG.splitDistance) *
-              CONFIG.splitStrength;
-
-            node.vx +=
-              (dx / safeDistance) *
-              force;
-
-            node.vy +=
-              (dy / safeDistance) *
-              force;
-          }
-
-          /*
-           * Normal close:
-           *
-           * Gently pull node toward
-           * the mouse.
-           *
-           * This makes the graph connect
-           * naturally around the cursor.
-           */
-
-          else {
-            const safeDistance =
-              Math.max(distance, 0.001);
-
-            const influence =
-              1 -
+          const force =
+            (1 -
               distance /
-                CONFIG.mouseDistance;
+                CONFIG.splitDistance) *
+            CONFIG.splitStrength;
 
-            const force =
-              influence *
-              CONFIG.connectStrength;
+          node.vx +=
+            (dx / safeDistance) *
+            force;
 
-            node.vx -=
-              (dx / safeDistance) *
-              force;
-
-            node.vy -=
-              (dy / safeDistance) *
-              force;
-          }
+          node.vy +=
+            (dy / safeDistance) *
+            force;
         }
+
+        /*
+         * REMOVED: No attraction to mouse
+         * Nodes just move naturally and visually connect
+         */
       }
 
       /*
@@ -503,7 +549,7 @@ closeKrushiModal();
   }
 
   /* --------------------------------
-     Mouse connections
+     Mouse connections (VISUAL ONLY)
   -------------------------------- */
 
   function drawMouseConnections() {
@@ -550,7 +596,7 @@ closeKrushiModal();
 
     /*
      * Connect only the closest
-     * nodes to the mouse.
+     * nodes to the mouse VISUALLY.
      */
 
     const maxConnections = 8;
@@ -564,9 +610,9 @@ closeKrushiModal();
         }) => {
           /*
            * If the cursor is directly
-           * over the node, don't connect.
+           * over the node, don't draw connection.
            *
-           * The node is splitting.
+           * The node is repelling/splitting.
            */
 
           if (
@@ -687,14 +733,18 @@ closeKrushiModal();
               dy * dy
           );
 
+        /*
+         * ONLY highlight when very close
+         * (when repelling from mouse)
+         */
         if (
           distance <
-          mouse.radius
+          CONFIG.splitDistance
         ) {
           const influence =
             1 -
             distance /
-              mouse.radius;
+              CONFIG.splitDistance;
 
           radius +=
             influence * 1.8;

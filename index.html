@@ -14,97 +14,77 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet"
 />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
    
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- ================= DOOR LOADER SYSTEM WRAPPER ================= -->
-    <div class="door-system" id="doorSystem">
-  <!-- 1. DOOR OVERLAY -->
-  <div class="door-loader" id="doorLoader">
-    <div class="doors-scene">
-      <div class="door-light-beam"></div>
+    <!-- ================= AI SYSTEM LOADER ================= --> 
+     <div class="ai-loader" id="aiLoader"> 
+      <div class="ai-grid"></div> 
+      <div class="ai-loader-content"> 
+        <!-- Neural Network --> 
+         <div class="neural-network"> 
+          <div class="network-layer layer-1"> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+          </div> 
+          <div class="network-layer layer-2"> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+          </div> 
+          <div class="network-layer layer-3"> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+          </div> 
+          <div class="network-layer layer-4"> 
+            <span></span> 
+            <span></span> 
+            <span></span> 
+          </div> 
+          <!-- Connections --> 
+           <div class="connection c1"></div> 
+           <div class="connection c2"></div> 
+           <div class="connection c3"></div> 
+           <div class="connection c4"></div> 
+           <div class="connection c5"></div> 
+           <div class="connection c6"></div> 
+           <div class="connection c7"></div> 
+           <div class="connection c8"></div> 
+          </div> 
+          <!-- Identity --> 
+           <div class="ai-identity"> 
+            <div class="ai-status"> 
+              <span class="status-pulse"></span> 
+              SYSTEM INITIALIZING </div> 
+              <h1>HIREN KERALIYA</h1> 
+              <p class="ai-role"> DATA SCIENTIST 
+                <span>•</span> FULL STACK DEVELOPER 
+              </p> 
+              </div> 
+                <!-- Loading --> 
+                 <div class="ai-loading"> 
+                  <div class="loading-info"> 
+                    <span id="loaderMessage">INITIALIZING AI SYSTEM...</span> 
+                    <span id="loaderPercent">0%</span> 
+                  </div> <div class="loading-track"> 
+                    <div class="loading-progress" id="loadingProgress">
 
-      <!-- LEFT DOOR HALF -->
-      <div class="door-half left">
-        <div class="door-face">
-          <!-- ================= DECORATIVE SURFACE LAYERS ================= -->
-          <div class="circuit-pattern"></div>
-          <div class="panel-frame"></div>
-          <div class="corner-bracket tl"></div>
-          <div class="corner-bracket tr"></div>
-          <div class="corner-bracket bl"></div>
-          <div class="corner-bracket br"></div>
-          <div class="rivet-row top"></div>
-          <div class="rivet-row bottom"></div>
-          <div class="door-scanline"></div>
-          <!-- ============ END DECORATIVE SURFACE LAYERS ============ -->
-
-          <!-- Laser Grid Lines -->
-          <div class="laser-track track-1"></div>
-          <div class="laser-track track-2"></div>
-          <div class="door-handle"></div>
-        </div>
-      </div>
-
-      <!-- RIGHT DOOR HALF (Holographic Core Interface) -->
-      <div class="door-half right">
-        <div class="door-face">
-          <!-- ================= DECORATIVE SURFACE LAYERS ================= -->
-          <div class="circuit-pattern"></div>
-          <div class="panel-frame"></div>
-          <div class="corner-bracket tl"></div>
-          <div class="corner-bracket tr"></div>
-          <div class="corner-bracket bl"></div>
-          <div class="corner-bracket br"></div>
-          <div class="rivet-row top"></div>
-          <div class="rivet-row bottom"></div>
-          <div class="door-scanline"></div>
-          <!-- ============ END DECORATIVE SURFACE LAYERS ============ -->
-
-          <div class="laser-track track-1"></div>
-          <div class="laser-track track-2"></div>
-
-          <!-- EMBEDDED HOLOGRAPHIC REACTOR TERMINAL -->
-          <div class="reactor-terminal">
-            <div class="terminal-header">
-              <span class="status-dot"></span>
-              <span class="terminal-title">SECURITY CORE</span>
-            </div>
-
-            <div class="password-hint-box">
-              <span class="hint-title">PASSCODE</span>
-              <span class="hint-code">3141</span>
-            </div>
-
-            <div class="keypad-container">
-              <div class="keypad-display" id="keypadDisplay">____</div>
-              <div class="keypad-grid">
-                <button class="key-num" type="button">1</button>
-                <button class="key-num" type="button">2</button>
-                <button class="key-num" type="button">3</button>
-                <button class="key-num" type="button">4</button>
-                <button class="key-num" type="button">5</button>
-                <button class="key-num" type="button">6</button>
-                <button class="key-num" type="button">7</button>
-                <button class="key-num" type="button">8</button>
-                <button class="key-num" type="button">9</button>
-                <button class="key-num clear" type="button">C</button>
-                <button class="key-num" type="button">0</button>
-                <button class="key-num" type="button" style="color:var(--str);">✓</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="door-handle"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+                    </div> </div> </div> <div class="system-ready" id="systemReady"> 
+                      <span>✓</span> SYSTEM ONLINE 
+                    </div> 
+                  </div> 
+                </div>
 
       <div class="page">
         <!-- ================= NAV / EDITOR TOP BAR ================= -->
@@ -210,13 +190,13 @@
 
         <!-- ================= ABOUT ================= -->
         <section id="about" class="section">
-          <div data-aos="fade-right" data-aos-duration="1500" class="section-head" >
+          <div class="section-head" >
             <span class="tag-line"># about.md</span>
             <h2>About Me</h2>
           </div>
 
           <div  class="about-grid">
-            <div class="about-id-col" data-aos="fade-down" data-aos-duration="1500">
+            <div class="about-id-col">
               <div class="lanyard-container">
                 <div class="lanyard-strap"></div>
                 <div class="breakaway-clip"></div>
@@ -245,7 +225,7 @@
               </div>
             </div>
 
-            <div data-aos="zoom-in-up" data-aos-duration="1500" class="about-text " data-delay="1">
+            <div class="about-text " data-delay="1">
               <p>
                 I am a <strong>Bachelor of Computer Applications (BCA)</strong> graduate from <strong>Silver Oak University, Ahmedabad</strong>, with a strong interest in <strong>Data Science, Machine Learning, Artificial Intelligence, and Data Analytics</strong>. I enjoy working with data to discover meaningful insights, solve real-world problems, and build predictive models.
               </p>
@@ -264,7 +244,7 @@
 
         <!-- ================= EXPERIENCE ================= -->
         <section id="experience" class="section">
-          <div data-aos="fade-right" data-aos-duration="1500"class="section-head" >
+          <divclass="section-head" >
             <span class="tag-line"># experience.log</span>
             <h2>Experience</h2>
             <p class="section-sub">git log --oneline --graph — the path from classroom to client work.</p>
@@ -280,7 +260,7 @@
               <div class="git-log">
                 <div class="git-log-track"></div>
                 <div class="git-log-progress" id="gitLogProgress"></div>
-                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="2">
+                <div class="commit reveal" data-delay="2">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-graduation-cap-line"></i></span>
                     <span class="commit-line"></span>
@@ -296,7 +276,7 @@
                   </div>
                 </div>
 
-                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="0">
+                <div class="commit reveal" data-delay="0">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-medal-line"></i></span>
                     <span class="commit-line"></span>
@@ -312,7 +292,7 @@
                   </div>
                 </div>
 
-                <div data-aos="fade-up" data-aos-duration="1500" class="commit reveal" data-delay="1">
+                <div class="commit reveal" data-delay="1">
                   <div class="commit-marker">
                     <span class="commit-dot"><i class="ri-briefcase-4-line"></i></span>
                     <span class="commit-line last"></span>
@@ -387,384 +367,514 @@
 
         <!-- ================= PROJECTS ================= -->
         <section id="projects" class="section">
-          <div class="section-head " data-aos="fade-right" data-aos-duration="1500">
-            <span class="tag-line"># projects/</span>
-            <h2>Notebook History</h2>
-            <p class="section-sub">Five executed notebooks — from a client engagement to independent capstones. Each cell shows what went in and what came out, warts included.</p>
-          </div>
 
-          <div class="notebook-list">
-            <article class="cell cell-web" data-aos="fade-up" data-aos-duration="1500">
-  <div class="cell-io">
-    <span class="cell-tag tag-college"><i class="ri-graduation-cap-line"></i>GRADUATION PROJECT· COLLEGE</span>
-    <span class="cell-exec">In [1]:</span>
+  <div class="section-head">
+    <span class="tag-line"># projects/</span>
+    <h2>Notebook History</h2>
+    <p class="section-sub">
+      Five executed notebooks — from a client engagement to independent
+      capstones. Each cell shows what went in and what came out, warts included.
+    </p>
   </div>
 
-  <div class="cell-code">
-    <h3>Krushi Manch <span class="cell-id">BCA · Silver Oak University</span></h3>
-    <p>A multilingual agricultural web platform built with a 4-person team to help farmers access reliable, region-specific crop information — over 50 crop varieties, disease guidance, a rental marketplace for equipment, and an EMI calculator. Full stack: PHP/MySQL backend, HTML/CSS/JS frontend, role-based access for farmers, buyers and admins.</p>
+  <div class="notebook-list stack-container">
 
-    <div class="chip-row">
-      <span class="chip chip-blue">PHP</span>
-      <span class="chip chip-purple">MySQL</span>
-      <span class="chip chip-green">HTML/CSS/JS</span>
-    </div>
+    <!-- =========================
+         PROJECT 01
+    ========================== -->
 
-    <!-- ONLY ADDED -->
-    <div class="case-study-action">
-      <button class="case-study-btn" id="openKrushiCaseStudy">
-        <span>View Case Study</span>
-        <i class="ri-arrow-right-up-line"></i>
-      </button>
-    </div>
+    <article class="cell cell-web stack-card">
+
+      <div class="cell-io">
+        <span class="cell-tag tag-college">
+          <i class="ri-graduation-cap-line"></i>
+          GRADUATION PROJECT · COLLEGE
+        </span>
+
+        <span class="cell-exec">In [1]:</span>
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Krushi Manch
+          <span class="cell-id">BCA · Silver Oak University</span>
+        </h3>
+
+        <p>
+          A multilingual agricultural web platform built with a 4-person team
+          to help farmers access reliable, region-specific crop information —
+          over 50 crop varieties, disease guidance, a rental marketplace for
+          equipment, and an EMI calculator. Full stack: PHP/MySQL backend,
+          HTML/CSS/JS frontend, role-based access for farmers, buyers and admins.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-blue">PHP</span>
+          <span class="chip chip-purple">MySQL</span>
+          <span class="chip chip-green">HTML/CSS/JS</span>
+        </div>
+
+        <div class="case-study-action">
+          <button class="case-study-btn" id="openKrushiCaseStudy">
+            <span>View Case Study</span>
+            <i class="ri-arrow-right-up-line"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[1]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">4</span>
+            <span class="metric-label">team members</span>
+          </div>
+
+          <div class="metric">
+            <span class="metric-val">50+</span>
+            <span class="metric-label">crop profiles</span>
+          </div>
+
+          <div class="metric">
+            <span class="metric-val">2+</span>
+            <span class="metric-label">languages supported</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =========================
+         PROJECT 02
+    ========================== -->
+
+    <article class="cell stack-card">
+
+      <div class="cell-io">
+
+        <span class="cell-tag tag-client">
+          <i class="ri-briefcase-4-line"></i>
+          CLIENT PROJECT · INTERNSHIP
+        </span>
+
+        <span class="cell-exec">In [2]:</span>
+
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Customer Churn Prediction
+
+          <span>
+            <a
+              class="chip-a chip-blue"
+              href="https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg>
+            </a>
+          </span>
+
+          <span class="cell-id">PRCL-0017</span>
+
+        </h3>
+
+        <p>
+          Predicting which telecom customers are likely to churn, using tenure,
+          contract type and billing behaviour. Built a full pipeline — cleaning,
+          feature engineering (tenure from signup date), and classification with
+          Logistic Regression, Decision Tree and Random Forest, using SMOTE to
+          address heavy class imbalance.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-py">pandas</span>
+          <span class="chip chip-green">scikit-learn</span>
+          <span class="chip chip-purple">imblearn / SMOTE</span>
+          <span class="chip chip-amber">seaborn</span>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[2]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">79%</span>
+            <span class="metric-label">accuracy</span>
+          </div>
+
+          <div class="metric metric-warn">
+            <span class="metric-val">⚠</span>
+            <span class="metric-label">
+              minority-class recall near 0 — imbalance still a challenge
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =========================
+         PROJECT 03
+    ========================== -->
+
+    <article class="cell stack-card">
+
+      <div class="cell-io">
+
+        <span class="cell-tag tag-capstone">
+          <i class="ri-flag-2-line"></i>
+          CAPSTONE · INTERNSHIP
+        </span>
+
+        <span class="cell-exec">In [3]:</span>
+
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Home Loan Default Prediction
+
+          <a
+            class="chip-a chip-blue"
+            href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb"
+            target="_blank"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg>
+          </a>
+
+          <span class="cell-id">PRCP-1006</span>
+
+        </h3>
+
+        <p>
+          Predicting loan default risk from applicant and credit history data.
+          Compared Logistic Regression, Decision Tree, Random Forest and XGBoost,
+          tuning with GridSearchCV and evaluating on both accuracy and ROC-AUC
+          rather than accuracy alone.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-py">pandas</span>
+          <span class="chip chip-green">XGBoost</span>
+          <span class="chip chip-blue">scikit-learn</span>
+          <span class="chip chip-amber">seaborn</span>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[3]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">91.98%</span>
+            <span class="metric-label">accuracy (XGBoost)</span>
+          </div>
+
+          <div class="metric">
+            <span class="metric-val">0.761</span>
+            <span class="metric-label">ROC-AUC (best model)</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =========================
+         PROJECT 04
+    ========================== -->
+
+    <article class="cell stack-card">
+
+      <div class="cell-io">
+
+        <span class="cell-tag tag-capstone">
+          <i class="ri-flag-2-line"></i>
+          CAPSTONE · INTERNSHIP
+        </span>
+
+        <span class="cell-exec">In [4]:</span>
+
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Insurance Claim Prediction
+
+          <span>
+            <a
+              class="chip-a chip-blue"
+              href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg>
+            </a>
+          </span>
+
+          <span class="cell-id">PRCP-1010</span>
+
+        </h3>
+
+        <p>
+          Classifying likely insurance claims from a privacy-masked feature set.
+          Trained Logistic Regression, Decision Tree, Random Forest and Gradient
+          Boosting with SMOTE resampling — a good lesson in why accuracy alone
+          can be misleading on imbalanced data.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-py">pandas</span>
+          <span class="chip chip-green">scikit-learn</span>
+          <span class="chip chip-purple">SMOTE</span>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[4]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">84.7%</span>
+            <span class="metric-label">
+              accuracy (Logistic Regression)
+            </span>
+          </div>
+
+          <div class="metric metric-warn">
+            <span class="metric-val">~0.50</span>
+            <span class="metric-label">
+              ROC-AUC — high accuracy hid weak separation
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =========================
+         PROJECT 05
+    ========================== -->
+
+    <article class="cell stack-card">
+
+      <div class="cell-io">
+
+        <span class="cell-tag tag-capstone">
+          <i class="ri-flag-2-line"></i>
+          CAPSTONE · INTERNSHIP
+        </span>
+
+        <span class="cell-exec">In [5]:</span>
+
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Vaccine Prediction
+
+          <span>
+            <a
+              class="chip-a chip-blue"
+              href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg>
+            </a>
+          </span>
+
+          <span class="cell-id">PRCP-1014</span>
+
+        </h3>
+
+        <p>
+          Regression task forecasting vaccination-related figures from public
+          health data with missing values from inconsistent regional reporting.
+          Compared Linear Regression, Random Forest and Gradient Boosting
+          regressors on MAE, RMSE and R².
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-py">pandas</span>
+          <span class="chip chip-green">scikit-learn</span>
+          <span class="chip chip-amber">seaborn</span>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[5]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">R² ≈ 1.0</span>
+            <span class="metric-label">
+              Random Forest &amp; Linear Regression
+            </span>
+          </div>
+
+          <div class="metric">
+            <span class="metric-val">0.77</span>
+            <span class="metric-label">
+              MAE (Random Forest)
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =========================
+         PROJECT 06
+    ========================== -->
+
+    <article class="cell stack-card">
+
+      <div class="cell-io">
+
+        <span class="cell-tag tag-capstone">
+          <i class="ri-flag-2-line"></i>
+          CAPSTONE · INTERNSHIP
+        </span>
+
+        <span class="cell-exec">In [6]:</span>
+
+      </div>
+
+      <div class="cell-code">
+
+        <h3>
+          Johns Hopkins COVID-19 Forecasting
+
+          <span>
+            <a
+              class="chip-a chip-blue"
+              href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <path d="M0 0h24v24H0z" fill="none" />
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
+    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+  </g>
+</svg>
+            </a>
+          </span>
+
+          <span class="cell-id">PRCP-1023</span>
+
+        </h3>
+
+        <p>
+          Converted wide time-series country-level case data into global daily
+          totals, then forecast future case counts using Linear, Ridge and Lasso
+          Regression plus a tuned Random Forest. Time-series forecasting on
+          cumulative counts turned out to be a much harder problem than the
+          earlier classification tasks.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip chip-py">pandas</span>
+          <span class="chip chip-blue">scikit-learn</span>
+          <span class="chip chip-amber">matplotlib</span>
+        </div>
+
+      </div>
+
+      <div class="cell-out">
+
+        <span class="cell-exec">Out[6]:</span>
+
+        <div class="metric-row">
+
+          <div class="metric">
+            <span class="metric-val">Ridge</span>
+            <span class="metric-label">
+              best baseline (lowest RMSE)
+            </span>
+          </div>
+
+          <div class="metric metric-warn">
+            <span class="metric-val">R² &lt; 0</span>
+            <span class="metric-label">
+              tuned model underfit — key lesson on time-series limits
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
   </div>
 
-  <div class="cell-out">
-    <span class="cell-exec">Out[1]:</span>
-
-    <div class="metric-row">
-      <div class="metric">
-        <span class="metric-val">4</span>
-        <span class="metric-label">team members</span>
-      </div>
-
-      <div class="metric">
-        <span class="metric-val">50+</span>
-        <span class="metric-label">crop profiles</span>
-      </div>
-
-      <div class="metric">
-        <span class="metric-val">2+</span>
-        <span class="metric-label">languages supported</span>
-      </div>
-    </div>
-  </div>
-</article>
-
-<div class="krushi-case-modal" id="krushiCaseModal">
-  <div class="krushi-case-overlay" id="krushiCaseOverlay"></div>
-
-  <div class="krushi-case-box">
-
-    <button class="krushi-case-close" id="closeKrushiCase">
-      <i class="ri-close-line"></i>
-    </button>
-
-    <div class="krushi-case-head">
-      <span>CASE STUDY · 01</span>
-      <h2>Krushi Manch</h2>
-      <p>
-        Multilingual agricultural web platform designed to provide
-        farmers with structured and region-specific agricultural information.
-      </p>
-    </div>
-
-    <div class="krushi-case-content">
-
-      <div class="krushi-case-item">
-        <small>01 · OVERVIEW</small>
-        <h3>What is Krushi Manch?</h3>
-        <p>
-          Krushi Manch is a web-based agricultural information platform
-          developed as a knowledge hub for farmers and agricultural
-          stakeholders. The platform focuses on making crop-related
-          information easier to access and understand.
-        </p>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>02 · PROBLEM</small>
-        <h3>The Problem</h3>
-        <p>
-          Farmers can face difficulty finding reliable and timely
-          information about crops, diseases, soil, climate and farming
-          practices. Language barriers and fragmented information can
-          make the problem worse.
-        </p>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>03 · SOLUTION</small>
-        <h3>The Solution</h3>
-        <p>
-          Krushi Manch brings agricultural information into one
-          centralized platform with structured crop profiles,
-          multilingual access and an interface designed for simple
-          navigation.
-        </p>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>04 · FEATURES</small>
-        <h3>Key Features</h3>
-
-        <div class="krushi-feature-grid">
-          <span>50+ Crop Profiles</span>
-          <span>Disease Guidance</span>
-          <span>Multilingual Support</span>
-          <span>Weather Information</span>
-          <span>Market Information</span>
-          <span>Equipment Rental</span>
-          <span>EMI Calculator</span>
-          <span>Role-Based Access</span>
-        </div>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>05 · MY ROLE</small>
-        <h3>My Contribution</h3>
-        <p>
-          Contributed to the development of the platform across frontend,
-          backend and database functionality, including interface
-          implementation, PHP functionality and MySQL data handling.
-        </p>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>06 · TECHNOLOGY</small>
-        <h3>Technology Stack</h3>
-
-        <div class="krushi-stack">
-          <div>
-            <b>Frontend</b>
-            <span>HTML · CSS · JavaScript</span>
-          </div>
-
-          <div>
-            <b>Backend</b>
-            <span>PHP</span>
-          </div>
-
-          <div>
-            <b>Database</b>
-            <span>MySQL</span>
-          </div>
-
-          <div>
-            <b>Project</b>
-            <span>Web Application</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="krushi-case-item krushi-full">
-        <small>07 · DEVELOPMENT</small>
-        <h3>Development Process</h3>
-
-        <div class="krushi-process">
-          <div><b>01</b><span>Requirements</span></div>
-          <div><b>02</b><span>Analysis</span></div>
-          <div><b>03</b><span>UI Design</span></div>
-          <div><b>04</b><span>Development</span></div>
-          <div><b>05</b><span>Testing</span></div>
-          <div><b>06</b><span>Deployment</span></div>
-        </div>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>08 · PROJECT DETAILS</small>
-        <h3>Project Snapshot</h3>
-
-        <div class="krushi-snapshot">
-          <div>
-            <span>Team</span>
-            <b>4 Members</b>
-          </div>
-
-          <div>
-            <span>Duration</span>
-            <b>6 Months</b>
-          </div>
-
-          <div>
-            <span>Type</span>
-            <b>Academic Project</b>
-          </div>
-
-          <div>
-            <span>Platform</span>
-            <b>Web Application</b>
-          </div>
-        </div>
-      </div>
-
-      <div class="krushi-case-item">
-        <small>09 · STATUS</small>
-        <h3>Current Status</h3>
-        <p>
-          Completed Academic / Final-Year Project — full-stack development is
-  complete; public deployment is pending.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="krushi-case-footer">
-      <span>KRUSHI MANCH</span>
-      <span>PHP · MYSQL · JAVASCRIPT</span>
-    </div>
-
-  </div>
-</div>
-
-            <article class="cell" data-aos="fade-up" data-aos-duration="1500" >
-              <div class="cell-io">
-                <span class="cell-tag tag-client"><i class="ri-briefcase-4-line"></i> CLIENT PROJECT · INTERNSHIP</span>
-                <span class="cell-exec">In [2]:</span>
-              </div>
-              <div class="cell-code">
-                <h3>Customer Churn Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-  <path d="M0 0h24v24H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
-  </g>
-</svg></a></span> <span class="cell-id">PRCL-0017</span></h3>
-                <p>Predicting which telecom customers are likely to churn, using tenure, contract type and billing behaviour. Built a full pipeline — cleaning, feature engineering (tenure from signup date), and classification with Logistic Regression, Decision Tree and Random Forest, using SMOTE to address heavy class imbalance.</p>
-                <div class="chip-row">
-                  <span class="chip chip-py">pandas</span>
-                  <span class="chip chip-green">scikit-learn</span>
-                  <span class="chip chip-purple">imblearn / SMOTE</span>
-                  <span class="chip chip-amber">seaborn</span>
-                </div>
-              </div>
-              <div class="cell-out">
-                <span class="cell-exec">Out[2]:</span>
-                <div class="metric-row">
-                  <div class="metric"><span class="metric-val">79%</span><span class="metric-label">accuracy</span></div>
-                  <div class="metric metric-warn"><span class="metric-val">⚠</span><span class="metric-label">minority-class recall near 0 — imbalance still a challenge</span></div>
-                </div>
-              </div>
-            </article>
-
-            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
-              <div class="cell-io">
-                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
-                <span class="cell-exec">In [3]:</span>
-              </div>
-              <div class="cell-code">
-                <h3>Home Loan Default Prediction <a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-  <path d="M0 0h24v24H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
-  </g>
-</svg></a> <span class="cell-id">PRCP-1006</span></h3>
-                <p>Predicting loan default risk from applicant and credit history data. Compared Logistic Regression, Decision Tree, Random Forest and XGBoost, tuning with GridSearchCV and evaluating on both accuracy and ROC-AUC rather than accuracy alone.</p>
-                <div class="chip-row">
-                  <span class="chip chip-py">pandas</span>
-                  <span class="chip chip-green">XGBoost</span>
-                  <span class="chip chip-blue">scikit-learn</span>
-                  <span class="chip chip-amber">seaborn</span>
-                </div>
-              </div>
-              <div class="cell-out">
-                <span class="cell-exec">Out[3]:</span>
-                <div class="metric-row">
-                  <div class="metric"><span class="metric-val">91.98%</span><span class="metric-label">accuracy (XGBoost)</span></div>
-                  <div class="metric"><span class="metric-val">0.761</span><span class="metric-label">ROC-AUC (best model)</span></div>
-                </div>
-              </div>
-            </article>
-
-            <article class="cell "data-aos="fade-up" data-aos-duration="1500">
-              <div class="cell-io">
-                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
-                <span class="cell-exec">In [4]:</span>
-              </div>
-              <div class="cell-code">
-                <h3>Insurance Claim Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-  <path d="M0 0h24v24H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
-  </g>
-</svg></a></span> <span class="cell-id">PRCP-1010</span></h3>
-                <p>Classifying likely insurance claims from a privacy-masked feature set. Trained Logistic Regression, Decision Tree, Random Forest and Gradient Boosting with SMOTE resampling — a good lesson in why accuracy alone can be misleading on imbalanced data.</p>
-                <div class="chip-row">
-                  <span class="chip chip-py">pandas</span>
-                  <span class="chip chip-green">scikit-learn</span>
-                  <span class="chip chip-purple">SMOTE</span>
-                </div>
-              </div>
-              <div class="cell-out">
-                <span class="cell-exec">Out[4]:</span>
-                <div class="metric-row">
-                  <div class="metric"><span class="metric-val">84.7%</span><span class="metric-label">accuracy (Logistic Regression)</span></div>
-                  <div class="metric metric-warn"><span class="metric-val">~0.50</span><span class="metric-label">ROC-AUC — high accuracy hid weak separation</span></div>
-                </div>
-              </div>
-            </article>
-
-            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
-              <div class="cell-io">
-                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
-                <span class="cell-exec">In [5]:</span>
-              </div>
-              <div class="cell-code">
-                <h3>Vaccine Prediction <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-  <path d="M0 0h24v24H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
-  </g>
-</svg></a></span> <span class="cell-id">PRCP-1014</span></h3>
-                <p>Regression task forecasting vaccination-related figures from public health data with missing values from inconsistent regional reporting. Compared Linear Regression, Random Forest and Gradient Boosting regressors on MAE, RMSE and R².</p>
-                <div class="chip-row">
-                  <span class="chip chip-py">pandas</span>
-                  <span class="chip chip-green">scikit-learn</span>
-                  <span class="chip chip-amber">seaborn</span>
-                </div>
-              </div>
-              <div class="cell-out">
-                <span class="cell-exec">Out[5]:</span>
-                <div class="metric-row">
-                  <div class="metric"><span class="metric-val">R² ≈ 1.0</span><span class="metric-label">Random Forest &amp; Linear Regression</span></div>
-                  <div class="metric"><span class="metric-val">0.77</span><span class="metric-label">MAE (Random Forest)</span></div>
-                </div>
-              </div>
-            </article>
-
-            <article class="cell" data-aos="fade-up" data-aos-duration="1500">
-              <div class="cell-io">
-                <span class="cell-tag tag-capstone"><i class="ri-flag-2-line"></i> CAPSTONE · INTERNSHIP</span>
-                <span class="cell-exec">In [6]:</span>
-              </div>
-              <div class="cell-code">
-                <h3>Johns Hopkins COVID-19 Forecasting <span><a class="chip-a chip-blue" href="https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-  <path d="M0 0h24v24H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-    <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-    <path d="M9 20.027c-3 .973-5.5 0-7-3" />
-  </g>
-</svg></a></span> <span class="cell-id">PRCP-1023</span></h3>
-                <p>Converted wide time-series country-level case data into global daily totals, then forecast future case counts using Linear, Ridge and Lasso Regression plus a tuned Random Forest. Time-series forecasting on cumulative counts turned out to be a much harder — and more humbling — problem than the earlier classification tasks.</p>
-                <div class="chip-row">
-                  <span class="chip chip-py">pandas</span>
-                  <span class="chip chip-blue">scikit-learn</span>
-                  <span class="chip chip-amber">matplotlib</span>
-                </div>
-              </div>
-              <div class="cell-out">
-                <span class="cell-exec">Out[6]:</span>
-                <div class="metric-row">
-                  <div class="metric"><span class="metric-val">Ridge</span><span class="metric-label">best baseline (lowest RMSE)</span></div>
-                  <div class="metric metric-warn"><span class="metric-val">R² &lt; 0</span><span class="metric-label">tuned model underfit — key lesson on time-series limits</span></div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
+</section>
 
         <!-- ================= CERTIFICATIONS ================= -->
         <section id="certs" class="section">
-          <div class="section-head" data-aos="fade-right" data-aos-duration="1500">
+          <div class="section-head">
             <span class="tag-line"># certs.json</span>
             <h2>Certifications</h2>
           </div>
 
           <div class="cert-grid">
-            <div class="cert-card" data-aos="fade-up-right" data-aos-duration="1500">
+            <div class="cert-card">
               <i class="ri-award-fill cert-icon cert-icon-gold"></i>
               <div class="cert-badge cert-gold">GOLD · 95%</div>
               <h3>Certified Data Scientist</h3>
@@ -773,7 +883,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/nasscom.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card" data-aos="fade-up-center" data-aos-duration="1500">
+            <div class="cert-card">
               <i class="ri-shield-star-line cert-icon cert-icon-gold"></i>
               <div class="cert-badge cert-gold">FOUNDATION</div>
               <h3>Data Science Foundation</h3>
@@ -782,7 +892,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/iabac.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card" data-aos="fade-up-left" data-aos-duration="1500">
+            <div class="cert-card">
               <i class="ri-award-fill cert-icon cert-icon-gold"></i>
               <div class="cert-badge cert-gold">Deloitte.</div>
               <h3>Data Analytics</h3>
@@ -791,7 +901,7 @@
               <button class="cert-view-btn" onclick="openCertificate('certificates/deloitte.pdf')"><i class="ri-eye-line"></i> View Certificate</button>
             </div>
 
-            <div class="cert-card" data-aos="fade-up" data-aos-duration="1500">
+            <div class="cert-card">
               <i class="ri-briefcase-4-line cert-icon cert-icon-gold"></i>
               <div class="cert-badge cert-gold">INTERNSHIP</div>
               <h3>Data Science Consultant</h3>
@@ -829,14 +939,14 @@
 
         <!-- ================= CONTACT ================= -->
         <section id="contact" class="section contact-section">
-          <div class="section-head" data-aos="fade-right" data-aos-duration="1500">
+          <div class="section-head">
             <span class="tag-line"># contact.sh</span>
             <h2>Let's Talk Data</h2>
             <p class="section-sub">Open to internships, collaborations and anything that involves a messy dataset and a deadline.</p>
           </div>
 
           <div class="contact-grid">
-  <div class="editor-window contact-window" data-aos="fade-right" data-aos-duration="1500">
+  <div class="editor-window contact-window">
     <div class="editor-header">
       <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       <span class="editor-filename">terminal — contact.sh</span>
@@ -857,7 +967,6 @@
         
         <!-- ADDED: Location entry -->
 
-
         <li><span class="contact-icon"><i class="ri-linkedin-box-fill"></i></span><a href="https://www.linkedin.com/in/hiren-keraliya-440700259/" target="_blank" rel="noopener" class="contact-val" id="contact-linkedin">LinkedIn Profile</a></li>
         <li><span class="contact-icon"><i class="ri-github-fill"></i></span><a href="https://github.com/hiren223" target="_blank" rel="noopener" class="contact-val" id="contact-github">GitHub Profile</a></li>
       </ul>
@@ -870,7 +979,7 @@
     </div>
   </div>
 
-            <div class="editor-window contact-form-window" data-aos="fade-left" data-aos-duration="1500">
+            <div class="editor-window contact-form-window">
               <div class="editor-header">
                 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
                 <span class="editor-filename">send_message.py</span>
@@ -897,7 +1006,6 @@
     required
     
   />
-  
 
   <label class="form-label" for="message"><span class="kw">message</span> =</label>
   <textarea
@@ -908,7 +1016,6 @@
     required
     minlength="10"
   ></textarea>
-
 
   <button type="submit" class="btn btn-primary form-submit">send_message() →</button>
   <p class="form-note" id="form-note"></p>
@@ -969,9 +1076,6 @@
       document.getElementById("footer-top-btn")?.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
-    </script>
-    <script>
-      AOS.init();
     </script>
 
   </body>
