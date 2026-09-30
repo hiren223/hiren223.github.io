@@ -2953,8 +2953,8 @@ a {
 ================================================================ */
 .toast-container {
   position: fixed;
-  top: 80px; /* Shifted down slightly so toasts don't block mobile topbar items */
-  right: 24px;
+  top: 100px; /* Shifted down slightly so toasts don't block mobile topbar items */
+  right: 40px;
   z-index: 999999 !important; /* Higher stacking priority than topbar */
   display: flex;
   flex-direction: column;
