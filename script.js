@@ -1207,114 +1207,217 @@ function showNote(text,type){
 // ============================================================
 // CERTIFICATE VIEWER MODAL
 // ============================================================
-(function initCertificateModal() {
-  const modal = document.getElementById('certificateModal');
-  const canvas = document.getElementById('certificateCanvas');
-  const loadingEl = document.getElementById('certLoading');
-  const zoomLabel = document.getElementById('certZoomLabel');
-  const pageLabel = document.getElementById('certPageLabel');
-  const zoomInBtn = document.getElementById('certZoomIn');
-  const zoomOutBtn = document.getElementById('certZoomOut');
-  const prevBtn = document.getElementById('certPrev');
-  const nextBtn = document.getElementById('certNext');
-  const downloadLink = document.getElementById('certDownload');
+(function initCertificateModal(){
+  const modal=document.getElementById('certificateModal');
+  const canvas=document.getElementById('certificateCanvas');
+  const loadingEl=document.getElementById('certLoading');
+  const zoomLabel=document.getElementById('certZoomLabel');
+  const pageLabel=document.getElementById('certPageLabel');
+  const zoomInBtn=document.getElementById('certZoomIn');
+  const zoomOutBtn=document.getElementById('certZoomOut');
+  const prevBtn=document.getElementById('certPrev');
+  const nextBtn=document.getElementById('certNext');
+  const downloadLink=document.getElementById('certDownload');
 
-  if (!modal || !canvas || typeof pdfjsLib === 'undefined') return;
+  if(!modal||!canvas||typeof pdfjsLib==='undefined')return;
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  const ctx = canvas.getContext('2d');
-  let pdfDoc = null;
-  let currentPage = 1;
-  let zoom = 1.2;
-  let lastFocused = null;
+  const ctx=canvas.getContext('2d');
 
-  function showLoading(show) {
-    loadingEl.classList.toggle('hidden', !show);
-    canvas.style.visibility = show ? 'hidden' : 'visible';
+  let pdfDoc=null;
+  let currentPage=1;
+  let zoom=1;
+  let lastFocused=null;
+
+  const MIN_ZOOM=0.5;
+  const MAX_ZOOM=1;
+  const ZOOM_STEP=0.1;
+
+  function updateZoomLabel(){
+    zoomLabel.textContent=`${Math.round(zoom*100)}%`;
   }
 
-  function renderPage(num) {
+  function updatePageLabel(){
+    if(pdfDoc){
+      pageLabel.textContent=`${currentPage} / ${pdfDoc.numPages}`;
+    }
+  }
+
+  function updateZoomButtons(){
+    if(zoomInBtn){
+      zoomInBtn.disabled=zoom>=MAX_ZOOM;
+    }
+
+    if(zoomOutBtn){
+      zoomOutBtn.disabled=zoom<=MIN_ZOOM;
+    }
+  }
+
+  function showLoading(show){
+    if(loadingEl){
+      loadingEl.classList.toggle('hidden',!show);
+    }
+
+    canvas.style.visibility=show?'hidden':'visible';
+  }
+
+  async function renderPage(num){
+    if(!pdfDoc)return;
+
     showLoading(true);
-    pdfDoc.getPage(num).then((page) => {
-      const viewport = page.getViewport({ scale: zoom });
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
 
-      const renderContext = { canvasContext: ctx, viewport: viewport };
-      page.render(renderContext).promise.then(() => {
-        showLoading(false);
-        pageLabel.textContent = `${num} / ${pdfDoc.numPages}`;
-        zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
-      });
-    });
+    try{
+      const page=await pdfDoc.getPage(num);
+      const viewport=page.getViewport({scale:zoom});
+
+      canvas.width=Math.floor(viewport.width);
+      canvas.height=Math.floor(viewport.height);
+
+      await page.render({
+        canvasContext:ctx,
+        viewport:viewport
+      }).promise;
+
+      currentPage=num;
+      updatePageLabel();
+      updateZoomLabel();
+      updateZoomButtons();
+      showLoading(false);
+    }catch(error){
+      console.error('PDF render error:',error);
+
+      if(loadingEl){
+        loadingEl.innerHTML='<i class="ri-error-warning-line"></i> Unable to render certificate.';
+      }
+    }
   }
 
-  window.openCertificate = function (pdfPath) {
-    lastFocused = document.activeElement;
+  window.openCertificate=function(pdfPath){
+    lastFocused=document.activeElement;
+
     modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow='hidden';
 
-    downloadLink.href = pdfPath;
-    zoom = 1.2;
-    currentPage = 1;
+    downloadLink.href=pdfPath;
+
+    pdfDoc=null;
+    currentPage=1;
+    zoom=1;
+
+    updateZoomLabel();
+    updateZoomButtons();
+    updatePageLabel();
     showLoading(true);
 
-    pdfjsLib.getDocument(pdfPath).promise.then((doc) => {
-      pdfDoc = doc;
+    pdfjsLib.getDocument(pdfPath).promise.then(doc=>{
+      pdfDoc=doc;
+      updatePageLabel();
       renderPage(currentPage);
-    }).catch(() => {
-      loadingEl.innerHTML = '<i class="ri-error-warning-line"></i> Unable to load certificate.';
+    }).catch(error=>{
+      console.error('PDF loading error:',error);
+
+      if(loadingEl){
+        loadingEl.innerHTML='<i class="ri-error-warning-line"></i> Unable to load certificate.';
+      }
     });
   };
 
-  window.closeCertificate = function () {
+  window.closeCertificate=function(){
     modal.classList.remove('open');
-    document.body.style.overflow = '';
-    if (lastFocused) lastFocused.focus();
+    document.body.style.overflow='';
 
-    setTimeout(() => {
-      pdfDoc = null;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      loadingEl.innerHTML = '<i class="ri-loader-4-line"></i> Loading certificate...';
-    }, 350);
+    if(lastFocused&&typeof lastFocused.focus==='function'){
+      lastFocused.focus();
+    }
+
+    setTimeout(()=>{
+      pdfDoc=null;
+      currentPage=1;
+      zoom=1;
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      canvas.width=0;
+      canvas.height=0;
+
+      updateZoomLabel();
+      updateZoomButtons();
+
+      if(loadingEl){
+        loadingEl.innerHTML='<i class="ri-loader-4-line"></i> Loading certificate...';
+      }
+    },350);
   };
 
-  zoomInBtn.addEventListener('click', () => {
-    if (!pdfDoc) return;
-    zoom = Math.min(zoom + 0.2, 3);
+  zoomInBtn.addEventListener('click',()=>{
+    if(!pdfDoc)return;
+
+    zoom=Math.min(
+      Math.round((zoom+ZOOM_STEP)*10)/10,
+      MAX_ZOOM
+    );
+
     renderPage(currentPage);
   });
 
-  zoomOutBtn.addEventListener('click', () => {
-    if (!pdfDoc) return;
-    zoom = Math.max(zoom - 0.2, 0.5);
+  zoomOutBtn.addEventListener('click',()=>{
+    if(!pdfDoc)return;
+
+    zoom=Math.max(
+      Math.round((zoom-ZOOM_STEP)*10)/10,
+      MIN_ZOOM
+    );
+
     renderPage(currentPage);
   });
 
-  prevBtn.addEventListener('click', () => {
-    if (!pdfDoc || currentPage <= 1) return;
+  prevBtn.addEventListener('click',()=>{
+    if(!pdfDoc||currentPage<=1)return;
+
     currentPage--;
     renderPage(currentPage);
   });
 
-  nextBtn.addEventListener('click', () => {
-    if (!pdfDoc || currentPage >= pdfDoc.numPages) return;
+  nextBtn.addEventListener('click',()=>{
+    if(!pdfDoc||currentPage>=pdfDoc.numPages)return;
+
     currentPage++;
     renderPage(currentPage);
   });
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeCertificate();
+  modal.addEventListener('click',e=>{
+    if(e.target===modal){
+      window.closeCertificate();
+    }
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (!modal.classList.contains('open')) return;
-    if (e.key === 'Escape') closeCertificate();
-    if (e.key === 'ArrowRight') nextBtn.click();
-    if (e.key === 'ArrowLeft') prevBtn.click();
+  document.addEventListener('keydown',e=>{
+    if(!modal.classList.contains('open'))return;
+
+    if(e.key==='Escape'){
+      window.closeCertificate();
+    }
+
+    if(e.key==='ArrowRight'){
+      nextBtn.click();
+    }
+
+    if(e.key==='ArrowLeft'){
+      prevBtn.click();
+    }
+
+    if(e.key==='+'||e.key==='='){
+      zoomInBtn.click();
+    }
+
+    if(e.key==='-'){
+      zoomOutBtn.click();
+    }
   });
+
+  updateZoomLabel();
+  updateZoomButtons();
 })();
 
 // ============================================================
