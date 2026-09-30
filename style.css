@@ -25,6 +25,8 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fn) var(--panel-alt);
 }
 
 html {
@@ -407,7 +409,11 @@ a {
 .ai-role span {
   margin: 0 8px;
   color: #38bdf8;
-} /* ========================================================= LOADING ========================================================= */
+}
+
+/* ================================================================
+   LOADING
+================================================================ */
 .ai-loading {
   width: min(430px, 85vw);
   margin-top: 35px;
@@ -439,7 +445,11 @@ a {
   background: #38bdf8;
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
   transition: width 0.15s linear;
-} /* ========================================================= SYSTEM READY ========================================================= */
+}
+
+/* ================================================================
+   SYSTEM READY
+================================================================ */
 .system-ready {
   margin-top: 22px;
   font-size: 11px;
@@ -459,7 +469,11 @@ a {
 .system-ready span {
   margin-right: 6px;
   font-size: 14px;
-} /* ========================================================= MOBILE ========================================================= */
+}
+
+/* ================================================================
+   MOBILE
+================================================================ */
 @media (max-width: 600px) {
   .neural-network {
     width: 300px;
@@ -1588,26 +1602,6 @@ a {
   }
 }
 
-/* dots light up once the glow passes them */
-.commit-dot {
-  position: relative;
-  z-index: 2;
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    color 0.3s ease,
-    box-shadow 0.4s ease,
-    border-color 0.4s ease;
-}
-.commit-dot.lit {
-  border-color: var(--fn);
-  background: var(--fn);
-  color: var(--bg);
-  box-shadow:
-    0 0 14px var(--fn),
-    0 0 26px rgba(130, 170, 255, 0.5);
-}
-
 @media (max-width: 600px) {
   .git-log-track,
   .git-log-progress {
@@ -1897,7 +1891,9 @@ a {
   transition:
     transform 0.3s ease,
     background 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
 }
 .commit-line {
   width: 2px;
@@ -2012,6 +2008,9 @@ a {
 .stack-card:nth-child(4) { z-index: 4; }
 .stack-card:nth-child(5) { z-index: 5; }
 .stack-card:nth-child(6) { z-index: 6; }
+.stack-card:nth-child(7) { z-index: 7; }
+
+
 
 #projects,
 #projects .notebook-list,
@@ -2764,141 +2763,30 @@ a {
 /* ================================================================
    SECTION: CONTACT
 ================================================================ */
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-.contact-window,
-.contact-form-window {
-  width: 100%;
-}
-.terminal-body p {
-  margin: 0 0 10px;
-}
-.prompt {
-  color: var(--str);
-  margin-right: 8px;
-}
-.terminal-out {
-  color: var(--text-dim);
-  padding-left: 20px;
-}
-.contact-links {
-  list-style: none;
-  margin: 4px 0 18px;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.contact-links li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.contact-icon {
-  font-size: 14px;
-}
-.contact-key {
-  color: var(--muted);
-  min-width: 62px;
-}
-.contact-val {
-  color: var(--fn);
-  border-bottom: 1px dashed transparent;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-}
-.contact-val:hover {
-  color: var(--str);
-  border-color: var(--str);
-}
-.contact-form {
-  display: flex;
-  flex-direction: column;
-}
-.form-label {
-  color: var(--text-dim);
-  font-size: 13px;
-  margin-top: 10px;
-}
-.contact-form input,
-.contact-form textarea {
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  background: var(--panel-alt);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--str);
-  padding: 10px 12px;
-  resize: vertical;
-  outline: none;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
-}
-/* Input Error Styling */
-.contact-form input.input-error,
-.contact-form textarea.input-error {
-  border-color: var(--danger) !important;
-  box-shadow: 0 0 8px rgba(243, 139, 168, 0.4) !important;
-}
-
-.field-error {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--danger);
-  margin-top: 2px;
-  min-height: 14px;
-  display: block;
-}
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: var(--muted);
-}
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: var(--fn);
-  box-shadow: 1px 1px 10px var(--fn);
-}
-.form-submit {
-  margin-top: 16px;
-  border: none;
-  cursor: pointer;
-  width: fit-content;
-}
-.form-note {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--str);
-  margin-top: 10px;
-  min-height: 16px;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
-}
-.form-note.note-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.form-note.note-success {
-  color: var(--str);
-}
-.form-note.note-error {
-  color: var(--danger);
-}
-
-@media (max-width: 800px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
+.contact-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+.contact-window,.contact-form-window{position:relative;z-index:2;width:100%;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;opacity:1;isolation:isolate}
+.terminal-body p{margin:0 0 10px}
+.prompt{margin-right:8px;color:var(--str)}
+.terminal-out{padding-left:20px;color:var(--text-dim)}
+.contact-links{display:flex;flex-direction:column;gap:12px;margin:4px 0 18px;padding-left:20px;list-style:none}
+.contact-links li{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.contact-icon{font-size:14px}
+.contact-key{min-width:62px;color:var(--muted)}
+.contact-val{color:var(--fn);border-bottom:1px dashed transparent;transition:color .15s ease,border-color .15s ease}
+.contact-val:hover{color:var(--str);border-color:var(--str)}
+.contact-form{display:flex;flex-direction:column}
+.form-label{margin-top:10px;color:var(--text-dim);font-size:13px}
+.contact-form input,.contact-form textarea{width:100%;padding:10px 12px;font-family:var(--font-mono);font-size:13.5px;color:var(--str);background:var(--panel-alt);border:1px solid var(--border);border-radius:6px;outline:none;resize:vertical;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted)}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--fn);box-shadow:0 0 10px rgba(130,170,255,.25)}
+.contact-form input.input-error,.contact-form textarea.input-error{border-color:var(--danger)!important;box-shadow:0 0 8px rgba(243,139,168,.4)!important}
+.field-error{display:block;min-height:14px;margin-top:2px;font-family:var(--font-mono);font-size:11px;color:var(--danger)}
+.form-submit{width:fit-content;margin-top:16px;border:none;cursor:pointer}
+.form-note{min-height:16px;margin-top:10px;font-family:var(--font-mono);font-size:12.5px;color:var(--str);opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+.form-note.note-visible{opacity:1;transform:translateY(0)}
+.form-note.note-success{color:var(--str)}
+.form-note.note-error{color:var(--danger)}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr;gap:20px}}
 
 /* ================================================================
    FOOTER
