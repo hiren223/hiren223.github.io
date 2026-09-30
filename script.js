@@ -1031,136 +1031,176 @@ onScroll();
 // ============================================================
 // CONTACT FORM SUBMISSION
 // ============================================================
-const Form = document.getElementById('contact-form');
-const fNote = document.getElementById('form-note');
+const Form=document.getElementById('contact-form');
+const fNote=document.getElementById('form-note');
 
-if (Form) {
-  // Select all input and textarea elements inside the form
-  const inputs = Form.querySelectorAll('input[name="name"], input[name="email"], textarea[name="message"]');
+if(Form){
+  const inputs=Form.querySelectorAll('input[name="name"],input[name="email"],textarea[name="message"]');
 
-  inputs.forEach((input) => {
-    input.addEventListener('blur', () => validateField(input));
-    input.addEventListener('input', () => clearFieldError(input));
+  inputs.forEach(input=>{
+    input.addEventListener('blur',()=>validateField(input));
+    input.addEventListener('input',()=>clearFieldError(input));
   });
 
-  Form.addEventListener('submit', async function (e) {
+  Form.addEventListener('submit',async e=>{
     e.preventDefault();
 
-    // 1. Run full validation check before fetch call
-    let isValid = true;
-    inputs.forEach((input) => {
-      if (!validateField(input)) {
-        isValid = false;
-      }
+    let isValid=true;
+
+    inputs.forEach(input=>{
+      if(!validateField(input))isValid=false;
     });
 
-    if (!isValid) {
-      showNote('please fill out all required fields correctly', 'error');
-      if (typeof showToast === 'function') showToast('please fill out all required fields correctly', 'error');
+    if(!isValid){
+      showNote('please fill out all required fields correctly','error');
+      if(typeof showToast==='function')showToast('please fill out all required fields correctly','error');
       return;
     }
 
-    const submitBtn = Form.querySelector('.form-submit');
-    if (submitBtn) submitBtn.disabled = true;
-    showNote('sending...', 'info');
+    const submitBtn=Form.querySelector('.form-submit');
 
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+    if(submitBtn)submitBtn.disabled=true;
+
+    showNote('sending...','info');
+
+    const name=Form.querySelector('[name="name"]').value.trim();
+    const email=Form.querySelector('[name="email"]').value.trim();
+    const message=Form.querySelector('[name="message"]').value.trim();
+
+    try{
+      const res=await fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Accept':'application/json'
         },
-        body: JSON.stringify({
-          access_key: "069cb0b8-1614-49a5-9f97-edc09efd038c",
-          name: Form.querySelector('[name="name"]').value.trim(),
-          email: Form.querySelector('[name="email"]').value.trim(),
-          message: Form.querySelector('[name="message"]').value.trim(),
-          subject: "New Portfolio Contact Message"
+        body:JSON.stringify({
+          access_key:'069cb0b8-1614-49a5-9f97-edc09efd038c',
+          name:name,
+          email:email,
+          message:message,
+          subject:'New Portfolio Contact Message'
         })
       });
 
-      const data = await res.json();
+      const data=await res.json();
 
-      if (data.success) {
-        showNote("message sent — I'll get back to you soon!", 'success');
-        if (typeof showToast === 'function') showToast('Message sent successfully!', 'success');
+      if(data.success){
+        showNote("message sent — I'll get back to you soon!",'success');
+
+        if(typeof showToast==='function'){
+          showToast('Message sent successfully!','success');
+        }
+
         Form.reset();
         clearAllErrors();
-      } else {
-        const errText = data.message || data.error || 'submission failed — please check inputs';
-        showNote(errText, 'error');
-        if (typeof showToast === 'function') showToast(errText, 'error');
+      }else{
+        const errText=data.message||data.error||'submission failed — please try again';
+
+        showNote(errText,'error');
+
+        if(typeof showToast==='function'){
+          showToast(errText,'error');
+        }
       }
-    } catch (err) {
-      showNote('network error — please try again', 'error');
-      if (typeof showToast === 'function') showToast('network error — please try again', 'error');
-    } finally {
-      if (submitBtn) submitBtn.disabled = false;
+    }catch(err){
+      console.error('Web3Forms Error:',err);
+
+      showNote('network error — please try again','error');
+
+      if(typeof showToast==='function'){
+        showToast('network error — please try again','error');
+      }
+    }finally{
+      if(submitBtn)submitBtn.disabled=false;
     }
   });
 }
 
-// Safer Field Validation Function
-function validateField(input) {
-  const val = input.value.trim();
-  const fieldName = input.name || 'Field';
-  let errorMessage = '';
+function validateField(input){
+  const val=input.value.trim();
+  const fieldName=input.name||'Field';
+  let errorMessage='';
 
-  if (!val) {
-    errorMessage = `${fieldName} is required`;
-  } else if (input.name === 'email' && !validateEmail(val)) {
-    errorMessage = 'Please enter a valid email address';
-  } else if (input.name === 'name' && val.length < 2) {
-    errorMessage = 'Name must be at least 2 characters';
-  } else if (input.name === 'message' && val.length < 10) {
-    errorMessage = 'Message must be at least 10 characters';
+  if(!val){
+    errorMessage=`${fieldName} is required`;
+  }else if(input.name==='email'&&!validateEmail(val)){
+    errorMessage='Please enter a valid email address';
+  }else if(input.name==='name'&&val.length<2){
+    errorMessage='Name must be at least 2 characters';
+  }else if(input.name==='message'&&val.length<0){
+    errorMessage='Message must be at least 10 characters';
   }
 
-  if (errorMessage) {
+  if(errorMessage){
     input.classList.add('input-error');
-    showFieldError(input, errorMessage);
+    showFieldError(input,errorMessage);
     return false;
-  } else {
-    clearFieldError(input);
-    return true;
   }
+
+  clearFieldError(input);
+  return true;
 }
 
-function validateEmail(email) {
+function validateEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function showFieldError(input, message) {
-  let errorEl = input.nextElementSibling;
-  if (!errorEl || !errorEl.classList.contains('field-error')) {
-    errorEl = document.getElementById(`${input.id}-error`);
+function showFieldError(input,message){
+  let errorEl=input.nextElementSibling;
+
+  if(!errorEl||!errorEl.classList.contains('field-error')){
+    errorEl=document.getElementById(`${input.id}-error`);
   }
-  if (errorEl) errorEl.textContent = `>>> ${message}`;
+
+  if(errorEl)errorEl.textContent=`>>> ${message}`;
 }
 
-function clearFieldError(input) {
+function clearFieldError(input){
   input.classList.remove('input-error');
-  let errorEl = input.nextElementSibling;
-  if (!errorEl || !errorEl.classList.contains('field-error')) {
-    errorEl = document.getElementById(`${input.id}-error`);
+
+  let errorEl=input.nextElementSibling;
+
+  if(!errorEl||!errorEl.classList.contains('field-error')){
+    errorEl=document.getElementById(`${input.id}-error`);
   }
-  if (errorEl) errorEl.textContent = '';
+
+  if(errorEl)errorEl.textContent='';
 }
 
-function clearAllErrors() {
-  if (!Form) return;
-  Form.querySelectorAll('.input-error').forEach((el) => el.classList.remove('input-error'));
-  Form.querySelectorAll('.field-error').forEach((el) => (el.textContent = ''));
+function clearAllErrors(){
+  if(!Form)return;
+
+  Form.querySelectorAll('.input-error').forEach(el=>{
+    el.classList.remove('input-error');
+  });
+
+  Form.querySelectorAll('.field-error').forEach(el=>{
+    el.textContent='';
+  });
 }
 
-function showNote(text, type) {
-  if (!fNote) return;
-  fNote.textContent = '>>> ' + text;
-  fNote.classList.remove('note-success', 'note-error', 'note-visible');
+function showNote(text,type){
+  if(!fNote)return;
+
+  fNote.textContent=`>>> ${text}`;
+
+  fNote.classList.remove(
+    'note-success',
+    'note-error',
+    'note-visible'
+  );
+
   void fNote.offsetWidth;
-  if (type === 'success') fNote.classList.add('note-success');
-  if (type === 'error') fNote.classList.add('note-error');
+
+  if(type==='success'){
+    fNote.classList.add('note-success');
+  }
+
+  if(type==='error'){
+    fNote.classList.add('note-error');
+  }
+
   fNote.classList.add('note-visible');
 }
 
