@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Home Loan Default Prediction — credit risk modelling cover">
+  <rect width="1600" height="1000" fill="#14100C"/>
+  <g stroke="#2A2119" stroke-width="1">
+    <path d="M0 220H1600M0 420H1600M0 620H1600M0 820H1600"/>
+  </g>
+  <!-- ROC-ish paired curves -->
+  <path d="M140 840 C 520 830, 820 700, 1080 470 S 1380 260, 1470 240" fill="none" stroke="#E8E2D6" stroke-width="5" stroke-linecap="round"/>
+  <path d="M140 840 C 560 838, 880 780, 1120 640 S 1400 480, 1470 460" fill="none" stroke="#B4542A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M140 840 L1470 240" stroke="#4A3B2E" stroke-width="2" stroke-dasharray="10 12"/>
+  <!-- house glyph -->
+  <g stroke="#E8E2D6" stroke-width="5" fill="none" stroke-linejoin="round">
+    <path d="M1200 640 L1290 560 L1380 640"/>
+    <path d="M1230 630 V740 H1350 V630"/>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="150" font-size="66" letter-spacing="8">HOME LOAN DEFAULT</text>
+    <text x="124" y="200" font-size="30" letter-spacing="12" fill="#B4542A">XGBOOST · ROC-AUC</text>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#B4542A" font-size="30" letter-spacing="6">
+    <text x="140" y="920">91.98% ACCURACY</text>
+  </g>
+</svg>

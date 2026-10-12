@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="COVID-19 Forecasting — time series cover">
+  <rect width="1600" height="1000" fill="#12100E"/>
+  <g stroke="#241F1B" stroke-width="1">
+    <path d="M0 250H1600M0 450H1600M0 650H1600M0 850H1600"/>
+  </g>
+  <!-- epidemic curve -->
+  <path d="M120 820 C 420 812, 620 780, 780 690 C 900 620, 940 470, 1040 400 C 1160 320, 1300 350, 1470 372" fill="none" stroke="#B4542A" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#E8E2D6" opacity="0.55">
+    <circle cx="300" cy="812" r="8"/><circle cx="520" cy="796" r="8"/>
+    <circle cx="740" cy="712" r="8"/><circle cx="960" cy="500" r="8"/>
+    <circle cx="1180" cy="336" r="8"/><circle cx="1400" cy="368" r="8"/>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="160" font-size="64" letter-spacing="8">COVID-19 FORECASTING</text>
+    <text x="124" y="212" font-size="30" letter-spacing="12" fill="#B4542A">TIME SERIES · RIDGE</text>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#B4542A" font-size="30" letter-spacing="6">
+    <text x="120" y="910">GLOBAL DAILY TOTALS</text>
+  </g>
+</svg>

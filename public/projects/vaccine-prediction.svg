@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Vaccine Prediction — regression forecasting cover">
+  <rect width="1600" height="1000" fill="#14100C"/>
+  <g stroke="#2A2119" stroke-width="1">
+    <path d="M0 250H1600M0 450H1600M0 650H1600M0 850H1600"/>
+  </g>
+  <!-- predicted vs actual -->
+  <g fill="#E8E2D6" opacity="0.5">
+    <circle cx="280" cy="700" r="10"/><circle cx="430" cy="640" r="10"/>
+    <circle cx="580" cy="672" r="10"/><circle cx="730" cy="540" r="10"/>
+    <circle cx="880" cy="566" r="10"/><circle cx="1030" cy="440" r="10"/>
+    <circle cx="1180" cy="470" r="10"/><circle cx="1330" cy="360" r="10"/>
+  </g>
+  <path d="M240 760 C 520 690, 700 600, 900 500 S 1240 340, 1400 300" fill="none" stroke="#B4542A" stroke-width="6" stroke-linecap="round"/>
+  <!-- syringe -->
+  <g stroke="#E8E2D6" stroke-width="5" fill="none" stroke-linejoin="round">
+    <path d="M1120 700 L1330 490"/>
+    <path d="M1200 780 L1360 620 L1420 680 L1260 840 Z"/>
+    <path d="M1300 520 L1370 590"/>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="160" font-size="70" letter-spacing="8">VACCINE PREDICTION</text>
+    <text x="124" y="212" font-size="30" letter-spacing="12" fill="#B4542A">REGRESSION · RANDOM FOREST</text>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#B4542A" font-size="30" letter-spacing="6">
+    <text x="120" y="910">MAE 0.77</text>
+  </g>
+</svg>

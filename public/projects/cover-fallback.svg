@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Project cover placeholder">
+  <rect width="1600" height="1000" fill="#14100C"/>
+  <g stroke="#2A2119" stroke-width="1">
+    <path d="M0 250H1600M0 500H1600M0 750H1600"/>
+    <path d="M400 0V1000M800 0V1000M1200 0V1000"/>
+  </g>
+  <rect x="120" y="120" width="180" height="3" fill="#B4542A"/>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="880" font-size="54" letter-spacing="10">PROJECT</text>
+  </g>
+</svg>

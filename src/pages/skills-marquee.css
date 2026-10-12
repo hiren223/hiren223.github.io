@@ -1,0 +1,128 @@
+/* =============================================================
+   Skills bands — spiral helix + WebGL circular gallery
+
+   Two sections share this file:
+   - .hk-spiral  : the InfiniteSpiral brand-mark helix
+   - .hk-skills-gallery : the CircularGallery WebGL ring
+
+   Neither paints a background of its own beyond the gallery's tint, so the
+   section's own bg-sand/30 shows through and the marks read as transparent.
+   ============================================================= */
+
+.hk-spiral {
+  /* This element IS the spiral's root: the cards are absolutely positioned
+     against it, and the component writes the CSS perspective onto it. */
+  position: relative;
+  width: 100%;
+  /* a floor, not a cap: the cards are absolutely positioned inside */
+  height: clamp(280px, 34vw, 420px);
+  overflow: hidden;
+  /* the cards are the children, so the box must not collapse or grow */
+  display: block;
+  contain: paint;
+  background-color: var(--sand);
+  /* soft vignette top and bottom so cards fade into the band edges */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 14%,
+    black 86%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 14%,
+    black 86%,
+    transparent
+  );
+}
+
+/* ---------- card: cream tile, brand glyph centred inside ---------- */
+
+.hk-spiral-card {
+  display: grid;
+  place-items: center;
+  background-color: var(--background);
+  box-shadow: 0 10px 30px rgba(20, 20, 20, 0.08);
+}
+
+.hk-spiral-card img {
+  /* the glyph never fills the tile edge to edge */
+  width: 46%;
+  height: 46%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 48rem) {
+  .hk-spiral {
+    height: 260px;
+  }
+
+  .hk-spiral-card img {
+    width: 44%;
+    height: 44%;
+  }
+}
+
+/* =============================================================
+   Circular gallery — WebGL skill ring
+   ============================================================= */
+
+.hk-skills-gallery {
+  position: relative;
+  width: 100%;
+  /* ogl reads clientWidth/clientHeight, so this must be a real box */
+  height: clamp(340px, 46vw, 560px);
+  overflow: hidden;
+  /* transparent: the section's own tint is the backdrop */
+  background-color: transparent;
+  /* the ring bends upward, so fade the top edge rather than the bottom */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 92%,
+    transparent
+  );
+}
+
+/* The canvas ogl appends must never intercept the page's own scrolling. */
+.hk-circular-gallery canvas {
+  display: block;
+  /* the gallery handles wheel/drag itself, but must not block text
+     selection or the pointer events of anything layered above it */
+  pointer-events: auto;
+}
+
+/* Keyboard users tabbing to the gallery need a visible ring. */
+.hk-circular-gallery:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: -2px;
+}
+
+@media (max-width: 48rem) {
+  .hk-skills-gallery {
+    height: 320px;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hk-spiral,
+  .hk-skills-gallery {
+    /* the components already stop animating; drop the mask so a static
+       gallery is not needlessly clipped */
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

@@ -1,0 +1,629 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.hk-hero {
+  /* The light side of the site palette: the hero now carries the same
+     paper ground as every other band (see --background in index.css),
+     inverted so one charcoal copper-accented system still drives the page.
+     Every layer below reads these — nothing is sized, spaced or animated
+     differently. */
+  --hk-bg: #f7f5f1;
+  --hk-bg-2: #f7f5f1;
+  --hk-ink: #1d1b18;
+  --hk-muted: #6f6a63;
+  --hk-line: rgba(29, 27, 24, 0.12);
+  /* the giant name behind the portrait. This is the one value that actually
+     drives it — .hk-hero__name span reads this and used to hard-code its own,
+     which is why the token and the word had drifted apart. 0.45 alpha lands at
+     2.82:1 on the paper ground, exactly the decorative floor index.css sets for
+     display type at >=24px (this word bottoms out at 96px). */
+  --hk-word: rgba(29, 27, 24, 0.45);
+  /* One gutter token drives both edges and never steps inside a notch. It is
+     .page-container's own inset (48px, 40px below 48rem), so the hero's left
+     column lines up with every section heading under it instead of standing
+     14–18px further in. Above 1448px the stage's own max-width does the
+     capping, exactly as the page container's does. */
+  --hk-gutter: 1.5rem;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden; /* decorative layers can never leak sideways */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100svh;
+  color: var(--hk-ink);
+  /* Solid ground — the palette rule is solid bands, not gradients. */
+  background: var(--hk-bg);
+  /* Clears the fixed transparent navbar, which ends 64px down (8px margin +
+     56px bar). 4.25rem is that line plus a few px of air, and it is a floor:
+     on a short window 9vh would otherwise duck under the bar. */
+  padding-top: clamp(4.25rem, 9vh, 4.5rem);
+  /* The introduction, the CTA pair and the plate all stand on this line, so
+     the room under it is what makes the three read as one baseline. */
+  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  padding-left: max(var(--hk-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--hk-gutter), env(safe-area-inset-right));
+}
+
+/* .page-container narrows its own inset to 20px below 48rem; the hero follows
+   so the two stay aligned on a phone. */
+@media (max-width: 47.99rem) {
+  .hk-hero {
+    --hk-gutter: 1.25rem;
+  }
+}
+
+.hk-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* one faint warm key-light behind the portrait — depth, not decoration.
+       On paper the lift has to be the accent itself, not a gold bloom: a
+       light warm tint on a light ground reads as nothing at all. */
+    radial-gradient(
+      56rem 30rem at 50% 14%,
+      rgba(184, 101, 67, 0.07),
+      transparent 62%
+    );
+}
+
+.hk-hero__stage {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  display: grid;
+  /* left introduction | portrait (auto) | right plate. The outer tracks are
+     NOT equal: the introduction needs room for two CTA labels on one line
+     (~316px) while the plate is a fixed 260px panel. 1.14/0.86 is the
+     smallest split that keeps the CTA pair unwrapped at every three-column
+     width, and it puts the subject a hair right of centre — the same
+     off-centre axis the reference composition uses.
+
+     The word shares the middle track, so whatever the split, the word and the
+     portrait can never drift apart from each other. */
+  grid-template-columns: minmax(0, 1.14fr) auto minmax(0, 0.86fr);
+  column-gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: end;
+  min-height: 0;
+  /* the shared 1400px content width — same boundaries as every section */
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+/* ---------- layer 1: the portrait (primary focus) ---------- */
+
+/* ---------- layer 0: the giant name, behind the portrait ---------- */
+
+/* Shares the portrait's grid cell and stretches to the row, so the word is
+   centred on the portrait itself rather than on the stage. Purely decorative
+   and aria-hidden: the real <h1> below carries the name for screen readers. */
+.hk-hero__name {
+  z-index: 0;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  justify-self: stretch;
+  place-items: center;
+  pointer-events: none;
+  user-select: none;
+  /* the word is deliberately wider than the portrait so it spans past both
+     shoulders; .hk-hero's own overflow:hidden stops any spill */
+}
+
+.hk-hero__name span {
+  display: block;
+font-family: "Bebas Neue", sans-serif;
+  /* Measured, not guessed: Bebas Neue's advances for H I R E N are 0.420 +
+     0.192 + 0.403 + 0.363 + 0.427, and CSS adds the 0.1em tracking after each
+     of the five — so the word is 2.305em wide. 35vw therefore lands it at
+     77–85% of the stage: past both shoulders, still inside it.
+
+     min() so on a short screen it is the viewport HEIGHT that caps the word.
+     52vh is where the ink still clears the introduction: the cap-height ink
+     is 0.7em, so its bottom sits 0.4em under the row's centre, and solving
+     0.4f < stage/2 - (intro height + rule) for a 720px-tall window gives
+     f < 415px — 52vh of 720 is 374. */
+  font-size: clamp(6rem, min(35vw, 52vh), 32rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  /* The trailing letter-space would otherwise sit to the right of the N and
+     push the word 0.05em left of the portrait's centre line. Indenting the
+     first line by the same amount balances the two sides. */
+  text-indent: 0.1em;
+  line-height: 0.8;
+  /* the token, not a literal — see --hk-word above */
+  color: var(--hk-word);
+}
+
+.hk-hero__portrait {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  /* min(36vw, 76vh): on short screens the portrait must not push the hero past
+     100svh. Trimmed from 42vw so the two outer tracks get the room the CTA
+     pair needs to stay on one line — the portrait stays the largest solid
+     element on the stage at every desktop width. */
+  width: clamp(360px, min(36vw, 76vh), 600px);
+  max-width: 100%;
+  /* no lift: the portrait's bottom fade has to end on the same line as the
+     CTA pair and the plate, or the three columns stop reading as one row */
+  margin-bottom: 0;
+}
+
+/*
+ * Studio treatment: the cutout is graded and lit in CSS so it reads as a
+ * photographic plate, then the base dissolves into the hero background.
+ */
+.hk-hero__portrait-wrap {
+  position: relative;
+  width: 100%;
+  /* the veil and the ::after fade both need a stacking parent of their own */
+  isolation: isolate;
+}
+
+.hk-hero__portrait-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  /* height:auto keeps the intrinsic ratio — the cutout is never stretched */
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  /* editorial grading: slight contrast, gently desaturated, warm key bias.
+     Cool rim = soft alpha-following edge light; black plate = depth below.
+
+     The same darkness the dither plate carries, here for the two paths
+     where the <img> is what shows: touch devices (the veil is display:none
+     there, no hover to drive the reveal) and the frames before the veil
+     paints its first one. Without it those would sit at full brightness
+     against a paper ground while the canvas beside them reads dark. */
+  filter:
+    contrast(1.03) saturate(0.94) sepia(0.06) brightness(0.78)
+    drop-shadow(0 -8px 14px rgba(165, 185, 210, 0.14))
+    /* the cast shadow had to be lightened with the ground: 55% black
+       dissolves into a dark hero but piles up into a smudge on paper */
+    drop-shadow(0 30px 50px rgba(29, 27, 24, 0.18));
+}
+
+/* Bottom fade — the only veil, and it never reaches the face.
+   Ends at the hero background color so no rectangle is visible. */
+.hk-hero__portrait-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(247, 245, 241, 0.15) 35%,
+    #f7f5f1 100%
+  );
+}
+
+/* ---------- the dither veil over the portrait ---------- */
+
+/* Sits directly on the cutout's box. The canvas paints the Floyd-Steinberg
+   plate; the plain <img> underneath shows through wherever the veil is not
+   drawn (no WebGL, or before the plate's intro sweep completes). */
+.hk-hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* the portrait's own bottom fade (::after, z-index 2) must stay on top of
+     the canvas, so this never claims z-index 2 */
+}
+
+/* Touch devices get no hover: the reveal is driven by tap (clickBurst), and
+   the dithered plate would otherwise sit there looking flat and unfinished.
+   Keep the plain cutout there instead. */
+@media (hover: none) {
+  .hk-hero__veil {
+    display: none;
+  }
+}
+
+.hk-hero__fallback {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hk-line);
+  background: rgba(29, 27, 24, 0.03);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 3rem);
+  color: rgba(29, 27, 24, 0.3);
+}
+
+/* ---------- layer 2: the introduction, left column of the lower band ---------- */
+
+.hk-hero__content-left {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  justify-self: start;
+  /* min-width:0 lets this column shrink below its content on narrow
+     viewports instead of forcing the portrait column out of the stage */
+  min-width: 0;
+  max-width: 22rem;
+  /* The old clamp(5rem, 18vh, 10rem) padding here was a push-up: it lifted
+     the copy off the hero's bottom edge to fake an alignment with a plate
+     that was absolutely positioned over the portrait. The plate is a grid
+     item now, so both columns simply end on the stage's own bottom line. */
+  padding-bottom: 0;
+}
+
+.hk-hero__rule {
+  flex: none;
+  width: 2.25rem;
+  height: 2px;
+  margin: 0 0 0.9rem;
+  border: 0;
+  background: var(--clay); /* theme accent reused from index.css */
+}
+
+.hk-hero__desc {
+  margin: 0;
+  font-size: var(--type-base);
+  line-height: 1.7;
+  color: var(--hk-muted);
+  /* a cap, not a fixed width: the column can be narrower than the measure
+     and the copy has to wrap inside it instead of overhanging the portrait */
+  width: 100%;
+  max-width: 22rem;
+}
+
+.hk-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+  /* the pair prefers one line and is allowed to fall back to two rather than
+     overhang the column */
+  width: max-content;
+  max-width: 100%;
+}
+
+.hk-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.78rem 1.35rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption);
+  font-weight: 600;
+  /* opened up from 0.16em so "View My Work" + "Let's Connect" still share one
+     row at 1280px, where the outer tracks are at their tightest */
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease;
+}
+
+.hk-hero__btn:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+}
+
+/* Only the two colours are inverted, since --hk-ink is now the dark one;
+   size, padding, tracking and transition stay identical between the pair. */
+.hk-hero__btn--solid {
+  background: var(--hk-ink);
+  color: #f7f5f1;
+}
+
+.hk-hero__btn--solid:hover {
+  background: #141311;
+  transform: translateY(-2px);
+}
+
+.hk-hero__btn--ghost {
+  border-color: rgba(29, 27, 24, 0.28);
+  color: var(--hk-ink);
+}
+
+.hk-hero__btn--ghost:hover {
+  border-color: var(--hk-ink);
+  background: rgba(29, 27, 24, 0.06);
+  transform: translateY(-2px);
+}
+
+/* ---------- layer 3: the signal plate, right-hand column ---------- */
+
+/* An instrument panel, not a fluid column: it keeps its authored 260px and only
+   gives ground where the track itself is narrower than that. It is a grid item
+   now — nothing is pinned over the portrait any more, so its bottom edge simply
+   lands on the same line as the CTA pair across the stage, and it can never
+   drift into the portrait or the word. */
+.hk-hero__plate-slot {
+  position: relative;
+  z-index: 2;
+  grid-column: 3;
+  grid-row: 1;
+  align-self: end;
+  justify-self: end;
+  width:17rem;
+}
+
+/* ---------- the plate itself ---------- */
+
+.hk-plate {
+  position: relative;
+  padding: 1rem 1.1rem 0.9rem;
+  border: 1px solid var(--hk-line);
+  border-radius: 10px;
+  /* A flat plate on paper: no blur, no sheen, no shadow — a printed
+     instrument panel, not glass. It stands on the hero's own ground, so the
+     fill keeps it a solid object rather than a hole in the composition. */
+  background: #f7f5f1;
+  overflow: hidden;
+}
+
+.hk-plate__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+  white-space: nowrap;
+}
+
+.hk-plate__fig {
+  font-family: var(--font-sans);
+  font-size: var(--type-micro);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  /* --clay-deep, not --clay: this label is 9.6px and sits on the plate's
+     paper fill, where raw --clay measures 3.9:1. index.css's own map
+     reserves raw --clay for rules and dots and routes small text here. */
+  color: var(--clay-deep);
+}
+
+.hk-plate__title {
+  font-family: var(--font-sans);
+  font-size: var(--type-caption);
+  letter-spacing: 0.04em;
+  color: var(--hk-muted);
+  white-space: nowrap;
+}
+
+/* ---------- the chart ---------- */
+
+.hk-plate__chart {
+  display: block;
+  width: 15em;
+  height: 100%;
+  overflow: visible;
+}
+
+.hk-plate__grid {
+  stroke: var(--hk-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.hk-plate__line {
+  fill: none;
+  stroke: var(--hk-ink);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* non-scaling keeps the stroke hairline-thin even though the SVG is
+     stretched horizontally by preserveAspectRatio="none" */
+  /* vector-effect: non-scaling-stroke; */
+}
+
+.hk-plate__dot {
+  fill: var(--clay);
+  stroke: var(--hk-ink);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- readouts ---------- */
+
+.hk-plate__readouts {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0.75rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--hk-line);
+}
+
+.hk-plate__row {
+  min-width: 0;
+  /* both readouts keep their own line — the keys must never wrap and push
+     the values out of the plate */
+  white-space: nowrap;
+}
+
+.hk-plate__key {
+  font-family: var(--font-sans);
+  font-size: var(--type-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hk-muted);
+}
+
+.hk-plate__val {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-display);
+  font-size: var(--type-base);
+  line-height: 1.1;
+  color: var(--hk-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =============================================================
+   TABLET (< 64rem) — two rows: the portrait (with the word
+   behind it) leads, then the introduction and the plate sit side
+   by side on one line, left and right. Three columns stop fitting
+   here: at 960px the outer tracks come out at 323/243 against a
+   316px CTA pair, i.e. 7px of slack and a plate squeezed below its
+   authored 260px. So the composition folds instead of running the
+   flank content into the portrait.
+   ============================================================= */
+
+@media (max-width: 63.99rem) {
+  .hk-hero__stage {
+    /* same asymmetry, same reason: the CTA pair is wider than the plate */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    column-gap: clamp(1.25rem, 4vw, 2rem);
+    row-gap: clamp(1.5rem, 5vw, 2.5rem);
+    /* one readable measure under the portrait, not a full-bleed line */
+    max-width: 48rem;
+  }
+
+  /* Row 1 — the word and the portrait share the full width, so the word's
+     centre line and the portrait's centre line are the same line. */
+  .hk-hero__name {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: stretch;
+    justify-self: stretch;
+  }
+
+  .hk-hero__name span {
+    /* 33vw x the word's 2.305em holds the word at ~85% of the stage while the
+       stage is still growing, and the 15.5rem cap takes over where the stage
+       stops (its own 48rem max-width) — 74–86% across the whole range, and
+       wider than the portrait at every width, so both ends stay legible. */
+    font-size: clamp(4.5rem, 33vw, 15.5rem);
+  }
+
+  .hk-hero__portrait {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: center;
+    /* 52vw, not 60: at 60 the portrait covered the word down to 25px of H and
+       N on a phone, which is no longer a layered composition. At 52vw the
+       word keeps 37–41px of each end visible while the portrait is still the
+       largest thing in the row. */
+    width: clamp(10rem, 52vw, 24rem);
+    margin-bottom: 0;
+  }
+
+  /* Row 2 — introduction left, plate right, standing on one baseline. */
+  .hk-hero__content-left {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    justify-self: start;
+    max-width: none;
+    padding-bottom: 0;
+  }
+
+  .hk-hero__plate-slot {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    justify-self: end;
+  }
+
+  .hk-hero__desc {
+    /* 16px → 20px across the range, instead of a poster-sized 24px */
+    width: 100%;
+    max-width: 24rem;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .hk-hero__actions {
+    width: 100%;
+    max-width: 100%;
+    gap: 0.6rem;
+    margin-top: clamp(1rem, 3vw, 1.25rem);
+  }
+
+  .hk-hero__btn {
+    /* share the row when they fit, and wrap to full width when they don't */
+    flex: 1 1 auto;
+    padding-inline: clamp(0.9rem, 3vw, 1.35rem);
+  }
+}
+
+/* =============================================================
+   PHONES (< 44rem) — one column: the introduction, then the
+   analytics plate below it. There is no room left for the pair.
+   ============================================================= */
+
+@media (max-width: 43.99rem) {
+  .hk-hero__stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hk-hero__content-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .hk-hero__plate-slot {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: stretch;
+    width: 100%;
+    max-width: 20rem;
+  }
+}
+
+/* ---------- very small phones: trim word, portrait and buttons ---------- */
+
+@media (max-width: 23.75rem) {
+  /* below 380px the two labels can no longer sit side by side */
+  .hk-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hk-hero__btn {
+    width: 100%;
+  }
+}
+
+/* =============================================================
+   TABLET LANDSCAPE / SMALL LAPTOP (60–80rem) — three columns still
+   hold at 1024px, but the tracks are tight: the portrait steps down
+   so the plate keeps its own width, and the CTA pair stacks rather
+   than wrapping mid-label.
+   ============================================================= */
+
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .hk-hero__portrait {
+    /* 30vw is what buys the introduction its 316px of CTA at 1024px: the
+       stage is 976 there, so the two outer tracks get 347 and 261 — room for
+       the pair on one line and a full 260px plate beside it. */
+    width: clamp(18rem, 30vw, 24rem);
+  }
+}
+
+/* ---------- landscape phones: compact stack, no giant portrait ---------- */
+
+@media (max-width: 63.99rem) and (max-height: 34rem) {
+  .hk-hero {
+    padding-top: 3.5rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .hk-hero__portrait {
+    width: min(46vw, 15rem);
+  }
+}

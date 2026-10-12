@@ -1,0 +1,350 @@
+/* =============================================================
+   Project index — the editorial archive
+
+   A project is a row of type, a hairline and a picture. No project
+   object here draws a border, a background, a radius or a shadow:
+   the structure is numbering, thin dividers, whitespace and the
+   cover art.
+
+   The order is number, title, description, technologies, image,
+   case study — and it is identical at every breakpoint. Nothing
+   floats, nothing follows the pointer, no row expands.
+
+   Below 48rem each row is one vertical flow, art directly under
+   the title. From 48rem the copy and the art sit side by side at
+   roughly 44/56, so the description keeps a readable measure
+   instead of being squeezed into a hairline.
+   ============================================================= */
+
+.pj {
+  --pj-ink: var(--foreground);
+  --pj-muted: var(--muted-foreground);
+  --pj-accent: var(--clay);
+  /* The page may raise this; it is a ceiling, never a driver. */
+  --pj-media-max: 560px;
+  font-family: var(--font-sans);
+}
+
+/* Shared type scale. Identical values to about.css, experience.css
+   and certifications.css, so the page reads as one system: a label
+   step, a small step, a body step, a lead step and a subhead step.
+   Nothing here drops below 12px. */
+.pj {
+  --fs-label: var(--type-label);
+  --fs-sm: var(--type-sm);
+  --fs-body: var(--type-base);
+  --fs-lead: clamp(1.0625rem, 1.3vw, 1.25rem);
+  --fs-subhead: clamp(1.375rem, 2.2vw, 1.875rem);
+}
+
+/* ---------- the list ---------- */
+
+.pj__list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- one project ---------- */
+
+.pj-row {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  outline: none;
+  /* 64–88px of air per row: enough to separate two projects, never
+     enough to make the pair read as two separate pages. */
+  padding-block: clamp(56px, 6vw, 88px);
+}
+
+.pj-row:focus-visible {
+  outline: 2px solid var(--pj-accent);
+  outline-offset: 8px;
+}
+
+/* The rule between projects: a hairline that lifts on hover, with a
+   clay bar wiping across it. */
+.pj-row::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--pj-ink);
+  opacity: 0.2;
+  transition: opacity 500ms ease;
+  pointer-events: none;
+}
+
+.pj-row:hover::after,
+.pj-row:focus-visible::after,
+.pj-row[data-active="true"]::after {
+  opacity: 0.7;
+}
+
+.pj-row__rule {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pj-row__rule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--pj-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pj-row:hover .pj-row__rule::before,
+.pj-row:focus-visible .pj-row__rule::before,
+.pj-row[data-active="true"] .pj-row__rule::before {
+  transform: scaleX(1);
+}
+
+/* ---------- number and year ---------- */
+
+.pj-row__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.pj-row__number {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--pj-muted);
+  transition: color 400ms ease;
+}
+
+.pj-row:hover .pj-row__number,
+.pj-row:focus-visible .pj-row__number,
+.pj-row[data-active="true"] .pj-row__number {
+  color: var(--pj-ink);
+}
+
+.pj-row__year {
+  font-size: var(--fs-label);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--pj-muted);
+}
+
+/* ---------- the body: copy, then art ---------- */
+
+.pj-row__main {
+  display: grid;
+  grid-template-areas:
+    "content"
+    "media";
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 1.75rem;
+}
+
+.pj-row__content {
+  grid-area: content;
+  min-width: 0;
+}
+
+/* ---------- title ---------- */
+
+.pj-row__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  /* Long titles such as "Smart Agriculture Analytics Dashboard" wrap
+     on their own terms rather than being squeezed. */
+  /* 30–44px on a phone, 32–58px from the two-column breakpoint up. */
+  font-size: clamp(30px, 9vw, 44px);
+  text-wrap: balance;
+  transition: color 400ms ease;
+}
+
+/* ---------- summary ---------- */
+
+.pj-row__summary {
+  margin: 1rem 0 0;
+  max-width: 420px;
+  font-size: clamp(var(--fs-body), 1.1vw, 1.125rem);
+  line-height: 1.6;
+  color: var(--pj-muted);
+  transition: color 400ms ease;
+}
+
+.pj-row:hover .pj-row__summary,
+.pj-row:focus-visible .pj-row__summary,
+.pj-row[data-active="true"] .pj-row__summary {
+  color: color-mix(in oklab, var(--pj-ink) 82%, transparent);
+}
+
+/* ---------- technologies: editorial text, never chips ---------- */
+
+.pj-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pj-muted);
+  transition: color 400ms ease;
+}
+
+.pj-meta__sep {
+  opacity: 0.45;
+}
+
+.pj-row:hover .pj-meta,
+.pj-row:focus-visible .pj-meta,
+.pj-row[data-active="true"] .pj-meta {
+  color: color-mix(in oklab, var(--pj-ink) 82%, transparent);
+}
+
+/* ---------- the cover art ---------- */
+
+.pj-row__media {
+  grid-area: media;
+  margin: 0;
+  min-width: 0;
+}
+
+.pj-row__frame {
+  overflow: hidden;
+  background-color: color-mix(in oklab, var(--sand) 45%, transparent);
+}
+
+.pj-row__frame img {
+  display: block;
+  width: 100%;
+  max-width: var(--pj-media-max);
+  /* A fixed ratio, not a viewport height: every project then reads at
+     the same size and the page is predictable top to bottom. */
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  transform: scale(1);
+  transition:
+    transform 450ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 450ms ease;
+}
+
+.pj-row:hover .pj-row__frame img,
+.pj-row:focus-visible .pj-row__frame img,
+.pj-row[data-active="true"] .pj-row__frame img {    transform: scale(1.02);
+  filter: brightness(1);
+}
+
+/* "Krushi Manch / 01" — a caption, not a label: 12px and sentence
+   case, so it stays readable on a phone. */
+.pj-row__caption {
+  margin-top: 0.75rem;
+  font-size: var(--fs-label);
+  letter-spacing: 0.02em;
+  color: var(--pj-muted);
+}
+
+/* ---------- footer ---------- */
+
+.pj-row__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.75rem;
+}
+
+/* Case study is a line of type — no box, no background, no border. */
+.pj-row__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pj-ink);
+  cursor: pointer;
+}
+
+.pj-row__cta svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--pj-accent);
+  transition: transform 300ms ease;
+}
+
+.pj-row__cta:hover svg,
+.pj-row__cta:focus-visible svg {
+  transform: translate(4px, -4px);
+}
+
+.pj-row__cta:focus-visible {
+  outline: 2px solid var(--pj-accent);
+  outline-offset: 4px;
+}
+
+/* "Co-developer · 4-person team", "Data Science Intern" — a
+   descriptor, not a label: 12px and sentence case. */
+.pj-row__role {
+  font-size: var(--fs-label);
+  letter-spacing: 0.02em;
+  color: var(--pj-muted);
+}
+
+/* =============================================================
+   From 48rem: copy and art side by side. The art is capped, so it
+   supports the project rather than outgrowing it, and the copy
+   column keeps a comfortable measure.
+   ============================================================= */
+
+@media (min-width: 48rem) {
+  .pj-row__title {
+    font-size: clamp(32px, 4vw, 58px);
+  }
+
+  .pj-row__main {
+    grid-template-areas: "content media";
+    /* ~45 / 55 — enough room for the title and a readable paragraph. */
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+    column-gap: clamp(2rem, 4vw, 4.5rem);
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .pj-row__media {
+    justify-self: start;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-row::after,
+  .pj-row__rule::before,
+  .pj-row__title,
+  .pj-row__number,
+  .pj-row__summary,
+  .pj-meta,
+  .pj-row__cta svg,
+  .pj-row__frame img {
+    transition-duration: 1ms;
+  }
+}

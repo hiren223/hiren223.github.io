@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hiren Keraliya — Portfolio</title>
+    <script>
+      /*
+       * GitHub Pages has no rewrite support, so a direct hit on /projects
+       * would 404. This page stores the requested path and hands it to the
+       * app, which replays it through React Router (see RouteSyncer in
+       * src/main.tsx). Keeps the URL in the address bar and the same tab.
+       */
+      (function () {
+        var l = window.location;
+        sessionStorage.setItem("gh-pages-redirect", l.pathname + l.search);
+        l.replace(
+          l.protocol +
+            "//" +
+            l.host +
+            l.pathname.replace(/\/[^/]*$/, "/") +
+            "index.html",
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

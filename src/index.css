@@ -1,0 +1,287 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@300..600&display=swap");
+/* DO NOT CHANGE */
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+/* DO NOT CHANGE */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Studio additions */
+  --color-clay: var(--clay);
+  --color-clay-foreground: var(--clay-foreground);
+  /* The text-safe copper. Without this mapping `text-clay-deep` /
+     `hover:bg-clay-deep` compile to nothing, because Tailwind only
+     emits a utility for names it can see in @theme. */
+  --color-clay-deep: var(--clay-deep);
+  --color-sand: var(--sand);
+  --color-ink: var(--ink);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+}
+
+/* CHANGE VALUES FOR THEME — Studio: warm paper, charcoal ink, copper accent.
+   One palette drives every section; the hero carries the dark side of the
+   same system (#0D1012) via its own scoped tokens in HeroSection.css.
+
+   Accessibility map (WCAG, measured on the paper/sand grounds):
+   - ink #1D1B18 ............ 15.8:1 paper, 14.8:1 sand — any size
+   - secondary #6F6A63 ...... 4.9:1 paper, 4.6:1 sand — body copy, labels
+   - soft #9A948C ........... 2.8:1 — decorative / >=24px display only
+   - accent #B86543 ......... 3.9:1 — rules, dots, large display accents
+   - deep #8F4C35 ........... 5.9:1 paper, 5.6:1 sand — accent as TEXT
+   The text-safe accent is --clay-deep; raw --clay never carries small text. */
+:root {
+  --radius: 0.25rem;
+  --background: #f7f5f1;
+  --foreground: #1d1b18;
+  --card: #f1eee8;
+  --card-foreground: #1d1b18;
+  --popover: #f1eee8;
+  --popover-foreground: #1d1b18;
+  --primary: #1d1b18;
+  --primary-foreground: #f7f5f1;
+  --secondary: #f1eee8;
+  --secondary-foreground: #1d1b18;
+  --muted: #f1eee8;
+  --muted-foreground: #6f6a63;
+  --accent: #eae6de;
+  --accent-foreground: #1d1b18;
+  --destructive: oklch(0.577 0.166 27.325);
+  --border: rgba(29, 27, 24, 0.14);
+  --input: rgba(29, 27, 24, 0.14);
+  --ring: #8f4c35;
+  --chart-1: #b86543;
+  --chart-2: #55636f;
+  --chart-3: #43505c;
+  --chart-4: #c2a15a;
+  --chart-5: #8f4c35;
+  --sidebar: #f1eee8;
+  --sidebar-foreground: #1d1b18;
+  --sidebar-primary: #1d1b18;
+  --sidebar-primary-foreground: #f7f5f1;
+  --sidebar-accent: #eae6de;
+  --sidebar-accent-foreground: #1d1b18;
+  --sidebar-border: rgba(29, 27, 24, 0.14);
+  --sidebar-ring: #8f4c35;
+
+  /* Studio additions. --clay is the accent for rules, dots, fills under
+     large type; --clay-deep is the same hue stepped dark enough to carry
+     small text on both paper and sand. */
+  --clay: #b86543;
+  --clay-deep: #8f4c35;
+  --clay-foreground: #ffffff;
+  --sand: #f1eee8;
+  --ink: #1d1b18;
+  /* The dark side of the palette: the hero and any inverted band. */
+  --ink-deep: #0d1012;
+  --paper: #f7f5f1;
+  /* Quietest voice. Below 24px it fails AA (2.8:1), so it is reserved
+     for display-scale metadata. */
+  --muted-soft: #9a948c;
+
+  /* -------------------------------------------------------------
+     ONE TYPE SCALE. Declared here, once, for the whole site.
+
+     Every section's --fs-* alias and every inline font-size in the
+     stylesheets resolves to one of these five steps, which are also
+     Tailwind's own 12/14/16 steps (text-xs, text-sm, text-base) — so
+     the hand-written CSS and the utility classes can never drift into
+     two neighbouring-but-different sizes.
+
+       10px  micro    tight counters, plate metadata
+       11px  caption  tooltip meta, kickers
+       12px  label    uppercase labels, eyebrows, links
+       14px  sm       secondary copy, list rows
+       16px  base     running body copy (= text-base)
+
+     Display sizes are deliberately NOT here: hero, section headings
+     and numerals carry hierarchy and stay authored per section as
+     clamps. Add a step only when no existing step can hold the copy.
+     ------------------------------------------------------------- */
+  --type-micro: 0.625rem;
+  --type-caption: 0.6875rem;
+  --type-label: 0.75rem;
+  --type-sm: 0.875rem;
+  --type-base: 1rem;
+}
+
+.dark {
+  --background: #0d1012;
+  --foreground: #f7f5f1;
+  --card: #14181b;
+  --card-foreground: #f7f5f1;
+  --popover: #14181b;
+  --popover-foreground: #f7f5f1;
+  --primary: #f7f5f1;
+  --primary-foreground: #0d1012;
+  --secondary: #14181b;
+  --secondary-foreground: #f7f5f1;
+  --muted: #14181b;
+  --muted-foreground: #a9a49c;
+  --accent: #1a1f23;
+  --accent-foreground: #f7f5f1;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: #c9825f;
+  --chart-1: #c9825f;
+  --chart-2: #7d8b98;
+  --chart-3: #66788a;
+  --chart-4: #d1b06b;
+  --chart-5: #d08a63;
+  --sidebar: #14181b;
+  --sidebar-foreground: #f7f5f1;
+  --sidebar-primary: #c9825f;
+  --sidebar-primary-foreground: #0d1012;
+  --sidebar-accent: #1a1f23;
+  --sidebar-accent-foreground: #f7f5f1;
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --sidebar-ring: #c9825f;
+
+  /* On charcoal the copper steps lighter so it can still carry text. */
+  --clay: #c9825f;
+  --clay-deep: #d08a63;
+  --clay-foreground: #0d1012;
+  --sand: #14181b;
+  --ink: #f7f5f1;
+  --ink-deep: #0d1012;
+  --paper: #f7f5f1;
+  --muted-soft: #8a857e;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 10px;
+  border: 1px solid var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clay);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* Global guard against sideways scrolling. This is a backstop only —
+     every section sizes itself fluidly, so nothing relies on it to be
+     visible. */
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: rgba(184, 101, 67, 0.24);
+  }
+}
+
+@layer utilities {
+  /* Navbar / menu gutters: fluid, and never inside a notch or rounded
+     display cutout. */
+  /* Horizontal breathing room for the navbar row: the logo and the
+     hamburger are absolutely positioned at the row's edges, so this padding
+     is what keeps them off the screen edge. max() keeps it clear of a
+     display notch as well. */
+  .navbar-gutter {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+
+  @media (min-width: 40rem) {
+    .navbar-gutter {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+  }
+
+  /* -------------------------------------------------------------
+     Shared layout system. One content width and one section rhythm
+     for every band of the page, so sections always share their left
+     and right boundaries and the page never ladders between widths.
+     ------------------------------------------------------------- */
+  .page-container {
+    width: min(calc(100% - 48px), 1400px);
+    margin-inline: auto;
+  }
+
+  .section-pad {
+    padding-block: clamp(90px, 9vw, 150px);
+  }
+
+  @media (max-width: 47.99rem) {
+    .page-container {
+      width: calc(100% - 40px);
+    }
+
+    .section-pad {
+      padding-block: 80px;
+    }
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}

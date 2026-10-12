@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Krushi Manch — agriculture platform cover">
+  <rect width="1600" height="1000" fill="#14100C"/>
+  <g stroke="#2A2119" stroke-width="1">
+    <path d="M0 200H1600M0 400H1600M0 600H1600M0 800H1600"/>
+    <path d="M200 0V1000M400 0V1000M600 0V1000M800 0V1000M1000 0V1000M1200 0V1000M1400 0V1000"/>
+  </g>
+  <!-- furrow rows -->
+  <g stroke="#B4542A" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <path d="M120 760 C 380 700, 520 640, 760 600"/>
+    <path d="M120 830 C 400 770, 560 706, 820 664"/>
+    <path d="M120 900 C 420 840, 600 776, 880 730"/>
+  </g>
+  <!-- crop stems -->
+  <g stroke="#E8E2D6" stroke-width="4" stroke-linecap="round">
+    <path d="M300 700V470M300 560c-60-30-80-80-80-80s60 10 80 80zM300 620c60-30 80-80 80-80s-60 10-80 80z"/>
+    <path d="M560 640V430M560 510c-56-28-74-74-74-74s56 10 74 74zM560 566c56-28 74-74 74-74s-56 10-74 74z"/>
+    <path d="M820 580V400M820 470c-50-26-66-68-66-68s50 9 66 68zM820 520c50-26 66-68 66-68s-50 9-66 68z"/>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="170" font-size="86" letter-spacing="10">KRUSHI MANCH</text>
+    <text x="124" y="228" font-size="30" letter-spacing="12" fill="#B4542A">AGRICULTURE PLATFORM</text>
+  </g>
+  <rect x="120" y="260" width="180" height="3" fill="#B4542A"/>
+</svg>

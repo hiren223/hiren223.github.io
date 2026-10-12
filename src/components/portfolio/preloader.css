@@ -1,0 +1,122 @@
+/* =============================================================
+   Preloader — the HIREN zoom reveal.
+
+   Three things on screen and nothing else:
+
+     word      HIREN, in the same face the hero's giant name is set in
+     bar       3px, track on the border hairline, fill in clay
+     counter   00–100, under the bar
+
+   The overlay is opaque cream (--background), so the portfolio that is
+   already rendered behind it is what the zoom finally uncovers. No
+   portrait, no graph, no spinner, no card.
+
+   The word's size is NOT authored here: Preloader.tsx measures the word
+   at a known size and writes one font-size that fills 86% of the
+   viewport width (capped by height), so the fit holds for whatever face
+   actually renders — Bebas Neue when it arrives, the sans fallback if it
+   never does. Everything else about the type is the hero's own recipe:
+   .1em tracking above 60rem and .02em under it, with text-indent matching
+   the tracking so the ink, not the trailing letter-space, sits on the
+   centre line.
+   ============================================================= */
+
+/* Same source HeroSection.css pulls, so the loader's HIREN is the same
+   face as the hero's even though Landing is lazy-loaded. */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+/* Locked while the overlay is up, released on unmount — the page behind
+   must not scroll during the sequence. */
+.hk-preloader-lock {
+  overflow: hidden;
+}
+
+.hk-preloader {
+  /* Above the navbar (z-1000), below the preview toolbar. */
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: grid;
+  place-items: center;
+  overflow: hidden; /* the zoom can never produce a scrollbar */
+  font-family: var(--font-sans);
+  color: var(--foreground);
+}
+
+/* The cream ground is its own layer so it can dissolve at the end
+   without taking the letters with it. */
+.hk-preloader__ground {
+  position: absolute;
+  inset: 0;
+  background-color: var(--background);
+}
+
+.hk-preloader__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hk-preloader__word {
+  /* Overwritten by Preloader.tsx once the fonts have settled. */
+  font-size: 200px;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  /* The hero's own tracking, and the same compensation for the trailing
+     letter-space so the word's ink is centred rather than its box. */
+  --hk-preloader-track: 0.1em;
+  letter-spacing: var(--hk-preloader-track);
+  /* letter-spacing trails the final N as well. Pulling that empty space back
+     out of the layout makes the box equal the ink, so centring the box
+     centres the word — and it is the same box Preloader.tsx measures. */
+  margin-right: calc(-1 * var(--hk-preloader-track));
+  width: max-content;
+  line-height: 0.8;
+  white-space: nowrap;
+  color: var(--foreground);
+  /* Centred origin: the zoom grows away from the middle of the screen. */
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 59.99rem) {
+  .hk-preloader__word {
+    --hk-preloader-track: 0.02em;
+  }
+}
+
+.hk-preloader__progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 2vh, 1.15rem);
+  margin-top: clamp(1.25rem, 4vh, 2.75rem);
+}
+
+.hk-preloader__track {
+  position: relative;
+  width: clamp(11rem, 30vw, 26rem);
+  height: 3px;
+  background-color: var(--border);
+}
+
+/* scaleX, not width: the fill is composited, and 0% is still a real
+   element rather than a collapsed one. */
+.hk-preloader__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--clay);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.hk-preloader__pct {
+  margin: 0;
+  font-size: var(--type-label);
+  line-height: 1;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}

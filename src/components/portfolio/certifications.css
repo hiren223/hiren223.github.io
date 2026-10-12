@@ -1,0 +1,363 @@
+/* =============================================================
+   Certifications — a curated archive of credentials.
+
+   One catalogue, not three cards:
+
+     header    the marker, the headline, the supporting line
+     archive   rule → entry → rule → entry → rule
+
+   One rule per entry, opened and closed, so the section reads as a
+   ledger rather than as a stack of boxes. The featured credential is
+   set at display scale and the supporting two follow it as numbered
+   rows; the tier is carried by type size, the index column and the
+   rules — never by a panel, a badge, a gradient or a shadow.
+
+   Scoped to `.certifications-*`. Every colour and font is a global
+   token from index.css: ink, muted, clay, clay-deep and the border
+   hairline are the whole palette.
+   ============================================================= */
+
+.certifications-section {
+  --cert-ink: var(--foreground);
+  --cert-muted: var(--muted-foreground);
+  /* Raw copper is display scale only (3.9:1). Reserved here for the
+     marker's numeral and the hover rule, exactly as about.css and
+     experience.css use it. */
+  --cert-accent: var(--clay);
+  /* The text-safe copper (5.9:1 on paper, 5.6:1 on this band's sand).
+     Everything small that is copper — the ledger indices, the award
+     label — uses this one, not the raw accent. */
+  --cert-accent-text: var(--clay-deep);
+  --cert-rule: var(--border);
+  /* The index column shared by the featured credential and the rows,
+     so their titles share one left edge. */
+  --cert-index: 2.5rem;
+
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Shared type scale — identical values to about.css,
+   experience.css and project-index.css. */
+.certifications-section {
+  --fs-label: var(--type-label);
+  --fs-sm: var(--type-sm);
+  --fs-body: var(--type-base);
+  --fs-ledger: clamp(1.125rem, 1.5vw, 1.4rem);
+  --fs-featured: clamp(1.9rem, 3.4vw, 3.25rem);
+  --fs-score: clamp(2.75rem, 5.2vw, 4.5rem);
+}
+
+/* ---------- header ---------- */
+
+.certifications-header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.4vw, 1.75rem);
+}
+
+.certifications-marker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.certifications-marker__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--cert-accent);
+}
+
+.certifications-marker__rule {
+  height: 1px;
+  width: 2.5rem;
+  background-color: var(--cert-rule);
+}
+
+.certifications-label {
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cert-muted);
+}
+
+.certifications-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.2vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.certifications-headline__line {
+  display: block;
+}
+
+/* The one decorative use of the accent in the section, at 34–60px. */
+.certifications-headline__accent {
+  color: var(--cert-accent);
+}
+
+.certifications-intro {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--cert-muted);
+}
+
+/* ---------- the archive ---------- */
+
+.certifications-archive {
+  display: flex;
+  flex-direction: column;
+  /* The rule that closes the catalogue. Each entry owns the rule above
+     itself, so no entry carries a bottom border and none of them can
+     double up into a 2px line. */
+  border-bottom: 1px solid var(--cert-rule);
+}
+
+/* The index. Shared by both tiers so "01" and "02" stand on one axis. */
+.certifications-index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--cert-accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The issuer name, in both tiers: restrained uppercase, muted. */
+.certifications-issuer {
+  margin: 0;
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cert-muted);
+}
+
+/* ---------- 01 — the featured credential ---------- */
+
+.certifications-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: start;
+  padding-block: clamp(1.9rem, 3.2vw, 2.75rem);
+  border-top: 1px solid var(--cert-rule);
+}
+
+/* The index and the issuer share one line across the whole block. */
+.certifications-featured__top {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.certifications-featured__lead {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.certifications-featured__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-featured);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  color: var(--cert-ink);
+}
+
+.certifications-featured__detail {
+  margin: 0;
+  max-width: 30rem;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--cert-muted);
+}
+
+/* The result. A numeral and the award it was given for — no ring, no
+   gauge, no progress bar, nothing that draws a second chart. */
+.certifications-score {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  margin: 0;
+  text-align: right;
+}
+
+.certifications-score__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-score);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--cert-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.certifications-score__award {
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cert-accent-text);
+}
+
+/* The catalogue line — the date and the credential number, under both
+   columns, exactly as issued. */
+.certifications-meta {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--fs-label);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  color: var(--cert-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 02, 03 — the supporting ledger ---------- */
+
+.certifications-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.certifications-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--cert-index) minmax(0, 1fr) auto;
+  column-gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  align-items: baseline;
+  padding-block: clamp(1.25rem, 2.2vw, 1.6rem);
+  border-top: 1px solid var(--cert-rule);
+}
+
+/* Hover: the entry's own hairline redraws itself in copper, from the
+   left, in one restrained 420ms sweep. The row is not a link, so the
+   cursor stays a cursor — the rule is the only thing that answers. */
+.certifications-item::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--cert-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.certifications-item:hover::after {
+  transform: scaleX(1);
+}
+
+.certifications-item:hover .certifications-index {
+  color: var(--cert-accent);
+}
+
+.certifications-index,
+.certifications-item__result {
+  transition: color 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certifications-item::after {
+    transition: none;
+  }
+}
+
+.certifications-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.certifications-item__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-ledger);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--cert-ink);
+}
+
+.certifications-item__meta {
+  margin: 0;
+  font-size: var(--fs-label);
+  line-height: 1.55;
+  color: var(--cert-muted);
+  /* The credential number is long and unbreakable-looking; let it fold
+     rather than push the row wider than its column. */
+  overflow-wrap: break-word;
+}
+
+.certifications-dot {
+  margin-inline: 0.5em;
+  color: var(--cert-accent);
+}
+
+.certifications-item__result {
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cert-muted);
+  white-space: nowrap;
+}
+
+/* =============================================================
+   BELOW THE DESKTOP SPLIT — the featured block folds: the score
+   drops under the credential instead of sitting beside it, which is
+   where a 44px numeral would start crowding a 30px title.
+   ============================================================= */
+
+@media (max-width: 63.99rem) {
+  .certifications-featured {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .certifications-score {
+    grid-column: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* =============================================================
+   NARROW — the ledger's result column folds under the credential,
+   so a 47-character credential name is never squeezed between the
+   index and the status.
+   ============================================================= */
+
+@media (max-width: 47.99rem) {
+  .certifications-item {
+    grid-template-columns: var(--cert-index) minmax(0, 1fr);
+  }
+
+  .certifications-item__result {
+    grid-column: 2;
+    margin-top: 0.15rem;
+  }
+}

@@ -1,0 +1,59 @@
+/* =============================================================
+   Lanyard stage — the About section's card
+
+   Two separate boxes on purpose:
+
+   `.lanyard-stage` is the caption. It sits in the right-hand
+   grid column, under the space the card occupies, so the label
+   points at the thing it describes.
+
+   `.lanyard-stage__layer` is the canvas. It covers the whole
+   `.about-section` (which is the positioning context), so the card
+   can be dragged anywhere in the section — across the copy, above
+   the headline, down past the keywords. The scene sizes itself from
+   this box, and `anchorX` / `anchorY` keep the card hanging over
+   the right-hand column rather than drifting to the centre.
+   ============================================================= */
+
+.lanyard-stage {
+  display: grid;
+  grid-auto-rows: auto;
+  align-items: start;
+  gap: 0;
+  margin: 0;
+}
+
+.lanyard-stage__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.lanyard-stage__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.lanyard-stage__caption {
+  grid-row: 1;
+  font-size: var(--type-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* -------------------------------------------------------------
+   Below 64rem the About grid is one column and the section is
+   tall. A section-sized drag surface there would put a canvas
+   between the reader and most of the copy, so the layer is pulled
+   back to the rows the card actually occupies: the card's own row
+   at the top, which is all the room the section reserved for it.
+   ------------------------------------------------------------- */
+@media (max-width: 63.99rem) {
+  .lanyard-stage__layer {
+    /* The visual column leads the section below 64rem, and its
+       height is the stage height set on `.about-visual`. */
+    bottom: auto;
+    height: clamp(340px, 38vw, 500px);
+  }
+}

@@ -1,0 +1,355 @@
+/* =============================================================
+   Contact — the closing page.
+
+   Two columns and no form:
+
+     left    the marker, the headline, one paragraph, the email
+             action — a verb, filled with ink, with the accent only
+             in the availability dot and the arrow's hover
+     right   the directory: five rows, six hairlines, one ledger
+
+   The rows are a table, not a grid of cards: index, term, value and
+   indicator, all four on one left edge because every row carries the
+   same three cells. Ink, muted, clay, clay-deep and the border
+   hairline are the whole palette — no panel, no fill, no shadow.
+   ============================================================= */
+
+.contact-section {
+  --contact-ink: var(--foreground);
+  --contact-muted: var(--muted-foreground);
+  /* Raw copper: the status dot and the sweep, both graphic (3.9:1 is
+     enough for a 1px rule and an 8px dot, never for text). */
+  --contact-accent: var(--clay);
+  /* The text-safe copper, for anything smaller than a headline. */
+  --contact-accent-text: var(--clay-deep);
+  --contact-rule: var(--border);
+  /* The directory's term column — fixed, so every value starts on the
+     same edge whatever the term's length. Wide enough for "LINKEDIN"
+     at 12px with 0.16em of tracking. */
+  --contact-term: 6.5rem;
+
+  font-family: var(--font-sans);
+
+  --fs-label: var(--type-label);
+  --fs-sm: var(--type-sm);
+  --fs-body: var(--type-base);
+}
+
+/* The gutter between the two columns. Wide on a desktop, and it is
+   the first thing to give way. */
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  column-gap: clamp(2.5rem, 6vw, 6rem);
+  row-gap: clamp(2.5rem, 6vw, 4rem);
+  align-items: start;
+}
+
+.contact-invite {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.4vw, 1.75rem);
+  min-width: 0;
+}
+
+/* ---------- the marker ---------- */
+
+.contact-marker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-marker__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--contact-accent);
+}
+
+.contact-marker__rule {
+  height: 1px;
+  width: 2.5rem;
+  background-color: var(--contact-rule);
+}
+
+.contact-label {
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--contact-muted);
+}
+
+/* ---------- the headline ---------- */
+
+.contact-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  /* The section's existing display scale, unchanged. */
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.contact-headline__line {
+  display: block;
+}
+
+/* The one decorative accent: raw --clay, which index.css reserves for
+   display type. At 40–72px it clears the graphic threshold several
+   times over. */
+.contact-headline__accent {
+  color: var(--contact-accent);
+}
+
+.contact-intro {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--contact-muted);
+}
+
+/* ---------- the invitation ---------- */
+
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1rem, 2vw, 1.35rem);
+  margin-top: clamp(0.25rem, 1vw, 0.75rem);
+}
+
+.contact-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--contact-muted);
+}
+
+/* Static, not pinging: the footer's badge already breathes, and two
+   live dots on one screen is one too many. */
+.contact-status__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--contact-accent);
+}
+
+/* The main action: the same charcoal fill, dimensions and copper hover
+   the footer's own buttons use, so the page closes on one system. */
+.contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: clamp(0.95rem, 1.6vw, 1.15rem) clamp(1.5rem, 2.4vw, 2rem);
+  background-color: var(--contact-ink);
+  color: var(--background);
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 350ms ease;
+}
+
+.contact-cta:hover {
+  background-color: var(--contact-accent-text);
+}
+
+.contact-cta:focus-visible {
+  outline: 2px solid var(--contact-accent);
+  outline-offset: 3px;
+}
+
+.contact-cta__arrow {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-cta:hover .contact-cta__arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ---------- the directory ---------- */
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Opens and closes the ledger. Each row then owns the rule above it,
+     so no row carries a bottom border and none of them can double up
+     into a 2px line. */
+  border-top: 1px solid var(--contact-rule);
+  border-bottom: 1px solid var(--contact-rule);
+}
+
+.contact-row + .contact-row {
+  border-top: 1px solid var(--contact-rule);
+}
+
+.contact-row__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 1rem;
+  column-gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  align-items: baseline;
+  /* Full row is the tap target on every size. */
+  padding-block: clamp(0.95rem, 1.7vw, 1.2rem);
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-row__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--contact-accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* term and value share one line on a desktop, and stack as soon as
+   the column can no longer hold both without crowding the value. */
+.contact-row__body {
+  display: grid;
+  grid-template-columns: var(--contact-term) minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 1rem;
+  min-width: 0;
+}
+
+.contact-row__label {
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--contact-muted);
+}
+
+.contact-row__value {
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  color: var(--contact-ink);
+  /* A 21-character address has to fold rather than push the row wider
+     than its column. */
+  overflow-wrap: break-word;
+  transition: color 300ms ease;
+}
+
+.contact-row__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: var(--contact-muted);
+}
+
+
+/* Hover answers only on the rows that are actually links: the rule
+   sweeps in copper from the left, the arrow steps out, the value takes
+   the text-safe accent. The Location row is not a link and stays
+   completely still. */
+a.contact-row__inner::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--contact-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a.contact-row__inner:hover::after,
+a.contact-row__inner:focus-visible::after {
+  transform: scaleX(1);
+}
+
+a.contact-row__inner:hover .contact-row__value,
+a.contact-row__inner:focus-visible .contact-row__value {
+  color: var(--contact-accent-text);
+}
+
+a.contact-row__inner:hover .contact-row__arrow,
+a.contact-row__inner:focus-visible .contact-row__arrow {
+  color: var(--contact-accent-text);
+}
+
+a.contact-row__inner:hover .contact-row__glyph,
+a.contact-row__inner:focus-visible .contact-row__glyph {
+  transform: translate(2px, -2px);
+}
+
+/* The glyph is sized here rather than with a utility class: lucide ships
+   a 24px svg, and this cell is 16px. */
+.contact-row__glyph {
+  width: 1rem;
+  height: 1rem;
+  transition:
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 300ms ease;
+}
+
+.contact-row__inner:focus-visible {
+  outline: 2px solid var(--contact-accent);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.contact-row__inner::after,
+  .contact-row__glyph,
+  .contact-cta__arrow {
+    transition: none;
+  }
+}
+
+/* Visually hidden, for the one fact a sighted reader gets from the
+   arrow: an external link leaves the page. */
+.contact-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =============================================================
+   BELOW THE DESKTOP SPLIT — the two columns stay side by side (this
+   is the tablet composition), but the term and the value inside each
+   row fold onto two lines so neither crowds the other.
+   ============================================================= */
+
+@media (max-width: 63.99rem) {
+  .contact-row__body {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+}
+
+/* =============================================================
+   MOBILE — one column: the invitation, then the directory.
+   ============================================================= */
+
+@media (max-width: 47.99rem) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

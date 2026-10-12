@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Smart Agriculture Analytics Dashboard — dashboard cover">
+  <rect width="1600" height="1000" fill="#14100C"/>
+  <!-- dashboard frame -->
+  <rect x="120" y="300" width="1360" height="520" fill="none" stroke="#3A2E24" stroke-width="3"/>
+  <path d="M120 400 H1480" stroke="#3A2E24" stroke-width="3"/>
+  <g fill="#B4542A">
+    <circle cx="160" cy="350" r="8"/><circle cx="192" cy="350" r="8" opacity="0.5"/><circle cx="224" cy="350" r="8" opacity="0.3"/>
+  </g>
+  <!-- bar panel -->
+  <g fill="#E8E2D6" opacity="0.55">
+    <rect x="180" y="640" width="46" height="120"/>
+    <rect x="250" y="600" width="46" height="160"/>
+    <rect x="320" y="660" width="46" height="100"/>
+    <rect x="390" y="560" width="46" height="200"/>
+  </g>
+  <!-- line panel -->
+  <path d="M540 740 C 660 700, 720 640, 820 600 S 1000 520, 1120 500" fill="none" stroke="#B4542A" stroke-width="5" stroke-linecap="round"/>
+  <!-- donut panel -->
+  <circle cx="1330" cy="600" r="90" fill="none" stroke="#E8E2D6" stroke-width="26" opacity="0.18"/>
+  <path d="M1330 510 A90 90 0 0 1 1412 660" fill="none" stroke="#B4542A" stroke-width="26" stroke-linecap="round"/>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#E8E2D6">
+    <text x="120" y="160" font-size="60" letter-spacing="8">SMART AGRICULTURE</text>
+    <text x="124" y="212" font-size="30" letter-spacing="12" fill="#B4542A">ANALYTICS DASHBOARD</text>
+  </g>
+  <g font-family="'Archivo Narrow',Arial,sans-serif" fill="#B4542A" font-size="28" letter-spacing="6">
+    <text x="120" y="890">POWER BI · SQL · PANDAS</text>
+  </g>
+</svg>

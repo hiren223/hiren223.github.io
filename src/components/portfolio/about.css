@@ -1,0 +1,367 @@
+/* =============================================================
+   About — an editorial spread in four bands.
+
+   The section is a single column of full-width bands, with the
+   asymmetry placed *inside* them rather than between two grid columns:
+
+     band 1  the marker
+     band 2  the headline, both lines flush to the marker's left edge
+     band 3  the method strip — one row of five cells divided by
+             hairlines
+     band 4  the profile — a centred two-column prose spread with a
+             hairline column rule, under its own label row
+
+   Scoped to `.about-*`, so nothing here can reach the rest of the
+   portfolio. No cards, no panels, no fills, no new colours and no new
+   fonts: ink, muted, clay, clay-deep and the border hairline are the
+   whole palette.
+   ============================================================= */
+
+.about-section {
+  --about-ink: var(--foreground);
+  --about-muted: var(--muted-foreground);
+  --about-accent: var(--clay);
+  --about-rule: var(--border);
+  /* The one highlight colour that carries small text. */
+  --about-em: var(--clay-deep);
+  /* The profile band's measure. The band is centred horizontally, so
+     this width is what keeps its left and right margins equal at every
+     desktop size (see .about-profile below). 68rem leaves ~150px of
+     gutter either side inside the 1400px page container, which is what
+     makes the centring read as centring rather than as full width, and
+     it lands each of the two prose columns near a 60-character
+     measure. */
+  --about-profile: 68rem;
+  /* The label column of the method strip. */
+  --about-method-title: 12rem;
+
+  font-family: var(--font-sans);
+}
+
+/* Shared type scale — identical values to experience.css,
+   certifications.css and project-index.css. */
+.about-section {
+  --fs-label: var(--type-label);
+  --fs-sm: var(--type-sm);
+  --fs-body: var(--type-base);
+  --fs-step: clamp(1.75rem, 2.3vw, 2.5rem);
+}
+
+/* =============================================================
+   The bands
+   ============================================================= */
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.25rem, 4.5vw, 4rem);
+}
+
+/* ---------- shared bits ---------- */
+
+.about-label {
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--about-muted);
+}
+
+/* Label and rule on one baseline. The rule takes the remaining width, so
+   it runs to the column edge instead of stopping at a fixed length. */
+.about-label-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background-color: var(--about-rule);
+}
+
+/* ---------- band 1 — the marker ---------- */
+
+.about-marker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-marker__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--about-accent);
+}
+
+.about-marker__rule {
+  height: 1px;
+  width: 2.5rem;
+  background-color: var(--about-rule);
+}
+
+/* ---------- band 2 — the headline ---------- */
+
+.about-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 4.5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.about-headline__line {
+  display: block;
+}
+
+/* The one decorative use of the accent in the section — raw --clay, which
+   index.css reserves for display scale. At 68px it clears the 3:1 graphic
+   threshold comfortably; it is never used for the body copy. */
+.about-headline__accent {
+  color: var(--about-accent);
+}
+
+/* =============================================================
+   Band 3 — the method strip
+
+   One row, five cells: the title, then the four stages. The only
+   graphic device is the hairline — above and below the strip, and
+   between the cells. The title cell is fixed width so the four stages
+   divide the rest evenly at every desktop width.
+   ============================================================= */
+
+.about-method {
+  display: grid;
+  grid-template-columns: var(--about-method-title) minmax(0, 1fr);
+  align-items: stretch;
+  border-block: 1px solid var(--about-rule);
+}
+
+.about-method__title {
+  margin: 0;
+  padding: clamp(1.5rem, 2.4vw, 2rem) clamp(1.25rem, 2vw, 1.75rem)
+    clamp(1.5rem, 2.4vw, 2rem) 0;
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* The heading of a band, not a caption: ink rather than muted. */
+  color: var(--about-ink);
+}
+
+.about-method__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--about-rule);
+}
+
+.about-method__step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: clamp(1.5rem, 2.4vw, 2rem) clamp(1.25rem, 2vw, 1.75rem);
+  min-width: 0;
+}
+
+/* A rule between cells only — so the strip reads as one table rather
+   than four bordered boxes, and nothing hangs off the last cell. */
+.about-method__step + .about-method__step {
+  border-left: 1px solid var(--about-rule);
+}
+
+.about-method__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-step);
+  line-height: 0.9;
+  color: var(--about-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.about-method__name {
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--about-ink);
+}
+
+.about-method__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--about-muted);
+}
+
+/* =============================================================
+   Band 4 — the profile spread
+
+   Four paragraphs in two balanced columns, with a hairline column
+   rule. The whole band — label row and prose alike — is centred
+   left-to-right: it is its own 76rem measure with equal space either
+   side, so each column keeps a comfortable width instead of the copy
+   running the full 1400px.
+   ============================================================= */
+
+.about-profile {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+  width: 100%;
+  max-width: var(--about-profile);
+  margin-inline: auto;
+}
+
+.about-prose {
+  column-count: 2;
+  column-gap: clamp(2.5rem, 4vw, 4.5rem);
+  column-rule: 1px solid var(--about-rule);
+}
+
+.about-paragraph {
+  margin: 0 0 1.5em;
+  font-size: var(--fs-body);
+  line-height: 1.72;
+  color: var(--about-muted);
+  /* Never split a paragraph across the two columns. */
+  break-inside: avoid;
+}
+
+.about-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Highlighted terms inside the copy: the degree, the institution and
+   city, the fields, the tools. Weight plus colour, never italic —
+   an <em> is marked up as emphasis, so the sentence keeps its
+   rhythm while the term still reads as a term.
+
+   600 is the heaviest real weight the Inter variable font is loaded
+   with (wght 300..600), so this is a true bold face rather than a
+   synthesised one. The surrounding copy sits at 400.
+
+   The accent is the deep copper, not raw --clay: #8F4C35 measures
+   5.9:1 on the paper ground and 5.6:1 on sand, over the 4.5:1 body
+   threshold, while raw #B86543 reaches only 3.9:1 — display scale
+   only. One token, both themes, no theme selector. */
+.about-em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--about-em);
+}
+
+/* =============================================================
+   Closing band — the discipline index
+   ============================================================= */
+
+.about-discipline {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.about-discipline__rule {
+  height: 1px;
+  background-color: var(--about-rule);
+}
+
+.about-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.about-keyword {
+  font-size: var(--fs-label);
+  line-height: 1.7;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--about-muted);
+}
+
+.about-keyword__sep {
+  margin-inline: 0.6em;
+  color: var(--about-accent);
+}
+
+/* =============================================================
+   BELOW THE DESKTOP SPLIT — the prose spread folds back to one
+   column. Two columns only appear once each of them clears ~420px,
+   and the single column then takes a 42rem measure so it does not
+   run the full width of a tablet.
+   ============================================================= */
+
+@media (max-width: 63.99rem) {
+  .about-section {
+    --about-profile: 42rem;
+  }
+
+  .about-prose {
+    column-count: 1;
+    column-rule: none;
+  }
+}
+
+/* =============================================================
+   NARROW LAYOUT — the strip stops being a row and becomes a stacked
+   ledger divided by the same hairline.
+   ============================================================= */
+
+@media (max-width: 47.99rem) {
+  .about-section {
+    --about-method-title: 0px;
+  }
+
+  .about-method {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-method__title {
+    padding: 0 0 clamp(1rem, 3vw, 1.25rem);
+  }
+
+  .about-method__list {
+    grid-template-columns: minmax(0, 1fr);
+    border-left: 0;
+  }
+
+  .about-method__step {
+    padding: clamp(1.25rem, 4vw, 1.5rem) 0;
+  }
+
+  .about-method__step + .about-method__step {
+    border-left: 0;
+    border-top: 1px solid var(--about-rule);
+  }
+
+  .about-prose {
+    column-count: 1;
+    column-rule: none;
+  }
+}
+
+/* =============================================================
+   TABLET — the strip keeps its row, but the four stage columns get
+   tight. The step shortens and the stage numeral drops a size so the
+   cell text still breathes at 64rem.
+   ============================================================= */
+
+@media (min-width: 64rem) and (max-width: 74.99rem) {
+  .about-headline {
+    font-size: clamp(38px, 3.8vw, 54px);
+  }
+
+  .about-section {
+    --fs-step: clamp(1.5rem, 1.9vw, 1.9rem);
+  }
+
+  .about-method__step {
+    padding-inline: clamp(0.85rem, 1.4vw, 1.25rem);
+  }
+}

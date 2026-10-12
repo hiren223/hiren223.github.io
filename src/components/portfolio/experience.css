@@ -1,0 +1,436 @@
+/* =============================================================
+   Experience — the editorial vertical career timeline.
+
+   ONE timeline at every width, positioned by ONE grid:
+
+       column 1   rail column   the marker badge
+       column 2   content       date + category, then the milestone
+
+   The rail is centred in column 1 and the marker badge is centred in
+   the same column, so the two share one X coordinate by construction.
+   The metadata lives at the top of column 2, above the title, so every
+   row reads: spine → when → what.
+
+   There is no alternating left/right layout, no percentage
+   positioning, no pseudo-element marker, and no hover transform on
+   anything that carries the geometry. Every colour, font and surface
+   is a global token from index.css; nothing new is introduced here.
+   ============================================================= */
+
+.experience-section {
+  --experience-ink: var(--foreground);
+  --experience-muted: var(--muted-foreground);
+  --experience-accent: var(--clay);
+  --experience-rule: var(--border);
+
+  --fs-label: var(--type-label);
+  --fs-category: var(--type-caption);
+  --fs-sm: var(--type-sm);
+  --fs-body: var(--type-base);
+  --fs-title: clamp(2.2rem, 3.4vw, 3.5rem);
+  --fs-milestone: clamp(2rem, 3.2vw, 3.4rem);
+
+  /* The timeline's own gutter — the header uses the page container
+     instead, and this is the padding the rail maths is measured from. */
+  --experience-pad: 1.25rem;
+
+  /* The timeline's two columns live here, so the width of the whole
+     timeline is derived from them. --tl-content is the one knob for
+     how wide the timeline is: the column, the centred track, the
+     measure and the rail's position all follow from it. */
+  --tl-rail: 36px;
+  --tl-content: 1000px;
+  --experience-track: calc(var(--tl-rail) + var(--tl-content));
+
+  font-family: var(--font-sans);
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  /* The section rhythm every other band on the page uses. */
+  padding-block: clamp(90px, 9vw, 150px);
+}
+
+/* ---------- header ---------- */
+
+/* The header keeps the page's own container (the "page-container"
+   utility, applied in the markup), so the eyebrow and the headline sit
+   on the same left edge as About, Certifications and Contact. */
+
+/* The timeline is a centred track: its two columns plus one gutter on
+   each side. */
+.experience-timeline {
+  width: 100%;
+  max-width: calc(var(--experience-track) + var(--experience-pad) * 2);
+  margin-inline: auto;
+  padding-inline: var(--experience-pad);
+}
+
+.experience-header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.4vw, 1.75rem);
+  /* The band between the heading and the first marker. */
+  margin-bottom: clamp(70px, 7vw, 90px);
+}
+
+.experience-marker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.experience-marker__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--experience-accent);
+}
+
+.experience-marker__rule {
+  height: 1px;
+  width: 2.5rem;
+  background-color: var(--experience-rule);
+}
+
+.experience-label {
+  font-size: var(--fs-label);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--experience-muted);
+}
+
+.experience-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-title);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.experience-headline__line {
+  display: block;
+}
+
+.experience-headline__accent {
+  color: var(--experience-accent);
+}
+
+/* =============================================================
+   Timeline geometry
+
+   One X coordinate (--tl-rail-x) and one Y coordinate
+   (--tl-marker-center). The columns, the rail and the marker badge
+   are all derived from the same variables, so neither axis can drift.
+
+   --tl-line is the metadata's line box (--fs-sm × 1.4). The badge is
+   taller than that line, so it is centred on it: half of the
+   difference rides above the line (--tl-chip-offset, negative) and
+   the sheet is given exactly that much headroom (--tl-top-pad) so
+   the first badge is never clipped.
+   ============================================================= */
+
+.experience-timeline {
+  /* --tl-rail and --tl-content are inherited from the section. */
+  --tl-icon: 26px;
+  /* The thickness of the spine itself: the rail and the accent fill
+     share it, so the drawn part is never fatter than the track. */
+  --tl-stroke: 2px;
+  --tl-line: 1.225rem;
+  --tl-chip-offset: calc((var(--tl-line) - var(--tl-icon)) / 2);
+  --tl-top-pad: calc(-1 * var(--tl-chip-offset));
+  --tl-marker-center: calc(var(--tl-top-pad) + var(--tl-line) / 2);
+  --tl-rail-x: calc(var(--experience-pad) + var(--tl-rail) / 2);
+  --tl-content-pad: clamp(1.25rem, 2vw, 1.5rem);
+  --tl-row-gap: clamp(5rem, 7vw, 6.25rem);
+
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--tl-top-pad);
+}
+
+/* ---------- the one rail ---------- */
+
+.experience-timeline__rail {
+  position: absolute;
+  left: var(--tl-rail-x);
+  top: var(--tl-marker-center);
+  bottom: 0;
+  width: var(--tl-stroke);
+  /* Half a width of offset: the rail centres itself whatever the
+     stroke is set to. */
+  transform: translateX(-50%);
+  /* The track the scroll-linked fill is drawn along. */
+  background: var(--experience-rule);
+}
+
+/* The moving half of the rail: an accent line that draws itself from
+   the first milestone to the last while the section travels through the
+   viewport. Its scale is set in the component from scroll progress, so
+   there is no time-based CSS animation here and the reduced-motion case
+   simply renders it complete. */
+.experience-timeline__fill {
+  position: absolute;
+  /* No transform here — Framer Motion owns this element's transform for
+     the scroll-driven scale — so it is centred by offsetting exactly
+     half of its own width instead. */
+  left: calc(var(--tl-rail-x) - var(--tl-stroke) / 2);
+  top: var(--tl-marker-center);
+  bottom: 0;
+  width: var(--tl-stroke);
+  transform-origin: top;
+  background: var(--experience-accent);
+}
+
+/* ---------- the list and the rows ---------- */
+
+.experience-timeline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.experience-timeline__row {
+  display: grid;
+  grid-template-columns: var(--tl-rail) minmax(0, var(--tl-content));
+  align-items: start;
+  /* Between the metadata and the title. */
+  row-gap: 0.7rem;
+  padding-bottom: var(--tl-row-gap);
+}
+
+.experience-timeline__row:last-child {
+  padding-bottom: 0;
+}
+
+/* ---------- column 1 — the marker badge ---------- */
+
+.experience-timeline__marker {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  /* Above the rail, so the badge always reads on top of the line. */
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  min-width: 0;
+}
+
+/* A badge of the page ground with a clay ring, so the rail breaks
+   cleanly behind the glyph instead of running through its strokes.
+   No shadow, no fill colour, no surface of its own. */
+.experience-timeline__icon {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: var(--tl-icon);
+  height: var(--tl-icon);
+  /* Centres the badge on the metadata line above the title. */
+  margin-top: var(--tl-chip-offset);
+  border: 1px solid var(--experience-accent);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--experience-accent);
+}
+
+/* The glyph scales with the badge rather than with a fixed size. */
+.experience-timeline__icon svg {
+  width: calc(var(--tl-icon) * 0.62);
+  height: calc(var(--tl-icon) * 0.62);
+}
+
+/* ---------- column 2, first line — metadata ---------- */
+
+.experience-timeline__meta {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-left: var(--tl-content-pad);
+  min-width: 0;
+  text-align: left;
+}
+
+.experience-timeline__date {
+  margin: 0;
+  font-size: var(--fs-sm);
+  /* Keep in step with --tl-line: the badge is centred on this box. */
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--experience-ink);
+}
+
+.experience-timeline__category {
+  margin: 0;
+  font-size: var(--fs-category);
+  line-height: 1.4;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--experience-accent);
+}
+
+/* ---------- column 2, second line — the milestone ---------- */
+
+.experience-timeline__content {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+  max-width: var(--tl-content);
+  padding-left: var(--tl-content-pad);
+}
+
+.experience-timeline__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-milestone);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  color: var(--experience-ink);
+}
+
+.experience-timeline__line {
+  display: block;
+}
+
+.experience-timeline__org {
+  margin: 0.6rem 0 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--experience-ink);
+}
+
+/* The role's dates — a different thing from the metadata column
+   above, which is why it has its own class. */
+.experience-timeline__period {
+  margin: 0.4rem 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--experience-muted);
+}
+
+.experience-timeline__desc {
+  margin: 0.7rem 0 0;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--experience-muted);
+}
+
+.experience-timeline__link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  margin-top: 1.1rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--experience-accent);
+  text-decoration: none;
+}
+
+/* Links only ever change colour or underline — never position. */
+.experience-timeline__link:hover .experience-timeline__link-name,
+.experience-timeline__toggle:hover .experience-timeline__link-name {
+  text-decoration: underline;
+}
+
+.experience-timeline__toggle {
+  margin-left: 0.05rem;
+}
+
+.experience-timeline__link-label {
+  color: var(--experience-muted);
+}
+
+.experience-timeline__link-name {
+  font-weight: 600;
+  color: var(--experience-ink);
+}
+
+.experience-timeline__points {
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--experience-muted);
+}
+
+.experience-timeline__point {
+  position: relative;
+  margin: 0 0 0.4rem;
+  padding-left: 1.1rem;
+}
+
+.experience-timeline__point::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 1px;
+  background-color: var(--experience-accent);
+}
+
+.experience-timeline__point:last-child {
+  margin-bottom: 0;
+}
+
+/* =============================================================
+   Tablet — same two columns, tighter spine and badge. Everything
+   positional below is derived, so only the inputs change.
+   ============================================================= */
+
+@media (max-width: 64rem) {
+  .experience-section {
+    --experience-pad: 1rem;
+    --fs-milestone: clamp(1.8rem, 4.2vw, 2.4rem);
+    --tl-rail: 34px;
+  }
+
+  .experience-timeline {
+    --tl-icon: 24px;
+    --tl-content-pad: 1.25rem;
+    --tl-row-gap: clamp(4rem, 8vw, 5rem);
+  }
+
+  .experience-timeline__desc {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* =============================================================
+   Mobile — the same two columns, narrower still. Still one grid,
+   still one rail, still one badge per milestone.
+   ============================================================= */
+
+@media (max-width: 47.99rem) {
+  .experience-section {
+    --experience-pad: 1rem;
+    --tl-rail: 30px;
+  }
+
+  .experience-timeline {
+    --tl-icon: 22px;
+    --tl-content-pad: 0.75rem;
+    --tl-row-gap: clamp(3rem, 9vw, 3.75rem);
+  }
+
+  .experience-timeline__title {
+    line-height: 1.04;
+  }
+}
+
+/* Reduced motion is handled in the component: with motion disabled, the
+   scroll-linked fill is rendered complete and static instead of being
+   drawn as the section scrolls. */

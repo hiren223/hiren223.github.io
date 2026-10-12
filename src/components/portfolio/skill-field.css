@@ -1,0 +1,420 @@
+/* =============================================================
+   Technology field — the interactive skills canvas
+
+   No card, no bordered box, no meter, no percentage: a logo and
+   its name are one loose object placed by hand on a wide canvas,
+   with a thin connection layer behind them. Desktop is a
+   free-form composition; below 64rem the same data is re-laid
+   out as a purpose-built vertical edition rather than a shrunken
+   copy of the canvas.
+   ============================================================= */
+
+.hk-field {
+  /* Theme-aware rather than hardcoded warm white: the section sits on the
+     sand tint, which is charcoal in dark and cream in light. */
+  --hk-field-ink: var(--foreground);
+  --hk-field-name: color-mix(in oklab, var(--foreground) 64%, transparent);
+  --hk-field-line: color-mix(in oklab, var(--foreground) 14%, transparent);
+  /* A desaturated mark still needs lifting on a charcoal ground, and
+     deepening on cream — hence one token, two values. */
+  --hk-field-mark-filter: grayscale(1) brightness(0.62);
+  font-family: var(--font-sans);
+}
+
+.dark .hk-field {
+  --hk-field-mark-filter: grayscale(1) brightness(1.45) contrast(0.85);
+}
+
+/* Brands whose mark is genuinely black (GitHub) are inverted on a dark
+   ground instead of being recoloured, so the artwork on the wire stays
+   the real thing and simply reads light where it has to. */
+.dark .hk-field__logo[data-tone="black"] {
+  --hk-field-mark-filter: grayscale(1) invert(1);
+}
+
+.dark .hk-field__item:hover .hk-field__logo[data-tone="black"],
+.dark .hk-field__item:focus-visible .hk-field__logo[data-tone="black"],
+.dark .hk-field__item:active .hk-field__logo[data-tone="black"] {
+  filter: invert(1);
+}
+
+/* ---------- shared object: mark above name ---------- */
+
+.hk-field__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: center;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 340ms ease;
+}
+
+.hk-field__logo {
+  display: block;
+  /* One icon scale across the whole field: 24–34px on desktop, 20–28px
+     on mobile (see the vertical edition below). No huge/small mix. */
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  opacity: 0.5;
+  /* The mark is desaturated for the default state and handed back its own
+     colour on hover — no second request, no recoloured asset. */
+  filter: var(--hk-field-mark-filter);
+  transition:
+    filter 320ms ease,
+    opacity 320ms ease;
+}
+
+.hk-field__name {
+  font-size: var(--type-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hk-field-name);
+  transition: color 300ms ease;
+}
+
+/* Sizes are typographic weights, never levels. */
+.hk-field__item[data-size="large"] .hk-field__logo {
+  width: 2.125rem;
+  height: 2.125rem;
+  opacity: 0.58;
+}
+
+.hk-field__item[data-size="large"] .hk-field__name {
+  font-size: var(--type-base);
+  letter-spacing: 0.1em;
+}
+
+.hk-field__item[data-size="medium"] .hk-field__logo {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.hk-field__item[data-size="small"] .hk-field__logo {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.42;
+}
+
+.hk-field__item[data-size="small"] .hk-field__name {
+  font-size: var(--type-caption);
+  letter-spacing: 0.16em;
+}
+
+/* ---------- hover: the object comes forward, the field goes quiet ---------- */
+
+@media (hover: hover) {
+  .hk-field__item:hover .hk-field__body {
+    transform: scale(1.06);
+  }
+
+  .hk-field__item:hover .hk-field__logo {
+    filter: grayscale(0) brightness(1) contrast(1);
+    opacity: 1;
+  }
+
+  .hk-field__item:hover .hk-field__name {
+    color: var(--hk-field-ink);
+  }
+}
+
+.hk-field[data-quiet="on"] .hk-field__item:not([data-active="true"]) {
+  opacity: 0.3;
+}
+
+.hk-field__item {
+  transition: opacity 380ms ease;
+}
+
+/* ---------- the tiny floating label ---------- */
+
+.hk-field__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.6rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding-bottom: 0.45rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hk-field__tip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 0.35rem;
+  background: var(--hk-field-line);
+}
+
+.hk-field__tip-name {
+  font-size: var(--type-caption);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--hk-field-ink);
+}
+
+/* Sentence case, not caps. This line is an index plus a category name
+   — "01 / Data Science" is 17 characters, "01 / Programming" is 16 —
+   and a run that long is measurably slower to read in caps. The name
+   above it is at most 12 characters (see src/lib/skill-field.ts), so
+   that line still earns the all-caps treatment and this one does not.
+
+   Colour: --clay-deep, not --clay. Raw clay measures 3.9:1 on paper
+   and 3.6:1 on sand at 11px — below the 4.5:1 body threshold. Deep is
+   5.9:1 / 5.6:1, and on charcoal it steps lighter to 6.8:1, so one
+   token clears AA in both themes. */
+.hk-field__tip-cat {
+  font-size: var(--type-caption);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--clay-deep);
+}
+
+@media (hover: hover) {
+  .hk-field__item:hover .hk-field__tip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ---------- category labels ---------- */
+
+/* The same string the tooltip shows, so it takes the same treatment:
+   "01 / Programming" in sentence case. Only the tracking eases, from
+   the 0.26em that was tuned for caps to 0.08em, which still marks this
+   as a label rather than body copy. */
+.hk-field__tag {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: var(--type-caption);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--hk-field-name);
+  white-space: nowrap;
+}
+
+/* Incidental AA correction: --hk-field-tag was foreground at 45%, which
+   is 2.8:1 on sand at 11px. --hk-field-name is foreground at 64% —
+   4.8:1 on sand, 5.1:1 on paper, 7.3:1 on charcoal. */
+.hk-field__tag-index {
+  color: var(--clay-deep);
+}
+
+/* =============================================================
+   Desktop canvas — the free-form composition
+   ============================================================= */
+
+.hk-field__canvas {
+  position: relative;
+  width: 100%;
+}
+
+.hk-field__canvas > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+  /* The lines inherit the theme-aware hairline. */
+  color: var(--hk-field-line);
+}
+
+.hk-field__tag[data-anchor="canvas"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.55rem;
+  width: 2.25rem;
+  height: 1px;
+  background: var(--hk-field-line);
+}
+
+/* One slow dot, travelling its own line on the compositor. */
+.hk-field__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 999px;
+  background: var(--clay);
+  opacity: 0.75;
+  offset-distance: 0%;
+  animation: hk-field-flow linear infinite;
+}
+
+@keyframes hk-field-flow {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (min-width: 64rem) {
+  .hk-field__canvas {
+    /* 60vh ceiling: the network is a band inside the section, not a
+       scroll-consuming room, and it never becomes an empty field. */
+    height: clamp(400px, 60vh, 640px);
+  }
+
+  /* Free-form placement replaces the vertical edition's flow. */
+  .hk-field__canvas > .hk-field__item {
+    position: absolute;
+    translate: -50% -50%;
+    /* Marks sit above the network, so a dot never lands on a name. */
+    z-index: 1;
+  }
+
+  .hk-field__tag[data-anchor="canvas"] {
+    position: absolute;
+    translate: 0 -50%;
+  }
+
+  .hk-field__item[data-size="large"] .hk-field__name {
+    font-size: clamp(1rem, 1.15vw, 1.25rem);
+  }
+
+  .hk-field__item[data-size="medium"] .hk-field__name {
+    font-size: clamp(0.78rem, 0.82vw, 0.96rem);
+  }
+
+  .hk-field__item[data-size="small"] .hk-field__name {
+    font-size: clamp(0.72rem, 0.72vw, 0.85rem);
+  }
+}
+
+/* =============================================================
+   Vertical edition — its own composition, not a squeezed canvas
+   ============================================================= */
+
+.hk-field__group + .hk-field__group {
+  padding-top: 2.5rem;
+  margin-top: 2.5rem;
+}
+
+/* The connector adapts: the desktop's network becomes one hairline rule
+   between two groups. */
+.hk-field__group + .hk-field__group::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -2.5rem;
+  width: 1px;
+  height: 2rem;
+  background: linear-gradient(to bottom, transparent, var(--hk-field-line));
+}
+
+.hk-field__group {
+  position: relative;
+}
+
+.hk-field__rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.9rem 0.75rem;
+  margin-top: 1.6rem;
+}
+
+.hk-field__rows .hk-field__item {
+  justify-self: center;
+  min-width: 0;
+}
+
+.hk-field__rows .hk-field__item[data-size="large"] .hk-field__name {
+  font-size: var(--type-sm);
+}
+
+.hk-field__rows .hk-field__item[data-size="medium"] .hk-field__name {
+  font-size: var(--type-label);
+}
+
+.hk-field__rows .hk-field__item[data-size="small"] .hk-field__name {
+  font-size: var(--type-caption);
+}
+
+/* Mobile icon scale — 20–28px, the same visual language as desktop. */
+@media (max-width: 63.99rem) {
+  .hk-field__item[data-size="large"] .hk-field__logo {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .hk-field__item[data-size="medium"] .hk-field__logo {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .hk-field__item[data-size="small"] .hk-field__logo {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* Tap fires the same state as hover, minus the tooltip. */
+@media (hover: none) {
+  .hk-field__item:active .hk-field__body {
+    transform: scale(1.06);
+  }
+
+  .hk-field__item:active .hk-field__logo {
+    filter: grayscale(0) brightness(1) contrast(1);
+    opacity: 1;
+  }
+
+  .hk-field__item:active .hk-field__name {
+    color: var(--hk-field-ink);
+  }
+
+  .hk-field__tip {
+    display: none;
+  }
+}
+
+/* The narrowest phones: one column, so nothing is ever clipped. */
+@media (max-width: 22.5rem) {
+  .hk-field__rows {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.7rem;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hk-field__dot {
+    animation: none;
+    display: none;
+  }
+
+  .hk-field__body,
+  .hk-field__logo,
+  .hk-field__name,
+  .hk-field__tip {
+    transition-duration: 1ms;
+  }
+}
