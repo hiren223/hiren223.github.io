@@ -21,6 +21,7 @@
   --about-ink: var(--foreground);
   --about-muted: var(--muted-foreground);
   --about-accent: var(--clay);
+  --about-accent-text: var(--clay-deep);
   --about-rule: var(--border);
   /* The one highlight colour that carries small text. */
   --about-em: var(--clay-deep);
@@ -92,7 +93,7 @@
 .about-marker__index {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
-  color: var(--about-accent);
+  color: var(--about-accent-text);
 }
 
 .about-marker__rule {

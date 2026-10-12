@@ -43,7 +43,7 @@ export const experiences: TimelineEntry[] = [
     org: "Rubixe",
     meta: "Aug 2025 — Feb 2026 · 6 months",
     description:
-      "Six months across proof-of-concept and client engagements, covering data preparation, feature engineering, model building and evaluation.",
+      "I spent six months on proof-of-concept work and client projects. I prepared data, built features, and trained and tested models.",
     points: [
       "Worked across proof-of-concept and client engagements.",
       "Cleaned data and engineered features.",
@@ -62,7 +62,7 @@ export const education: TimelineEntry = {
   headline: "BCA — Bachelor of Computer Applications",
   org: "Silver Oak University, Ahmedabad",
   description:
-    "A foundation in web development — HTML, CSS, JavaScript, PHP, MySQL and Bootstrap — finished with a four-person final-year project: Krushi Manch.",
+    "I learned web development with HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap. In my final year, I worked with a team of four to build Krushi Manch.",
   link: { label: "Krushi Manch", to: "/projects" },
 };
 

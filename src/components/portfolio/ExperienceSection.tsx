@@ -61,7 +61,7 @@ const certificationMilestone = {
   headline: "Certified Data Scientist\n& Data Science Foundation" as const,
   org: "NASSCOM FutureSkills Prime (Gold, 95%) · IABAC" as const,
   description:
-    "Created a Government of India-aligned Data Scientist assessment with a Gold score, and earned the IABAC Data Science Foundation certification — formalising skills built during the Rubixe internship." as const,
+    "I earned a Gold score on the NASSCOM FutureSkills Prime Data Scientist test. I also earned the IABAC Data Science Foundation certificate. These build on what I learned at Rubixe." as const,
 };
 
 type MilestoneEntry = {

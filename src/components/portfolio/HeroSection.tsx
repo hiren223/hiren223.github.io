@@ -187,8 +187,8 @@ export function HeroSection() {
           >
             <hr className="hk-hero__rule" />
             <p className="hk-hero__desc">
-              Building data-driven solutions through machine learning,
-              analytics, visualization, and modern web development.
+              I build useful tools with machine learning, data, charts, and web
+              development.
             </p>
             <div className="hk-hero__actions">
               <a className="hk-hero__btn hk-hero__btn--solid" href="#work">

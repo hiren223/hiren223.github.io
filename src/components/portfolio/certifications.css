@@ -20,9 +20,7 @@
 .certifications-section {
   --cert-ink: var(--foreground);
   --cert-muted: var(--muted-foreground);
-  /* Raw copper is display scale only (3.9:1). Reserved here for the
-     marker's numeral and the hover rule, exactly as about.css and
-     experience.css use it. */
+  /* Raw copper is for display text and decorative rules only (3.9:1). */
   --cert-accent: var(--clay);
   /* The text-safe copper (5.9:1 on paper, 5.6:1 on this band's sand).
      Everything small that is copper — the ledger indices, the award
@@ -67,7 +65,7 @@
 .certifications-marker__index {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
-  color: var(--cert-accent);
+  color: var(--cert-accent-text);
 }
 
 .certifications-marker__rule {
@@ -272,7 +270,7 @@
 }
 
 .certifications-item:hover .certifications-index {
-  color: var(--cert-accent);
+  color: var(--cert-accent-text);
 }
 
 .certifications-index,

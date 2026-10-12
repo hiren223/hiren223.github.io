@@ -21,6 +21,7 @@
   --experience-ink: var(--foreground);
   --experience-muted: var(--muted-foreground);
   --experience-accent: var(--clay);
+  --experience-accent-text: var(--clay-deep);
   --experience-rule: var(--border);
 
   --fs-label: var(--type-label);
@@ -82,7 +83,7 @@
 .experience-marker__index {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
-  color: var(--experience-accent);
+  color: var(--experience-accent-text);
 }
 
 .experience-marker__rule {
@@ -269,7 +270,7 @@
   line-height: 1.4;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--experience-accent);
+  color: var(--experience-accent-text);
 }
 
 /* ---------- column 2, second line — the milestone ---------- */

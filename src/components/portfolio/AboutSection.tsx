@@ -62,46 +62,40 @@ const AT = {
 export function AboutSection() {
   const paragraphs = [
     <>
-      I am a <em className="about-em">Bachelor of Computer Applications (BCA)</em>{" "}
-      graduate from <em className="about-em">Silver Oak University, Ahmedabad</em>
-      , with a strong interest in{" "}
-      <em className="about-em">
-        Data Science, Machine Learning, Artificial Intelligence, and Data
-        Analytics
-      </em>
-      . I enjoy working with data to discover meaningful insights, solve
-      real-world problems, and build predictive models.
+      I earned a{" "}
+      <em className="about-em">Bachelor of Computer Applications (BCA)</em> at{" "}
+      <em className="about-em">Silver Oak University in Ahmedabad</em>. I like
+      data science, machine learning, AI, and data analytics. I use data to find
+      patterns, solve problems, and build models that make predictions.
     </>,
     <>
-      During my BCA, I built a strong foundation in{" "}
-      <em className="about-em">Web Development</em> using{" "}
+      During my BCA, I learned{" "}
+      <em className="about-em">web development</em> with{" "}
       <em className="about-em">
         HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap
       </em>
-      . As my final-year project, I co-developed{" "}
-      <em className="about-em">Krushi Manch</em>, a multilingual agricultural web
-      platform that provides digital services for farmers while giving me
-      valuable experience in full-stack development and teamwork.
+      . For my final-year project, I helped build{" "}
+      <em className="about-em">Krushi Manch</em>. It is a multilingual website
+      that gives farmers digital services. I gained experience building both
+      the front and back ends and working with a team.
     </>,
     <>
-      To strengthen my technical skills, I completed a{" "}
-      <em className="about-em">Data Science program at Datamites</em>, where I
-      gained hands-on experience with{" "}
+      I took a{" "}
+      <em className="about-em">Data Science course at Datamites</em>. I learned{" "}
       <em className="about-em">
-        Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL,
-        Statistics, Machine Learning, Data Visualization, and Exploratory Data
-        Analysis (EDA)
+        Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL, and
+        statistics
       </em>
-      . I worked on real-world datasets involving data preprocessing, feature
-      engineering, model building, hyperparameter tuning, and model evaluation.
+      . I also studied machine learning, data visualization, and exploratory
+      data analysis (EDA). I cleaned real data, picked useful features, built
+      and tuned models, and checked their results.
     </>,
     <>
-      My goal is to build a successful career as a{" "}
-      <em className="about-em">Data Scientist</em>, applying data-driven
-      solutions to real-world challenges while continuously learning and
-      improving my skills in{" "}
+      I want to become a{" "}
+      <em className="about-em">data scientist</em>. I want to use data to solve
+      real problems and keep learning about{" "}
       <em className="about-em">
-        Data Science, Machine Learning, and Artificial Intelligence
+        data science, machine learning, and artificial intelligence
       </em>
       .
     </>,

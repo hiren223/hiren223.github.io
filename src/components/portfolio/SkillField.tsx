@@ -338,10 +338,21 @@ export function SkillField() {
       onPointerLeave={rest}
     >
       {/* The field is decorative markup; the list below is the real content. */}
-      <p className="sr-only">
-        Skills — {SKILL_CATEGORIES.map((c) => `${c.label}: `).join("")}
-        {SKILLS.map((s) => s.name).join(", ")}.
-      </p>
+      <div className="sr-only">
+        <p>Skills by category:</p>
+        {SKILL_CATEGORIES.map((category) => (
+          <div key={category.id}>
+            <p>{category.label}</p>
+            <ul>
+              {SKILLS.filter((skill) => skill.category === category.id).map(
+                (skill) => (
+                  <li key={skill.id}>{skill.name}</li>
+                ),
+              )}
+            </ul>
+          </div>
+        ))}
+      </div>
 
       {wide ? (
         <div

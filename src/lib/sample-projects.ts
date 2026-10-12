@@ -105,7 +105,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
     client: "Silver Oak University",
     year: "2025",
     summary:
-      "A multilingual agricultural web platform giving farmers reliable, region-specific crop information and digital services.",
+      "A website in many languages with crop tips and online tools for farmers.",
     description:
       "My final-year BCA project, co-developed with a team of four. Krushi Manch brings crop guidance, disease information and an equipment rental marketplace together behind role-based access for farmers, buyers and admins. I worked across the full stack — PHP, MySQL, HTML, CSS and JavaScript — and contributed to the multilingual layer and the EMI calculator. It was the project that convinced me I wanted to build data-driven products, not just models.",
     tags: ["PHP", "MySQL", "JavaScript", "HTML", "CSS", "Bootstrap"],
@@ -125,7 +125,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
     client: "Rubixe · Client PRCL-0017",
     year: "2025",
     summary:
-      "Predicting which telecom customers are likely to churn from tenure, contract type and billing behaviour — the client engagement I owned end to end.",
+      "This project predicts which telecom customers may leave. I used customer history, contract type, and billing data, and led the work from start to finish.",
     description:
       "The first project I took from raw client data to a working deliverable. I cleaned the dataset, engineered features (including deriving tenure from signup date), and compared Logistic Regression, Decision Tree and Random Forest. SMOTE was applied to counter the heavy class imbalance. The headline accuracy landed at 79%, but minority-class recall stayed close to zero — an honest reminder that accuracy alone can hide a model that fails exactly where it matters.",
     tags: [

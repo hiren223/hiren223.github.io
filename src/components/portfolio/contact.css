@@ -63,7 +63,7 @@
 .contact-marker__index {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
-  color: var(--contact-accent);
+  color: var(--contact-accent-text);
 }
 
 .contact-marker__rule {
