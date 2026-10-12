@@ -33,8 +33,8 @@
   --fs-label: var(--type-label);
   --fs-sm: var(--type-sm);
   --fs-body: var(--type-base);
-  --fs-lead: clamp(1.0625rem, 1.3vw, 1.25rem);
-  --fs-subhead: clamp(1.375rem, 2.2vw, 1.875rem);
+  --fs-lead: var(--type-base);
+  --fs-subhead: var(--type-display-sm);
 }
 
 /* ---------- the list ---------- */
@@ -120,7 +120,7 @@
 
 .pj-row__number {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-size: var(--type-display-sm);
   line-height: 1;
   letter-spacing: 0.02em;
   color: var(--pj-muted);
@@ -167,7 +167,7 @@
   /* Long titles such as "Smart Agriculture Analytics Dashboard" wrap
      on their own terms rather than being squeezed. */
   /* 30–44px on a phone, 32–58px from the two-column breakpoint up. */
-  font-size: clamp(30px, 9vw, 44px);
+  font-size: var(--type-display-sm);
   text-wrap: balance;
   transition: color 400ms ease;
 }
@@ -177,7 +177,7 @@
 .pj-row__summary {
   margin: 1rem 0 0;
   max-width: 420px;
-  font-size: clamp(var(--fs-body), 1.1vw, 1.125rem);
+  font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--pj-muted);
   transition: color 400ms ease;
@@ -317,7 +317,7 @@
 
 @media (min-width: 48rem) {
   .pj-row__title {
-    font-size: clamp(32px, 4vw, 58px);
+    font-size: var(--type-display-md);
   }
 
   .pj-row__main {

@@ -27,8 +27,8 @@
   --fs-category: var(--type-caption);
   --fs-sm: var(--type-sm);
   --fs-body: var(--type-base);
-  --fs-title: clamp(2.2rem, 3.4vw, 3.5rem);
-  --fs-milestone: clamp(2rem, 3.2vw, 3.4rem);
+  --fs-title: var(--type-display-md);
+  --fs-milestone: var(--type-display-md);
 
   /* The timeline's own gutter — the header uses the page container
      instead, and this is the padding the rail maths is measured from. */
@@ -352,6 +352,11 @@
   color: var(--experience-muted);
 }
 
+.experience-timeline__link-label--sentence {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
 .experience-timeline__link-name {
   font-weight: 600;
   color: var(--experience-ink);
@@ -394,7 +399,7 @@
 @media (max-width: 64rem) {
   .experience-section {
     --experience-pad: 1rem;
-    --fs-milestone: clamp(1.8rem, 4.2vw, 2.4rem);
+    --fs-milestone: var(--type-display-sm);
     --tl-rail: 34px;
   }
 

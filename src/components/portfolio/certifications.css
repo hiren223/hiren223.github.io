@@ -45,9 +45,9 @@
   --fs-label: var(--type-label);
   --fs-sm: var(--type-sm);
   --fs-body: var(--type-base);
-  --fs-ledger: clamp(1.125rem, 1.5vw, 1.4rem);
-  --fs-featured: clamp(1.9rem, 3.4vw, 3.25rem);
-  --fs-score: clamp(2.75rem, 5.2vw, 4.5rem);
+  --fs-ledger: var(--type-base);
+  --fs-featured: var(--type-display-md);
+  --fs-score: var(--type-display-lg);
 }
 
 /* ---------- header ---------- */
@@ -88,7 +88,7 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(32px, 4.2vw, 60px);
+  font-size: var(--type-display-lg);
   line-height: 1.04;
   letter-spacing: -0.02em;
   text-align: left;

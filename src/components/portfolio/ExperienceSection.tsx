@@ -147,8 +147,8 @@ function MilestoneContent({
 
       {entry.link && (
         <a href={entry.link.to} className="experience-timeline__link">
-          <span className="experience-timeline__link-label">
-            FINAL-YEAR PROJECT
+          <span className="experience-timeline__link-label experience-timeline__link-label--sentence">
+            Final-year project
           </span>
           <span className="experience-timeline__link-name">
             {entry.link.label}

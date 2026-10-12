@@ -23,7 +23,7 @@
 import { coverSrc } from "@/lib/project-media";
 import type { PortfolioProject } from "@/lib/sample-projects";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { useCallback, useState } from "react";
 import "./project-index.css";
 

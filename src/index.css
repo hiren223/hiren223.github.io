@@ -132,14 +132,16 @@
        16px  base     running body copy (= text-base)
 
      Display sizes are deliberately NOT here: hero, section headings
-     and numerals carry hierarchy and stay authored per section as
-     clamps. Add a step only when no existing step can hold the copy.
+     and numerals carry hierarchy through three shared fluid steps.
      ------------------------------------------------------------- */
   --type-micro: 0.625rem;
   --type-caption: 0.6875rem;
   --type-label: 0.75rem;
   --type-sm: 0.875rem;
   --type-base: 1rem;
+  --type-display-sm: clamp(1.75rem, 2.6vw, 2.5rem);
+  --type-display-md: clamp(2rem, 3.8vw, 3.5rem);
+  --type-display-lg: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .dark {

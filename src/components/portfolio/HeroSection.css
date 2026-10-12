@@ -240,7 +240,7 @@ font-family: "Bebas Neue", sans-serif;
   border: 1px solid var(--hk-line);
   background: rgba(29, 27, 24, 0.03);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 8vw, 3rem);
+  font-size: var(--type-display-md);
   color: rgba(29, 27, 24, 0.3);
 }
 
@@ -543,7 +543,7 @@ font-family: "Bebas Neue", sans-serif;
     /* 16px → 20px across the range, instead of a poster-sized 24px */
     width: 100%;
     max-width: 24rem;
-    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-size: var(--type-base);
     line-height: 1.6;
   }
 

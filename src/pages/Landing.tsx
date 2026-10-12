@@ -225,7 +225,7 @@ export default function Landing() {
           <Reveal className="flex flex-col gap-6 pb-12 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-6">
               <SectionLabel index="01" label="Selected work" />
-              <h2 className="max-w-5xl text-balance font-display text-[clamp(40px,5vw,68px)] leading-[1.02]">
+              <h2 className="max-w-5xl text-balance font-display text-[length:var(--type-display-lg)] leading-[1.02]">
                 Two featured projects, each with the numbers behind it.
               </h2>
             </div>
@@ -257,7 +257,7 @@ export default function Landing() {
             <Reveal className="flex flex-col gap-8 pb-14 sm:pb-20">
               <div className="flex flex-col gap-5">
                 <SectionLabel index="02" label="Skills" />
-                <h2 className="max-w-5xl text-balance font-display text-[clamp(40px,5vw,68px)] leading-[1.02]">
+                <h2 className="max-w-5xl text-balance font-display text-[length:var(--type-display-lg)] leading-[1.02]">
                   Technologies I use to build, analyze and ship data-driven
                   solutions.
                 </h2>
@@ -311,7 +311,7 @@ export default function Landing() {
                   the three things a visitor can actually do on the right. */}
               <Reveal className="flex flex-col gap-10 py-14 lg:flex-row lg:items-end lg:justify-between lg:py-16">
                 <div>
-                  <p className="font-display text-[clamp(28px,3.2vw,40px)] leading-none tracking-[-0.015em]">
+                  <p className="font-display text-[length:var(--type-display-sm)] leading-none tracking-[-0.015em]">
                     Hiren Keraliya
                   </p>
                   <p className="mt-3 text-sm text-muted-foreground">
@@ -320,7 +320,7 @@ export default function Landing() {
 
                   {/* Availability. The outer ring breathes so the footer
                       reads as a live endpoint rather than a dead end. */}
-                  <p className="mt-5 inline-flex items-center gap-2.5 border border-border px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                  <p className="mt-5 inline-flex items-center gap-2.5 border border-border px-3 py-1.5 text-xs tracking-[0.02em] text-muted-foreground">
                     <span className="relative flex size-2" aria-hidden="true">
                       <span className="absolute size-full animate-ping rounded-full bg-clay opacity-70" />
                       <span className="relative size-2 rounded-full bg-clay" />
@@ -406,12 +406,6 @@ export default function Landing() {
                     />
                     Back to top
                   </button>
-                  <Link
-                    to="/auth"
-                    className="transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
-                  >
-                    Studio
-                  </Link>
                 </div>
               </div>
             </div>

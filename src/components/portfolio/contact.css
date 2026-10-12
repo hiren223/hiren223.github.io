@@ -87,7 +87,7 @@
   font-family: var(--font-display);
   font-weight: 400;
   /* The section's existing display scale, unchanged. */
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: var(--type-display-lg);
   line-height: 1.02;
   letter-spacing: -0.02em;
   text-align: left;
@@ -129,8 +129,7 @@
   margin: 0;
   font-size: var(--fs-label);
   line-height: 1.2;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: var(--contact-muted);
 }
 
