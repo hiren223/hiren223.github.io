@@ -16,6 +16,7 @@ import {
   type PortfolioProject,
 } from "@/lib/sample-projects";
 import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, House, ArrowLeft } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import "./projects.css";
@@ -33,9 +34,21 @@ const PROJECTS_INDEX = HEADER_LINKS.findIndex(
 );
 
 const CONTACT_LINKS = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/hiren-keraliya-440700259/" },
-  { label: "GitHub", href: "https://github.com/hiren223" },
-  { label: "Email", href: "mailto:hirenkeraliya99@gmail.com" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/hiren-keraliya-440700259/",
+    icon: Linkedin,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/hiren223",
+    icon: Github,
+  },
+  {
+    label: "Email",
+    href: "mailto:hirenkeraliya99@gmail.com",
+    icon: Mail,
+  },
 ];
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -109,20 +122,32 @@ export default function ProjectsPage() {
       <footer className="site-footer">
         <div className="site-footer__inner">
           <span className="site-footer__brand">HIREN KERALIYA</span>
-          <nav className="site-footer__links" aria-label="Footer">
-            {CONTACT_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                {...(link.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                {link.label}
-              </a>
-            ))}
-            <Link to="/">Home</Link>
-          </nav>
+          <nav className="site-footer__links" aria-label="Footer links">
+  {CONTACT_LINKS.map((link) => {
+    const Icon = link.icon;
+
+    return (
+      <a
+        key={link.label}
+        href={link.href}
+        aria-label={link.label}
+        
+        className="site-footer__social-link"
+        {...(link.href.startsWith("http")
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
+        <Icon size={17} strokeWidth={1.7} />
+      </a>
+    );
+  })}
+
+  <Link to="/" className="site-footer__social-link" aria-label="Home">
+  <House size={17} strokeWidth={1.7} />
+  <span>Back to Home</span>
+</Link>
+</nav>
+
         </div>
         <p className="site-footer__bottom">
           © 2026 Hiren Keraliya. All rights reserved.
