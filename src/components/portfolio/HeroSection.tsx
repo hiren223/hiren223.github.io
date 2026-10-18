@@ -135,6 +135,9 @@ export function HeroSection() {
                       }
                       src={PORTRAIT_SOURCES[portraitIndex]}
                       alt="Hiren Keraliya — Data Scientist and Full Stack Developer"
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
                       width={500}
                       height={500}
                       onError={() => {

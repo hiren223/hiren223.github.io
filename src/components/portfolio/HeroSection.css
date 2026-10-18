@@ -224,10 +224,10 @@ font-family: "Bebas Neue", sans-serif;
      the canvas, so this never claims z-index 2 */
 }
 
-/* Touch devices get no hover: the reveal is driven by tap (clickBurst), and
-   the dithered plate would otherwise sit there looking flat and unfinished.
-   Keep the plain cutout there instead. */
-@media (hover: none) {
+/* Keep the plain cutout on devices with no hover-capable pointer at all.
+   `any-hover` preserves the reveal on touch-first laptops when a mouse is
+   also connected. */
+@media (any-hover: none) {
   .hk-hero__veil {
     display: none;
   }
