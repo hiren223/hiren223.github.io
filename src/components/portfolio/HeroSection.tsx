@@ -190,8 +190,7 @@ export function HeroSection() {
           >
             <hr className="hk-hero__rule" />
             <p className="hk-hero__desc">
-              I build useful tools with machine learning, data, charts, and web
-              development.
+             I turn data into actionable insights, build intelligent machine learning solutions, and create impactful web experiences.
             </p>
             <div className="hk-hero__actions">
               <a className="hk-hero__btn hk-hero__btn--solid" href="#work">
