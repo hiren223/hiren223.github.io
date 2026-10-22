@@ -245,6 +245,9 @@
   .navbar-gutter {
     padding-left: max(1.25rem, env(safe-area-inset-left));
     padding-right: max(1.25rem, env(safe-area-inset-right));
+    background: #989494ab;
+    backdrop-filter: blur(5px);
+    border-radius: 7px;
   }
 
   @media (min-width: 40rem) {

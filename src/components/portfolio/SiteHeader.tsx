@@ -108,7 +108,7 @@ export function SiteHeader({ links, activeIndex, className }: SiteHeaderProps) {
           it is only a row of measurements. The dark chips on the nav links
           below are what gives the navbar its shape now. */}
       <div
-        className="navbar-gutter relative mx-4 my-2 flex h-12 w-auto items-center justify-center rounded-[10px] bg-[rgba(247,245,241,0.92)] backdrop-blur-xl backdrop-saturate-150 md:mx-6 md:h-14 md:bg-transparent md:backdrop-blur-none md:backdrop-saturate-100"
+        className="navbar-gutter relative mx-4 my-2 flex h-12 w-auto items-center justify-center rounded-[10px] backdrop-blur-xl backdrop-saturate-150 md:mx-6 md:h-14 md:bg-transparent md:backdrop-blur-none md:backdrop-saturate-100"
       >
         {/* Brand mark — small screens only. Below md the pill nav is hidden
             and the bar is the only navigation, so it needs a surface to sit
@@ -209,17 +209,7 @@ export function SiteHeader({ links, activeIndex, className }: SiteHeaderProps) {
           the fade and slide. */}
       <div
         id="mobile-menu"
-        /* The one place a fill is kept: this panel sits over the page while
-           the menu is open, so without it the links would collide with
-           whatever is behind them. One colour, no scrolled variant.
-
-           `mx-4` + `rounded-[10px]` are the bar's own numbers, so the two
-           line up as one stack: same 16px inset from the viewport, same
-           10px corners. The hairline has moved up here from the nav — on the
-           same element as the radius it follows the corner curve, whereas a
-           border on the child drew a straight line across the square corners
-           and poked out past them. */
-        className={`mx-4 grid rounded-[10px] border-t border-[rgba(20,20,20,0.08)] bg-[rgba(247,245,241,0.97)] transition-[grid-template-rows,opacity,translate,visibility] duration-[300ms] ease-out md:hidden ${
+        className={`mx-4 grid rounded-[10px] border-t border-[rgba(20,20,20,0.08)] transition-[grid-template-rows,opacity,translate,visibility] duration-[300ms] ease-out md:hidden ${
           isMenuOpen
             ? "visible grid-rows-[1fr] translate-y-0 opacity-100"
             : "invisible grid-rows-[0fr] -translate-y-2 opacity-0"
