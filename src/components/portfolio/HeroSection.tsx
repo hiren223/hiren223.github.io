@@ -18,7 +18,7 @@ import "./HeroSection.css";
  * the monogram placeholder is shown.
  */
 const PORTRAIT_SOURCES = [
-  "/assets/photo-2-removebg-preview.png",
+  "/assets/hero-image.webp",
   "/hiren.png",
   "/hiren.jpg",
   "/hiren.jpeg",

@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 
 /* Brand portrait — the same background-removed cutout the hero shows, so the
    navbar mark and the hero read as one person rather than two identities. */
-const BRAND_PORTRAIT = `${import.meta.env.BASE_URL}assets/photo-2-removebg-preview.png`;
+const BRAND_PORTRAIT = `${import.meta.env.BASE_URL}assets/hero-image.webp`;
 
 export type HeaderLink = { label: string; href: string };
 
