@@ -365,3 +365,114 @@
     padding-inline: clamp(0.85rem, 1.4vw, 1.25rem);
   }
 }
+
+
+/* About skills — shared styling for both animation rows */
+.about-skills-marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-block: 1rem;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+}
+
+.about-skills-marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: about-skills-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.about-skills-marquee__group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+}
+
+/* Identical typography for skills in both rows */
+.about-skills-marquee .about-keyword {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 1.6rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  color: var(--about-ink);
+}
+
+.about-skills-marquee .about-keyword__diamond {
+  display: inline-block;
+  color: var(--about-accent);
+  font-size: 0.9rem;
+  line-height: 1;
+  /* transform: rotate(45deg); */
+}
+
+/* First row: left */
+@keyframes about-skills-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Second row: right */
+.about-skills-marquee--reverse .about-skills-marquee__track {
+  animation-name: about-skills-scroll-reverse;
+  animation-duration: 45s;
+}
+
+@keyframes about-skills-scroll-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .about-skills-marquee {
+    padding-block: 0.6rem;
+  }
+
+  .about-skills-marquee__group {
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .about-skills-marquee .about-keyword {
+    font-size: 1.1rem;
+    gap: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .about-skills-marquee__track {
+    animation: none;
+  }
+}

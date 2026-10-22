@@ -1,26 +1,9 @@
-/* AboutSection — an editorial spread in four bands.
-
-   Band 1  the marker: 03 — ABOUT, on the page's left edge
-   Band 2  the headline, both lines flush to the marker's left edge
-   Band 3  "How I think": a full-width method strip — one row of five
-           cells separated by hairlines, no fills and no panels
-   Band 4  the profile: four paragraphs set as a two-column spread with
-           a hairline column rule, indented to the headline's second
-           line so the two left edges rhyme
-           … closed by the discipline index on a full-width rule
-
-   Nothing here is a card and nothing is centred. The palette is the
-   section's existing tokens only — ink, muted, clay, clay-deep and the
-   border hairline — and the two fonts the site already loads.
-*/
-
 import { keywords } from "@/lib/experience-data";
 import { motion } from "framer-motion";
 import "./about.css";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/** Scroll entrance — 500–800ms, 15–25px, once only. */
 function rise(delay: number, distance = 15) {
   return {
     initial: { opacity: 0, y: distance },
@@ -30,11 +13,6 @@ function rise(delay: number, distance = 15) {
   };
 }
 
-/**
- * The four stages. Numbers are authored so "01" cannot drift to "1".
- * Labels are written in sentence case and uppercased in CSS, which keeps
- * the markup readable and the typography in one place.
- */
 const STAGES = [
   { n: "01", name: "Question", desc: "Start with the problem." },
   { n: "02", name: "Explore", desc: "Understand the data." },
@@ -42,12 +20,6 @@ const STAGES = [
   { n: "04", name: "Explain", desc: "Turn findings into action." },
 ];
 
-/**
- * One reveal order for the whole section, read top to bottom: marker →
- * headline → method strip → its four steps → profile label → the four
- * paragraphs → the discipline line. Kept together so the cascade can be
- * read at a glance instead of diffing a dozen delay literals.
- */
 const AT = {
   marker: 0,
   headline: 0.06,
@@ -56,17 +28,63 @@ const AT = {
   label: 0.2,
   paragraph: (i: number) => 0.24 + i * 0.06,
   discipline: 0.5,
-  keyword: (i: number) => 0.54 + i * 0.04,
 };
+
+const SKILLS = [
+  "Python",
+  "SQL",
+  "Data Science",
+  "Machine Learning",
+  "Deep Learning",
+  "Artificial Intelligence",
+  "Pandas",
+  "NumPy",
+  "Scikit-learn",
+  "Data Analysis",
+  "Statistics",
+  "EDA",
+  "Power BI",
+  "Tableau",
+  "Data Visualization",
+  "Feature Engineering",
+  "Model Evaluation",
+  "Predictive Analytics",
+  "JavaScript",
+  "MySQL",
+];
+
+const SKILLS_SECOND = [
+  "Data Cleaning",
+  "Data Preprocessing",
+  "Feature Engineering",
+  "Exploratory Data Analysis",
+  "Missing Value Handling",
+  "Outlier Detection",
+  "Feature Selection",
+  "Data Encoding",
+  "Feature Scaling",
+  "Model Training",
+  "Hyperparameter Tuning",
+  "Model Evaluation",
+  "Cross Validation",
+  "ROC-AUC Analysis",
+  "Model Deployment",
+];
 
 export function AboutSection() {
   const paragraphs = [
     <>
       I earned a{" "}
-      <em className="about-em">Bachelor of Computer Applications (BCA)</em> at{" "}
-      <em className="about-em">Silver Oak University in Ahmedabad</em>. I like
-      data science, machine learning, AI, and data analytics. I use data to find
-      patterns, solve problems, and build models that make predictions.
+      <em className="about-em">
+        Bachelor of Computer Applications (BCA)
+      </em>{" "}
+      at{" "}
+      <em className="about-em">
+        Silver Oak University in Ahmedabad
+      </em>
+      . I am interested in data science, machine learning, AI, and data
+      analytics. I use data to discover patterns, solve problems, and build
+      predictive models.
     </>,
     <>
       During my BCA, I learned{" "}
@@ -75,52 +93,60 @@ export function AboutSection() {
         HTML, CSS, JavaScript, PHP, MySQL, and Bootstrap
       </em>
       . For my final-year project, I helped build{" "}
-      <em className="about-em">Krushi Manch</em>. It is a multilingual website
-      that gives farmers digital services. I gained experience building both
-      the front and back ends and working with a team.
+      <em className="about-em">Krushi Manch</em>, a multilingual website
+      providing digital services for farmers. This gave me experience in
+      frontend development, backend development, and teamwork.
     </>,
     <>
-      I took a{" "}
-      <em className="about-em">Data Science course at Datamites</em>. I learned{" "}
+      I completed a{" "}
+      <em className="about-em">Data Science course at Datamites</em>,
+      where I studied{" "}
       <em className="about-em">
-        Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL, and
-        statistics
+        Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, SQL,
+        and statistics
       </em>
-      . I also studied machine learning, data visualization, and exploratory
-      data analysis (EDA). I cleaned real data, picked useful features, built
-      and tuned models, and checked their results.
+      . I practised exploratory data analysis, data cleaning, feature
+      engineering, model training, hyperparameter tuning, and evaluation.
     </>,
     <>
-      I want to become a{" "}
-      <em className="about-em">data scientist</em>. I want to use data to solve
-      real problems and keep learning about{" "}
+      My goal is to become a{" "}
+      <em className="about-em">data scientist</em> who turns complex data
+      into useful insights. I am continually developing my skills in{" "}
       <em className="about-em">
         data science, machine learning, and artificial intelligence
-      </em>
-      .
+      </em>{" "}
+      while building practical projects that address real-world problems.
     </>,
   ];
 
   return (
     <div className="about-section">
-      {/* Band 1 — the marker, on the copy's left edge */}
+      {/* Band 1 — section marker */}
       <motion.div className="about-marker" {...rise(AT.marker)}>
         <span className="about-marker__index">03</span>
         <span className="about-marker__rule" />
         <span className="about-label">About</span>
       </motion.div>
 
-      {/* Band 2 — the headline. Two authored lines, both flush left. */}
-      <motion.h2 className="about-headline" {...rise(AT.headline, 25)}>
-        <span className="about-headline__line">Curious about data,</span>
+      {/* Band 2 — headline */}
+      <motion.h2
+        className="about-headline"
+        {...rise(AT.headline, 25)}
+      >
+        <span className="about-headline__line">
+          Curious about data,
+        </span>
         <span className="about-headline__line">
           serious about what it{" "}
           <span className="about-headline__accent">proves.</span>
         </span>
       </motion.h2>
 
-      {/* Band 3 — the method strip */}
-      <motion.section className="about-method" {...rise(AT.method, 0)}>
+      {/* Band 3 — method strip */}
+      <motion.section
+        className="about-method"
+        {...rise(AT.method, 0)}
+      >
         <h3 className="about-method__title">How I think</h3>
 
         <ol className="about-method__list">
@@ -138,7 +164,7 @@ export function AboutSection() {
         </ol>
       </motion.section>
 
-      {/* Band 4 — the profile spread */}
+      {/* Band 4 — profile */}
       <div className="about-profile">
         <motion.div className="about-label-row" {...rise(AT.label)}>
           <span className="about-label">Profile</span>
@@ -158,29 +184,63 @@ export function AboutSection() {
         </div>
       </div>
 
-      {/* Closing band — the discipline index */}
-      <motion.div className="about-discipline" {...rise(AT.discipline)}>
+      {/* Closing band — continuously moving skill index */}
+      <motion.div
+        className="about-discipline"
+        {...rise(AT.discipline)}
+      >
         <span className="about-discipline__rule" />
-        <div className="about-keywords">
-          {keywords.map((word, i) => (
-            <motion.span
-              key={word}
-              className="about-keyword"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.5,
-                ease: EASE,
-                delay: AT.keyword(i),
-              }}
-            >
-              {i > 0 && <span className="about-keyword__sep">/</span>}
-              {word}
-            </motion.span>
-          ))}
+
+        <div
+          className="about-skills-marquee"
+          role="region"
+          aria-label="Technical skills"
+        >
+          <div className="about-skills-marquee__track">
+            {[0, 1].map((copy) => (
+              <div
+                className="about-skills-marquee__group"
+                key={copy}
+                aria-hidden={copy === 1}
+              >
+                {SKILLS.map((skill, i) => (
+                  <span
+                    className="about-keyword"
+                    key={`${copy}-${skill}`}
+                  >
+                    <span>{skill}</span>
+                    <span
+                      className="about-keyword__diamond"
+                      aria-hidden="true"
+                    >
+                      ✦
+                    </span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+
+     
+<div className="about-skills-marquee about-skills-marquee--reverse">
+  <div className="about-skills-marquee__track">
+    {[...SKILLS_SECOND, ...SKILLS_SECOND].map((skill, index) => (
+      <div
+        className="about-skills-marquee__group"
+        key={`${skill}-${index}`}
+      >
+        <span className="about-keyword">{skill}</span>
+        <span className="about-keyword__diamond">✦</span>
+      </div>
+    ))}
+  </div>
+</div>
+
         </div>
+
       </motion.div>
     </div>
   );
 }
+
+export default AboutSection;

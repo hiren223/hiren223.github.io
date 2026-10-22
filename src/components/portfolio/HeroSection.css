@@ -75,15 +75,6 @@
   z-index: 1;
   flex: 1 1 auto;
   display: grid;
-  /* left introduction | portrait (auto) | right plate. The outer tracks are
-     NOT equal: the introduction needs room for two CTA labels on one line
-     (~316px) while the plate is a fixed 260px panel. 1.14/0.86 is the
-     smallest split that keeps the CTA pair unwrapped at every three-column
-     width, and it puts the subject a hair right of centre — the same
-     off-centre axis the reference composition uses.
-
-     The word shares the middle track, so whatever the split, the word and the
-     portrait can never drift apart from each other. */
   grid-template-columns: minmax(0, 1.14fr) auto minmax(0, 0.86fr);
   column-gap: clamp(1.25rem, 3vw, 3rem);
   align-items: end;
@@ -117,22 +108,9 @@
 .hk-hero__name span {
   display: block;
 font-family: "Bebas Neue", sans-serif;
-  /* Measured, not guessed: Bebas Neue's advances for H I R E N are 0.420 +
-     0.192 + 0.403 + 0.363 + 0.427, and CSS adds the 0.1em tracking after each
-     of the five — so the word is 2.305em wide. 35vw therefore lands it at
-     77–85% of the stage: past both shoulders, still inside it.
-
-     min() so on a short screen it is the viewport HEIGHT that caps the word.
-     52vh is where the ink still clears the introduction: the cap-height ink
-     is 0.7em, so its bottom sits 0.4em under the row's centre, and solving
-     0.4f < stage/2 - (intro height + rule) for a 720px-tall window gives
-     f < 415px — 52vh of 720 is 374. */
-  font-size: clamp(6rem, min(35vw, 52vh), 32rem);
+   font-size: clamp(6rem, min(35vw, 52vh), 32rem);
   font-weight: 400;
-  letter-spacing: 0.1em;
-  /* The trailing letter-space would otherwise sit to the right of the N and
-     push the word 0.05em left of the portrait's centre line. Indenting the
-     first line by the same amount balances the two sides. */
+  letter-spacing: 0.2em;
   text-indent: 0.1em;
   line-height: 0.8;
   /* the token, not a literal — see --hk-word above */
@@ -157,6 +135,15 @@ font-family: "Bebas Neue", sans-serif;
   margin-bottom: 0;
 }
 
+.logo-text{
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--card-foreground);
+    letter-spacing: 1px;
+
+}
+
 /*
  * Studio treatment: the cutout is graded and lit in CSS so it reads as a
  * photographic plate, then the base dissolves into the hero background.
@@ -172,28 +159,15 @@ font-family: "Bebas Neue", sans-serif;
   display: block;
   width: 100%;
   max-width: 100%;
-  /* height:auto keeps the intrinsic ratio — the cutout is never stretched */
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  /* editorial grading: slight contrast, gently desaturated, warm key bias.
-     Cool rim = soft alpha-following edge light; black plate = depth below.
-
-     The same darkness the dither plate carries, here for the two paths
-     where the <img> is what shows: touch devices (the veil is display:none
-     there, no hover to drive the reveal) and the frames before the veil
-     paints its first one. Without it those would sit at full brightness
-     against a paper ground while the canvas beside them reads dark. */
   filter:
     contrast(1.03) saturate(0.94) sepia(0.06) brightness(0.78)
     drop-shadow(0 -8px 14px rgba(165, 185, 210, 0.14))
-    /* the cast shadow had to be lightened with the ground: 55% black
-       dissolves into a dark hero but piles up into a smudge on paper */
     drop-shadow(0 30px 50px rgba(29, 27, 24, 0.18));
 }
 
-/* Bottom fade — the only veil, and it never reaches the face.
-   Ends at the hero background color so no rectangle is visible. */
 .hk-hero__portrait-wrap::after {
   content: "";
   position: absolute;
