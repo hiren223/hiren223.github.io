@@ -115,6 +115,7 @@ export default function ProjectsPage() {
             onOpen={setActive}
             activeId={spotlight}
             onActiveIdChange={setSpotlight}
+            showFilters={true}
           />
         </div>
       </main>

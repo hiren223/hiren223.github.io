@@ -212,10 +212,16 @@ function NavLabel({
     // in-page anchors get `true`; a real route would get "page"
     "aria-current": isActive ? (href?.startsWith("#") ? true : "page") : undefined,
     className: cn(
-      "flex cursor-pointer items-center whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay",
-      isActive ? FADE_IN : FADE_OUT,
-      SIZES[size].label,
-    ),
+  "flex cursor-pointer items-center whitespace-nowrap",
+  "rounded-[7px]",
+  "transition-all duration-300 ease-out",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay",
+  !isActive && [
+    "hover:!text-[var(--clay-deep)]",
+  ],
+  isActive ? FADE_IN : FADE_OUT,
+  SIZES[size].label,
+),
     style: { color: isActive ? activeLabelColor : idleLabelColor },
     onClick: onSelect,
   } as const;
@@ -291,7 +297,10 @@ export function GooeyNav({
                 borderBottomRightRadius: open(i + 1) ? corner : 0,
               }}
               className={cn(isActive ? FADE_IN : FADE_OUT)}
-              style={{ backgroundColor: fill(i) }}
+              style={{
+  backgroundColor: fill(i),
+  border: "1px solid rgba(29, 27, 24, 0.28)",
+}}
             >
               <NavLabel
                 {...navItem}

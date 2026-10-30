@@ -5,6 +5,7 @@
  * grid: the index rows open it, and the project content it renders is
  * exactly what the previous cards showed.
  */
+import { coverSrc } from "@/lib/project-media";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { PortfolioProject } from "@/lib/sample-projects";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 
 function MetaRow({ label, value }: { label: string; value: string }) {
   return (
@@ -20,7 +21,7 @@ function MetaRow({ label, value }: { label: string; value: string }) {
       <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
         {label}
       </span>
-      <span className="text-sm text-foreground">{value}</span>
+      <span className="text-sm font-medium text-foreground">{value}</span>
     </div>
   );
 }
@@ -34,24 +35,34 @@ export function ProjectDialog({
 }) {
   return (
     <Dialog open={project !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[88vh] gap-0 overflow-y-auto border-border bg-background p-0 sm:max-w-2xl">
+      <DialogContent className="max-h-[85vh] gap-0 overflow-y-auto border-border bg-background p-0 sm:max-w-2xl shadow-2xl rounded-2xl">
         {project && (
           <div className="flex flex-col">
-            <div className="flex flex-col gap-5 border-b border-border p-8">
-              <span className="text-[10px] uppercase tracking-[0.28em] text-clay">
+            {/* Project Hero Visual Banner */}
+            <div className="relative w-full aspect-[16/9] sm:aspect-[2.2/1] overflow-hidden bg-card border-b border-border">
+              <img
+                src={coverSrc(project.image)}
+                alt={`${project.title} cover`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/25 to-transparent" />
+            </div>
+
+            <div className="flex flex-col gap-4 border-b border-border p-6 sm:p-8">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-clay">
                 {project.year} · {project.client}
               </span>
-              <DialogTitle className="font-display text-4xl leading-none text-foreground">
+              <DialogTitle className="font-display text-3xl sm:text-4xl leading-tight text-foreground">
                 {project.title}
               </DialogTitle>
-              <DialogDescription className="max-w-xl text-sm leading-6 text-muted-foreground">
+              <DialogDescription className="max-w-xl text-sm leading-relaxed text-muted-foreground">
                 {project.summary}
               </DialogDescription>
               <div className="flex flex-wrap gap-2 pt-1">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-border px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground"
+                    className="rounded-full border border-border bg-card/60 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground"
                   >
                     {tag}
                   </span>

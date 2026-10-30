@@ -82,6 +82,7 @@
   --muted: #f1eee8;
   --muted-foreground: #6f6a63;
   --accent: #eae6de;
+  --accent1:rgba(252, 252, 252, 0.338);
   --accent-foreground: #1d1b18;
   --destructive: oklch(0.577 0.166 27.325);
   --border: rgba(29, 27, 24, 0.14);
@@ -245,8 +246,9 @@
   .navbar-gutter {
     padding-left: max(1.25rem, env(safe-area-inset-left));
     padding-right: max(1.25rem, env(safe-area-inset-right));
-    background: #989494ab;
+    background: var(--accent1);
     backdrop-filter: blur(5px);
+    border: 1.5px solid rgba(29, 27, 24, 0.28);
     border-radius: 7px;
   }
 

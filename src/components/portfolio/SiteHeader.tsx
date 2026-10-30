@@ -145,15 +145,15 @@ export function SiteHeader({
 
         {/* DESKTOP NAVIGATION */}
         <GooeyNav
-          aria-label="Primary"
-          items={links}
-          value={activeIndex}
-          className="hidden md:block"
-          activeColor="var(--clay-deep)"
-          activeLabelColor="var(--clay-foreground)"
-          idleColor="#1d1b18"
-          idleLabelColor="rgba(255,255,255,0.78)"
-        />
+  aria-label="Primary"
+  items={links}
+  value={activeIndex}
+  className="hidden md:block"
+  activeColor="var(--clay-deep)"
+  activeLabelColor="var(--clay-foreground)"
+  idleColor="transparent"
+  idleLabelColor="#1d1b18"
+/>
 
         {/* MOBILE HAMBURGER */}
         <button

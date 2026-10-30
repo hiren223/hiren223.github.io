@@ -26,13 +26,13 @@ export type PortfolioProject = {
  * (which has no image field yet) still resolves to the right artwork.
  */
 const IMAGE_BY_TITLE: Record<string, string> = {
-  "Krushi Manch": "/projects/krushi-manch.svg",
-  "Customer Churn Prediction": "/projects/customer-churn.svg",
-  "Home Loan Default Prediction": "/projects/home-loan-default.svg",
-  "Insurance Claim Prediction": "/projects/insurance-claim.svg",
-  "Vaccine Prediction": "/projects/vaccine-prediction.svg",
-  "COVID-19 Forecasting": "/projects/covid-forecasting.svg",
-  "Smart Agriculture Analytics Dashboard": "/projects/smart-agriculture.svg",
+  "Krushi Manch": "/projects/krushi-manch.jpg",
+  "Customer Churn Prediction": "/projects/customer-churn.jpg",
+  "Home Loan Default Prediction": "/projects/home-loan-default.jpg",
+  "Insurance Claim Prediction": "/projects/insurance-claim.jpg",
+  "Vaccine Prediction": "/projects/vaccine-prediction.jpg",
+  "COVID-19 Forecasting": "/projects/covid-forecasting.jpg",
+  "Smart Agriculture Analytics Dashboard": "/projects/smart-agriculture.jpg",
 };
 
 const FALLBACK_IMAGE = "/projects/cover-fallback.svg";
@@ -114,7 +114,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "Team members", value: "04" },
       { label: "Languages", value: "2+" },
     ],
-    image: "/projects/krushi-manch.svg",
+    image: "/projects/krushi-manch.jpg",
     featured: true,
     order: 1,
   },
@@ -141,7 +141,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "Models evaluated", value: "03" },
       { label: "Imbalance handling", value: "SMOTE" },
     ],
-    image: "/projects/customer-churn.svg",
+    image: "/projects/customer-churn.jpg",
     repoUrl:
       "https://github.com/hiren223/ML_Projects/blob/main/PRCL-0017%20Customer%20Churn%20Business%20case/PRCL-0017%20Customer%20Churn.ipynb",
     featured: true,
@@ -170,7 +170,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "ROC-AUC", value: "0.761" },
       { label: "Best model", value: "XGBoost" },
     ],
-    image: "/projects/home-loan-default.svg",
+    image: "/projects/home-loan-default.jpg",
     repoUrl:
       "https://github.com/hiren223/ML_Projects/blob/main/PRCP-1006-HomeLoanDef.ipynb",
     featured: false,
@@ -199,7 +199,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "ROC-AUC", value: "≈0.50" },
       { label: "Best model", value: "Logistic Reg." },
     ],
-    image: "/projects/insurance-claim.svg",
+    image: "/projects/insurance-claim.jpg",
     repoUrl:
       "https://github.com/hiren223/ML_Projects/blob/main/PRCP-1010-InsClaimPred.ipynb",
     featured: false,
@@ -221,7 +221,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "R²", value: "≈1.00" },
       { label: "Best model", value: "Random Forest" },
     ],
-    image: "/projects/vaccine-prediction.svg",
+    image: "/projects/vaccine-prediction.jpg",
     repoUrl:
       "https://github.com/hiren223/ML_Projects/blob/main/PRCP-1014-VaccinePred.ipynb",
     featured: false,
@@ -250,7 +250,7 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
       { label: "Tuned R²", value: "≤ 0" },
       { label: "Evaluation", value: "RMSE" },
     ],
-    image: "/projects/covid-forecasting.svg",
+    image: "/projects/covid-forecasting.jpg",
     repoUrl:
       "https://github.com/hiren223/ML_Projects/blob/main/PRCP-1023-JohnsHopkinsCovid19.ipynb",
     featured: false,
@@ -259,20 +259,20 @@ export const SAMPLE_PROJECTS: PortfolioProject[] = [
   {
     id: "smart-agriculture-dashboard",
     title: "Smart Agriculture Analytics Dashboard",
-    role: "Data Science Project",
-    client: "Silver Oak University",
+    role: "Power BI Developer · Personal Project",
+    client: "Personal Project",
     year: "2026",
     summary:
-      "An agriculture analytics dashboard that turns crop and farm data into readable charts for non-technical users.",
+      "An interactive Power BI agriculture dashboard built with advanced DAX measures, star schema data modeling, and executive KPI reporting.",
     description:
-      "The analytics counterpart to Krushi Manch: instead of serving crop information page by page, the same domain is presented as a dashboard of charts. Built with Python for the cleaning and aggregation, Power BI for the interactive reporting layer, and SQL for the queries behind each visual. It is the piece that showed me how much a decision-maker gets from a well-shaped chart compared with the same numbers in a notebook.",
-    tags: ["Python", "Pandas", "Power BI", "SQL", "Data Cleaning", "EDA"],
+      "My independent personal project built entirely in Power BI: transforming agricultural data into an interactive decision-making dashboard. Focused on dimensional data modeling with star schema relationships, custom DAX measures for time intelligence and yield trend analysis, and rich interactive visuals for crop performance and seasonal insights.",
+    tags: ["Power BI", "DAX", "Data Modeling", "Power Query", "Data Visualization", "Business Intelligence"],
     highlights: [
-      { label: "Visuals", value: "12" },
-      { label: "Data source", value: "SQL" },
-      { label: "Reporting", value: "Power BI" },
+      { label: "Modeling", value: "Star Schema" },
+      { label: "Calculations", value: "DAX Measures" },
+      { label: "Report Visuals", value: "12" },
     ],
-    image: "/projects/smart-agriculture.svg",
+    image: "/projects/smart-agriculture.jpg",
     featured: false,
     order: 7,
   },
