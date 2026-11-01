@@ -1,5 +1,6 @@
 import DitherVeil from "@/components/portfolio/DitherVeil";
 import { HeroSignalGraph } from "@/components/portfolio/HeroSignalGraph";
+import TechText from "@/components/portfolio/TechText";
 import {
   motion,
   MotionConfig,
@@ -96,9 +97,8 @@ export function HeroSection() {
         <div className="hk-hero__bg" aria-hidden="true" />
 
         <div className="hk-hero__stage">
-          {/* Layer 0 — the giant name, behind the portrait. Static type with
-              a slow parallax drift; the real <h1> further down is what
-              screen readers get. */}
+          {/* Layer 0 — the interactive name sits behind the portrait; the
+              real <h1> further down is what screen readers get. */}
           <motion.div
             className="hk-hero__name"
             aria-hidden="true"
@@ -107,7 +107,20 @@ export function HeroSection() {
             transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
             style={{ x: wordX, y: wordY }}
           >
-            <span>HIREN</span>
+            <TechText
+              text="HIREN"
+              fontFamily="'Bebas Neue', sans-serif"
+              fontWeight={400}
+              fontSize={320}
+              letterSpacing={0.12}
+              color="rgba(29, 27, 24, 0.4)"
+              accentColor="#B86543"
+              reveal="letter"
+              specks={15}
+              sweep
+              clickKick
+              className="hk-hero__tech-text"
+            />
           </motion.div>
 
           {/* Layer 1 — the portrait, primary focus (studio-treated) */}
@@ -190,7 +203,8 @@ export function HeroSection() {
           >
             <hr className="hk-hero__rule" />
             <p className="hk-hero__desc">
-             I turn data into actionable insights, build intelligent machine learning solutions, and create impactful web experiences.
+              I find useful insights in data, build machine learning tools, and
+              create web experiences that solve real problems.
             </p>
             <div className="hk-hero__actions">
               <a className="hk-hero__btn hk-hero__btn--solid" href="#work">

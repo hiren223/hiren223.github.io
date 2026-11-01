@@ -11,12 +11,6 @@
   --hk-ink: #1d1b18;
   --hk-muted: #6f6a63;
   --hk-line: rgba(29, 27, 24, 0.12);
-  /* the giant name behind the portrait. This is the one value that actually
-     drives it — .hk-hero__name span reads this and used to hard-code its own,
-     which is why the token and the word had drifted apart. 0.45 alpha lands at
-     2.82:1 on the paper ground, exactly the decorative floor index.css sets for
-     display type at >=24px (this word bottoms out at 96px). */
-  --hk-word: rgba(29, 27, 24, 0.45);
   /* One gutter token drives both edges and never steps inside a notch. It is
      .page-container's own inset (48px, 40px below 48rem), so the hero's left
      column lines up with every section heading under it instead of standing
@@ -89,32 +83,30 @@
 
 /* ---------- layer 0: the giant name, behind the portrait ---------- */
 
-/* Shares the portrait's grid cell and stretches to the row, so the word is
-   centred on the portrait itself rather than on the stage. Purely decorative
-   and aria-hidden: the real <h1> below carries the name for screen readers. */
+/* Shares the portrait's grid row so the interactive wordmark sits behind it.
+   The wrapper is hidden from assistive technology; the real <h1> carries the
+   name for screen readers. */
 .hk-hero__name {
+  display: grid;
+  position: relative;
   z-index: 0;
   grid-column: 2;
   grid-row: 1;
   align-self: stretch;
-  justify-self: stretch;
+  justify-self: center;
   place-items: center;
   pointer-events: none;
   user-select: none;
-  /* the word is deliberately wider than the portrait so it spans past both
-     shoulders; .hk-hero's own overflow:hidden stops any spill */
 }
 
-.hk-hero__name span {
-  display: block;
-font-family: "Bebas Neue", sans-serif;
-   font-size: clamp(6rem, min(35vw, 52vh), 32rem);
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-indent: 0.1em;
-  line-height: 0.8;
-  /* the token, not a literal — see --hk-word above */
-  color: var(--hk-word);
+.hk-hero__name > .hk-hero__tech-text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: min(1400px, calc(100vw - 3rem));
+  height: 100%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
 }
 
 .hk-hero__portrait {
@@ -473,14 +465,7 @@ font-family: "Bebas Neue", sans-serif;
     grid-row: 1;
     align-self: stretch;
     justify-self: stretch;
-  }
-
-  .hk-hero__name span {
-    /* 33vw x the word's 2.305em holds the word at ~85% of the stage while the
-       stage is still growing, and the 15.5rem cap takes over where the stage
-       stops (its own 48rem max-width) — 74–86% across the whole range, and
-       wider than the portrait at every width, so both ends stay legible. */
-    font-size: clamp(4.5rem, 33vw, 15.5rem);
+    width: 100%;
   }
 
   .hk-hero__portrait {

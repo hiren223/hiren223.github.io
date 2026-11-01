@@ -1,20 +1,11 @@
 /* =============================================================
    Experience — the editorial vertical career timeline.
 
-   ONE timeline at every width, positioned by ONE grid:
+   Desktop: metadata | rail and marker | milestone card.
+   Mobile: rail and marker | metadata + milestone card.
 
-       column 1   rail column   the marker badge
-       column 2   content       date + category, then the milestone
-
-   The rail is centred in column 1 and the marker badge is centred in
-   the same column, so the two share one X coordinate by construction.
-   The metadata lives at the top of column 2, above the title, so every
-   row reads: spine → when → what.
-
-   There is no alternating left/right layout, no percentage
-   positioning, no pseudo-element marker, and no hover transform on
-   anything that carries the geometry. Every colour, font and surface
-   is a global token from index.css; nothing new is introduced here.
+   The rail and markers share a grid track, so the spine stays aligned
+   as the layout changes. Colour and type stay within the global system.
    ============================================================= */
 
 .experience-section {
@@ -35,18 +26,12 @@
      instead, and this is the padding the rail maths is measured from. */
   --experience-pad: 1.25rem;
 
-  /* The timeline's two columns live here, so the width of the whole
-     timeline is derived from them. --tl-content is the one knob for
-     how wide the timeline is: the column, the centred track, the
-     measure and the rail's position all follow from it. */
   --tl-rail: 36px;
-  --tl-content: 1000px;
-  --experience-track: calc(var(--tl-rail) + var(--tl-content));
+  --tl-meta: clamp(9rem, 24vw, 15rem);
 
   font-family: var(--font-sans);
   width: 100%;
   max-width: 100%;
-  overflow: hidden;
   /* The section rhythm every other band on the page uses. */
   padding-block: clamp(90px, 9vw, 150px);
 }
@@ -57,11 +42,9 @@
    utility, applied in the markup), so the eyebrow and the headline sit
    on the same left edge as About, Certifications and Contact. */
 
-/* The timeline is a centred track: its two columns plus one gutter on
-   each side. */
 .experience-timeline {
   width: 100%;
-  max-width: calc(var(--experience-track) + var(--experience-pad) * 2);
+  max-width: 1120px;
   margin-inline: auto;
   padding-inline: var(--experience-pad);
 }
@@ -133,7 +116,6 @@
    ============================================================= */
 
 .experience-timeline {
-  /* --tl-rail and --tl-content are inherited from the section. */
   --tl-icon: 26px;
   /* The thickness of the spine itself: the rail and the accent fill
      share it, so the drawn part is never fatter than the track. */
@@ -142,12 +124,11 @@
   --tl-chip-offset: calc((var(--tl-line) - var(--tl-icon)) / 2);
   --tl-top-pad: calc(-1 * var(--tl-chip-offset));
   --tl-marker-center: calc(var(--tl-top-pad) + var(--tl-line) / 2);
-  --tl-rail-x: calc(var(--experience-pad) + var(--tl-rail) / 2);
-  --tl-content-pad: clamp(1.25rem, 2vw, 1.5rem);
-  --tl-row-gap: clamp(5rem, 7vw, 6.25rem);
+  --tl-rail-x: calc(var(--experience-pad) + var(--tl-meta) + var(--tl-rail) / 2);
+  --tl-meta-pad: clamp(1.25rem, 2.4vw, 2rem);
+  --tl-row-gap: clamp(3.5rem, 6vw, 5rem);
 
   position: relative;
-  overflow: hidden;
   padding-top: var(--tl-top-pad);
 }
 
@@ -194,10 +175,9 @@
 
 .experience-timeline__row {
   display: grid;
-  grid-template-columns: var(--tl-rail) minmax(0, var(--tl-content));
+  grid-template-columns: minmax(0, var(--tl-meta)) var(--tl-rail) minmax(0, 1fr);
   align-items: start;
-  /* Between the metadata and the title. */
-  row-gap: 0.7rem;
+  column-gap: 0;
   padding-bottom: var(--tl-row-gap);
 }
 
@@ -205,10 +185,10 @@
   padding-bottom: 0;
 }
 
-/* ---------- column 1 — the marker badge ---------- */
+/* ---------- the rail column and marker badge ---------- */
 
 .experience-timeline__marker {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 1;
   position: relative;
   /* Above the rail, so the badge always reads on top of the line. */
@@ -242,17 +222,17 @@
   height: calc(var(--tl-icon) * 0.62);
 }
 
-/* ---------- column 2, first line — metadata ---------- */
+/* ---------- column 1 — date and category ---------- */
 
 .experience-timeline__meta {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding-left: var(--tl-content-pad);
+  padding-right: var(--tl-meta-pad);
   min-width: 0;
-  text-align: left;
+  text-align: right;
 }
 
 .experience-timeline__date {
@@ -273,14 +253,22 @@
   color: var(--experience-accent-text);
 }
 
-/* ---------- column 2, second line — the milestone ---------- */
+/* ---------- column 3 — the milestone ---------- */
 
 .experience-timeline__content {
-  grid-column: 2;
-  grid-row: 2;
+  grid-column: 3;
+  grid-row: 1;
   min-width: 0;
-  max-width: var(--tl-content);
-  padding-left: var(--tl-content-pad);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--experience-rule);
+  border-left: 2px solid color-mix(in oklab, var(--experience-accent) 60%, var(--experience-rule));
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--sand) 55%, var(--background));
+  transition: border-color 180ms ease;
+}
+
+.experience-timeline__content:hover {
+  border-color: color-mix(in oklab, var(--experience-accent) 55%, var(--experience-rule));
 }
 
 .experience-timeline__title {
@@ -335,8 +323,14 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: left;
-  color: var(--experience-accent);
+  color: var(--experience-accent-text);
   text-decoration: none;
+}
+
+.experience-timeline__link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 /* Links only ever change colour or underline — never position. */
@@ -393,7 +387,7 @@
 }
 
 /* =============================================================
-   Tablet — same two columns, tighter spine and badge. Everything
+   Tablet — same three columns, tighter spine and badge. Everything
    positional below is derived, so only the inputs change.
    ============================================================= */
 
@@ -402,11 +396,11 @@
     --experience-pad: 1rem;
     --fs-milestone: var(--type-display-sm);
     --tl-rail: 34px;
+    --tl-meta: clamp(8.5rem, 24vw, 13rem);
   }
 
   .experience-timeline {
     --tl-icon: 24px;
-    --tl-content-pad: 1.25rem;
     --tl-row-gap: clamp(4rem, 8vw, 5rem);
   }
 
@@ -416,8 +410,8 @@
 }
 
 /* =============================================================
-   Mobile — the same two columns, narrower still. Still one grid,
-   still one rail, still one badge per milestone.
+   Mobile — metadata and content share one column beside the rail.
+   Still one rail and one badge per milestone.
    ============================================================= */
 
 @media (max-width: 47.99rem) {
@@ -428,8 +422,32 @@
 
   .experience-timeline {
     --tl-icon: 22px;
-    --tl-content-pad: 0.75rem;
+    --tl-rail-x: calc(var(--experience-pad) + var(--tl-rail) / 2);
     --tl-row-gap: clamp(3rem, 9vw, 3.75rem);
+  }
+
+  .experience-timeline__row {
+    grid-template-columns: var(--tl-rail) minmax(0, 1fr);
+    row-gap: 0.75rem;
+  }
+
+  .experience-timeline__marker {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .experience-timeline__meta {
+    grid-column: 2;
+    grid-row: 1;
+    padding-right: 0;
+    padding-left: 1rem;
+    text-align: left;
+  }
+
+  .experience-timeline__content {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 1.1rem;
   }
 
   .experience-timeline__title {
@@ -437,6 +455,8 @@
   }
 }
 
-/* Reduced motion is handled in the component: with motion disabled, the
-   scroll-linked fill is rendered complete and static instead of being
-   drawn as the section scrolls. */
+@media (prefers-reduced-motion: reduce) {
+  .experience-timeline__content {
+    transition: none;
+  }
+}

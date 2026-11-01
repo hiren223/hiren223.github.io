@@ -1,21 +1,20 @@
 /* ExperienceSection — the editorial vertical career timeline.
 
-ONE timeline, one layout, at every width. Each milestone is a row of
-the same three-column grid:
+On desktop, each milestone is a three-column row:
 
     metadata | rail column | content
 
 The rail column owns the marker, and the single rail above the list is
 centred in that same column, which is why the markers and the rail
-cannot drift apart. Nothing alternates left/right and nothing is
-positioned with percentages.
+cannot drift apart. On mobile, metadata and content share one column
+beside the rail.
 
 The content comes from src/lib/experience-data.ts — the degree, the
 certification and the role — so the three milestones keep a single
 source of truth. No new copy, colour or font is introduced here.
 */
 
-import { education, timeline } from "@/lib/experience-data";
+import { education, experiences } from "@/lib/experience-data";
 import {
   motion,
   useReducedMotion,
@@ -53,7 +52,7 @@ function rise(delay: number, still: boolean, distance = 16) {
   };
 }
 
-/** Milestone 02 — the two credentials named in the portfolio. */
+/** The credentials named in the portfolio. */
 const certificationMilestone = {
   id: "certification" as const,
   category: "Certification" as const,
@@ -91,21 +90,21 @@ const MILESTONES: MilestoneRow[] = [
     date: education.year,
     category: "Education",
     icon: GraduationCap,
-    entry: education as MilestoneEntry,
+    entry: education,
   },
   {
     n: "02",
-    date: certificationMilestone.year,
-    category: "Certification",
-    icon: Award,
-    entry: certificationMilestone as MilestoneEntry,
+    date: experiences[0].year,
+    category: "Experience",
+    icon: Briefcase,
+    entry: experiences[0],
   },
   {
     n: "03",
-    date: timeline[1].year,
-    category: "Experience",
-    icon: Briefcase,
-    entry: timeline[1] as MilestoneEntry,
+    date: certificationMilestone.year,
+    category: "Certification",
+    icon: Award,
+    entry: certificationMilestone,
   },
 ];
 
@@ -162,29 +161,29 @@ function MilestoneContent({
             type="button"
             className="experience-timeline__link experience-timeline__toggle"
             aria-expanded={expanded}
-            aria-controls={expanded ? `${entry.id}-points` : undefined}
+            aria-controls={`${entry.id}-points`}
+            aria-label={`${expanded ? "Hide" : "Show"} responsibilities for ${entry.headline}`}
             onClick={onToggle}
           >
             <span className="experience-timeline__link-label">
               VIEW RESPONSIBILITIES
             </span>
-            <span className="experience-timeline__link-name">
+            <span className="experience-timeline__link-name" aria-hidden="true">
               {expanded ? "−" : "+"}
             </span>
           </button>
 
-          {expanded && (
-            <ul
-              id={`${entry.id}-points`}
-              className="experience-timeline__points"
-            >
-              {entry.points.map((point) => (
-                <li key={point} className="experience-timeline__point">
-                  {point}
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul
+            id={`${entry.id}-points`}
+            className="experience-timeline__points"
+            hidden={!expanded}
+          >
+            {entry.points.map((point) => (
+              <li key={point} className="experience-timeline__point">
+                {point}
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </motion.div>
