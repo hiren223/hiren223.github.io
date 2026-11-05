@@ -1,6 +1,6 @@
-import DitherVeil from "@/components/portfolio/DitherVeil";
 import { HeroSignalGraph } from "@/components/portfolio/HeroSignalGraph";
 import TechText from "@/components/portfolio/TechText";
+import { Mascot } from "page-mascot";
 import {
   motion,
   MotionConfig,
@@ -10,21 +10,8 @@ import {
   useTransform,
   type Variants,
 } from "framer-motion";
-import { useState, type CSSProperties, type MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import "./HeroSection.css";
-
-/**
- * Portrait sources — the owner's uploaded background-removed cutout lives in
- * `public/assets/`. Common `public/hiren.*` fallbacks are tried next before
- * the monogram placeholder is shown.
- */
-const PORTRAIT_SOURCES = [
-  "/assets/hero-image.webp",
-  "/hiren.png",
-  "/hiren.jpg",
-  "/hiren.jpeg",
-  "/hiren.webp",
-];
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -49,12 +36,6 @@ const sideContent: Variants = {
  */
 export function HeroSection() {
   const reduced = useReducedMotion();
-  const [portraitIndex, setPortraitIndex] = useState(0);
-  const portraitFailed = portraitIndex >= PORTRAIT_SOURCES.length;
-  /* The veil discards the cutout's transparent pixels, so once it is drawing
-     the <img> underneath must fade out or the subject shows through at full
-     opacity and the dither is invisible. Until then it is the fallback. */
-  const [veilReady, setVeilReady] = useState(false);
 
   /* Subtle parallax: the word drifts one way, the portrait the other. */
   const pointerX = useMotionValue(0);
@@ -123,7 +104,7 @@ export function HeroSection() {
             />
           </motion.div>
 
-          {/* Layer 1 — the portrait, primary focus (studio-treated) */}
+          {/* Layer 1 — cursor-tracking Hiren mascot, primary focus */}
           <motion.div
             className="hk-hero__portrait"
             initial={{ opacity: 0, y: 42 }}
@@ -132,63 +113,13 @@ export function HeroSection() {
           >
             <motion.div style={{ x: photoX, y: photoY }}>
               <div className="hk-hero__portrait-wrap">
-                {portraitFailed ? (
-                  <div className="hk-hero__fallback">HK</div>
-                ) : (
-                  <>
-                    {/* Kept underneath as the no-WebGL fallback. It fades out
-                        once the veil reports its first painted frame. */}
-                    <img
-                      className="hk-hero__portrait-img"
-                      style={
-                        {
-                          opacity: veilReady ? 0 : 1,
-                          transition: "opacity 420ms ease-out",
-                        } as CSSProperties
-                      }
-                      src={PORTRAIT_SOURCES[portraitIndex]}
-                      alt="Hiren Keraliya — Data Scientist and Full Stack Developer"
-                      loading="eager"
-                      fetchPriority="high"
-                      decoding="async"
-                      width={500}
-                      height={500}
-                      onError={() => {
-                        // A new source is a new image: show the <img> again
-                        // until this source's veil paints its first frame,
-                        // or a failed veil would leave no portrait at all.
-                        setVeilReady(false);
-                        setPortraitIndex((i) => i + 1);
-                      }}
-                    />
-                    <div className="hk-hero__veil">
-                      <DitherVeil
-                        src={PORTRAIT_SOURCES[portraitIndex]}
-                        fit="contain"
-                        pattern="floyd"
-                        levels={3}
-                        /* ink/paper are the two ends of the duotone, mapped
-                           by source luminance: ink takes the shadows, paper
-                           takes the highlights. On the dark hero they were
-                           near-black and cream; on the paper hero cream
-                           highlights would dissolve into the page, so both
-                           ends now sit dark — the portrait reads as one dark
-                           plate against the ground, using the theme's own
-                           --foreground and --muted-foreground. */
-                        inkColor="#1d1b18"
-                        paperColor="#6f6a63"
-                        contrast={1.22}
-                        revealRadius={190}
-                        softness={0.62}
-                        linger={1.1}
-                        rim={0.14}
-                        rimColor="#B86543"
-                        cutout
-                        onReady={() => setVeilReady(true)}
-                      />
-                    </div>
-                  </>
-                )}
+                <Mascot
+                  directions="/mascots/hiren-directions.webp"
+                  reactions="/mascots/hiren-reactions.webp"
+                  size={500}
+                  label="Illustrated portrait of Hiren"
+                  className="hk-hero__mascot"
+                />
               </div>
             </motion.div>
           </motion.div>

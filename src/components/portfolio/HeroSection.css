@@ -69,7 +69,7 @@
   z-index: 1;
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.14fr) auto minmax(0, 0.86fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   column-gap: clamp(1.25rem, 3vw, 3rem);
   align-items: end;
   min-height: 0;
@@ -116,11 +116,11 @@
   grid-row: 1;
   align-self: end;
   justify-self: center;
-  /* min(36vw, 76vh): on short screens the portrait must not push the hero past
+  /* min(33vw, 68vh): on short screens the portrait must not push the hero past
      100svh. Trimmed from 42vw so the two outer tracks get the room the CTA
      pair needs to stay on one line — the portrait stays the largest solid
      element on the stage at every desktop width. */
-  width: clamp(360px, min(36vw, 76vh), 600px);
+  width: clamp(330px, min(33vw, 68vh), 560px);
   max-width: 100%;
   /* no lift: the portrait's bottom fade has to end on the same line as the
      CTA pair and the plate, or the three columns stop reading as one row */
@@ -136,31 +136,23 @@
 
 }
 
-/*
- * Studio treatment: the cutout is graded and lit in CSS so it reads as a
- * photographic plate, then the base dissolves into the hero background.
- */
+/* Keep the cursor-tracking sprite responsive within the portrait slot. */
 .hk-hero__portrait-wrap {
   position: relative;
   width: 100%;
-  /* the veil and the ::after fade both need a stacking parent of their own */
+  aspect-ratio: 1;
   isolation: isolate;
 }
 
-.hk-hero__portrait-img {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  filter:
-    contrast(1.03) saturate(0.94) sepia(0.06) brightness(0.78)
-    drop-shadow(0 -8px 14px rgba(165, 185, 210, 0.14))
-    drop-shadow(0 30px 50px rgba(29, 27, 24, 0.18));
+.hk-hero__mascot {
+  width: 100% !important;
+  height: 100% !important;
+  transform: scale(1.12) translateY(14%);
+  transform-origin: center bottom;
+  filter: drop-shadow(0 24px 30px rgba(29, 27, 24, 0.18));
 }
 
-.hk-hero__portrait-wrap::after {
+/* .hk-hero__portrait-wrap::after {
   content: "";
   position: absolute;
   left: 0;
@@ -175,40 +167,7 @@
     rgba(247, 245, 241, 0.15) 35%,
     #f7f5f1 100%
   );
-}
-
-/* ---------- the dither veil over the portrait ---------- */
-
-/* Sits directly on the cutout's box. The canvas paints the Floyd-Steinberg
-   plate; the plain <img> underneath shows through wherever the veil is not
-   drawn (no WebGL, or before the plate's intro sweep completes). */
-.hk-hero__veil {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  /* the portrait's own bottom fade (::after, z-index 2) must stay on top of
-     the canvas, so this never claims z-index 2 */
-}
-
-/* Keep the plain cutout on devices with no hover-capable pointer at all.
-   `any-hover` preserves the reveal on touch-first laptops when a mouse is
-   also connected. */
-@media (any-hover: none) {
-  .hk-hero__veil {
-    display: none;
-  }
-}
-
-.hk-hero__fallback {
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--hk-line);
-  background: rgba(29, 27, 24, 0.03);
-  font-family: var(--font-display);
-  font-size: var(--type-display-md);
-  color: rgba(29, 27, 24, 0.3);
-}
+} */
 
 /* ---------- layer 2: the introduction, left column of the lower band ---------- */
 
@@ -473,11 +432,11 @@
     grid-row: 1;
     align-self: end;
     justify-self: center;
-    /* 52vw, not 60: at 60 the portrait covered the word down to 25px of H and
-       N on a phone, which is no longer a layered composition. At 52vw the
+    /* 48vw, not 60: at 60 the portrait covered the word down to 25px of H and
+       N on a phone, which is no longer a layered composition. At 48vw the
        word keeps 37–41px of each end visible while the portrait is still the
        largest thing in the row. */
-    width: clamp(10rem, 52vw, 24rem);
+    width: clamp(14rem, 48vw, 22rem);
     margin-bottom: 0;
   }
 
