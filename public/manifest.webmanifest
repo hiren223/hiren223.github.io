@@ -1,17 +1,10 @@
 {
-  "name": "freebuff.com application",
-  "short_name": "freebuff.com",
-  "description": "freebuff.com application",
+  "name": "Hiren Keraliya Portfolio",
+  "short_name": "Hiren",
+  "description": "Portfolio of Hiren Keraliya — Data Scientist",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "icons": [
-    {
-      "src": "/logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
-  ]
+  "theme_color": "#020617",
+  "icons": []
 }
